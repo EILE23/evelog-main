@@ -8,34 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true, // 기본 키로 지정
         autoIncrement: true, // 자동 증가 설정
       },
-      userid: {
+      category: {
         type: DataTypes.STRING(30),
         allowNull: false, // 필수 (NotNull)
         unique: true, // 고유 값
       },
-      nickname: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      userName: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
-      gender: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-      },
-      phone: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
-      },
-      address: {
-        type: DataTypes.STRING(200),
-        allowNull: false,
+      content: {
+        type: DataTypes.TEXT("long"),
+        allowNull: true,
       },
     },
     {
