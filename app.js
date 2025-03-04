@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const db = require("./models");
-const mainRoutes = require("./routes/mainroutes");
+const mainRoutes = require("./routes/mainRoutes");
 const cookieparser = require("cookie-parser");
 const ws = require("ws");
 
