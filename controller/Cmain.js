@@ -23,7 +23,7 @@ const getData = async (req, res) => {
       const address = req.body.RoadAddress + req.body.detailAddress;
       await models.Data.create({
         userid: req.body.userid,
-        nickname: "임시",
+        nickname: req.body.nickname,
         password: pw,
         userName: req.body.name,
         age: req.body.age,
