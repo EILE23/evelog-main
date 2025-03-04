@@ -36,4 +36,9 @@ const getData = async (req, res) => {
     console.error(e);
   }
 };
-module.exports = { main, getData };
+
+const write = (req, res) => {
+  res.render("write");
+};
+
+module.exports = { main, getData, write };

@@ -19,6 +19,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+//route to 'write page'
+router.get("/write", controller.write);
+
 router.get("/", controller.main);
 router.post("/getData", upload.none(), controller.getData);
 

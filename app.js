@@ -18,7 +18,7 @@ app.use(express.json());
 app.use("/", mainRoutes);
 
 db.sequelize
-  .sync({ alter: true }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x
+  .sync({ alter: false }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x
   .then(() => {
     console.log("DB 연결 성공, 테이블 생성됨");
   })
