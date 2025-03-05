@@ -97,10 +97,6 @@ const checkLogin = async (req, res) => {
   }
 };
 
-const write = (req, res) => {
-  res.render("write");
-};
-
 const logout = async (req, res) => {
   res.clearCookie("token");
   res.json({ message: "로그아웃" });
@@ -124,51 +120,16 @@ const cookieCheck = async (req, res) => {
   }
 };
 
-const getCategory = async (req, res) => {
-  try {
-    const categories = await models.Category.findAll({
-      attributes: [
-        [models.sequelize.fn("DISTINCT", models.sequelize.col("name")), "name"],
-      ],
-      raw: true,
-    });
-
-    console.log("Categories from DB:", categories); // Log the results
-
-    res.json(categories);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    res.status(500).json({ error: "Error fetching categories" });
-  }
-};
-
-const createData = async (req, res) => {
-  try {
-    console.log(req.body);
-    const { title, content, categoryId, imgsrc } = req.body;
-
-    await models.Data.create({
-      title: title,
-      content: content,
-      categoryId: categoryId,
-      imgsrc: imgsrc,
-    });
-
-    res.json({ result: true, message: "Data created successfully" }); // Send the created data
-  } catch (error) {
-    console.error("Error creating data:", error);
-    res.status(500).json({ result: false, error: "Error creating data" });
-  }
+const write = (req, res) => {
+  res.render("write");
 };
 module.exports = {
   main,
   getData,
-  write,
   checkId,
   checkLogin,
   join,
   cookieCheck,
   logout,
-  getCategory,
-  createData,
+  write,
 };

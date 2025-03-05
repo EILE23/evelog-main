@@ -9,11 +9,11 @@ module.exports = {
         primaryKey: true,
       },
       content: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT("long"),
         allowNull: false,
       },
       title: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT("long"),
         allowNull: false,
       },
       categoryid: {

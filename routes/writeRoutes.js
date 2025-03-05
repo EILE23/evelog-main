@@ -1,4 +1,4 @@
-const controller = require("../controller/Cmain.js");
+const controller = require("../controller/Cwrite.js");
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
@@ -24,15 +24,8 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
-
-router.get("/write", controller.write);
-router.get("/", controller.main);
-router.post("/idCheck", controller.checkId);
-router.post("/getData", upload.none(), controller.getData);
-router.post("/login", controller.checkLogin);
-router.get("/logout", controller.logout);
-router.get("/join", controller.join);
+router.get("/categories", controller.getCategory);
+router.post("/saveData", controller.createData);
 router.get("/checkCookie", controller.cookieCheck);
 
 module.exports = router;

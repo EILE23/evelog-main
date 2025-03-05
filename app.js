@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const db = require("./models");
 const mainRoutes = require("./routes/mainRoutes");
+const writeRoutes = require("./routes/writeRoutes");
 const bodyParser = require("body-parser");
 
 const cookieparser = require("cookie-parser");
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true })); // Adjust lim
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/", mainRoutes);
+app.use("/write", writeRoutes);
 
 db.sequelize
   .sync({ alter: false, force: false }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x
