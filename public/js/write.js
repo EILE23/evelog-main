@@ -23,7 +23,7 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
 
   // Send data to the server (no need for extra /categories request)
   axios
-    .post("/saveData", {
+    .post("/write/saveData", {
       title: toast_title,
       content: toast_ui_editor,
       categoryId: toast_category, // Send the category ID
@@ -74,7 +74,7 @@ function extractImages() {
 }
 
 axios
-  .get("/categories")
+  .get("/write/categories")
   .then((response) => {
     const categories = response.data;
     console.log(categories);

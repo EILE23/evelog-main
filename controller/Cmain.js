@@ -123,6 +123,13 @@ const cookieCheck = async (req, res) => {
 const write = (req, res) => {
   res.render("write");
 };
+
+const getCategory = async (req, res) => {
+  try {
+    const category = models.Category;
+  } catch (e) {}
+};
+
 module.exports = {
   main,
   getData,

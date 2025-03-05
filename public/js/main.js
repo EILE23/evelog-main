@@ -54,17 +54,18 @@ function cookieCheck() {
       loginWrap.innerHTML = `<div class="title">evelog</div>
         <div class="iconBox">
           <img class="icon" onclick="login()" src="../public/img/alam.png" />
-          <img class="icon" onclick="login()" src="../public/img/search.png" />
+          <img class="icon" onclick="search()" src="../public/img/search.png" />
           <button class = "newWrite" onclick = "newWrite()" type = "button">새글작성</button>
           
           <div class="myInfo">
              <img class="icon_person" src="../public/img/user-thumbnail.png" />
              <img class="icon_drop"src="../public/img/arrowdrop.png"/>
                  <div class = "dropdown">
-                   <div>내 정보</div>
-                   <div>찜한 목록</div>
-                   <div>설정</div>
-                   <div>검색</div>
+                   <div onclick = "infoPage()">내 정보</div>
+                   <div onclick = "likePage()">좋아요 페이지</div>
+                   <div onclick = "settingPage()">설정</div>
+                   <div onclick = "search()">검색</div>
+                   <div onclick = "logout()">로그아웃</div>
                  </div>
           </div>
 
@@ -74,9 +75,7 @@ function cookieCheck() {
       loginWrap.innerHTML = `<div class="title">evelog</div>
         <div class="iconBox">
           <img class="icon" onclick="login()" src="../public/img/alam.png" />
-          <img class="icon" onclick="login()" src="../public/img/search.png" />
-          <img class="icon" onclick="login()" src="../public/img/menu.png" />
-
+          <img class="icon" onclick="search()" src="../public/img/search.png" />
           <button class="loginBtn" type="button" onclick="login()">
             로그인
           </button>

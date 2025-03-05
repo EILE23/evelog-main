@@ -61,7 +61,6 @@ const cookieCheck = async (req, res) => {
 };
 
 module.exports = {
-  write,
   getCategory,
   createData,
   cookieCheck,

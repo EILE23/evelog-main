@@ -156,8 +156,8 @@
 .dropdown {
   display: none;
   position: absolute;
-  top: 50px;
-  left: -15px;
+  top: 40px;
+  left: -45px;
   flex-direction: column;
   gap: 10px;
   background-color: white;
