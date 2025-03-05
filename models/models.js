@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const data = sequelize.define(
+  const Data = sequelize.define(
     "Data",
     {
       id: {
@@ -8,12 +8,24 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true, // 기본 키로 지정
         autoIncrement: true, // 자동 증가 설정
       },
-      category: {
-        type: DataTypes.STRING(30),
-        allowNull: false, // 필수 (NotNull)
-        unique: true, // 고유 값
+      title: {
+        type: DataTypes.TEXT("long"),
+        allowNull: true,
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Categories",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       content: {
+        type: DataTypes.TEXT("long"),
+        allowNull: true,
+      },
+      imgsrc: {
         type: DataTypes.TEXT("long"),
         allowNull: true,
       },
@@ -24,7 +36,12 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true,
     }
   );
-  data.associate = (db) => {};
+  Data.associate = (db) => {
+    Data.belongsTo(db.Category, {
+      foreignKey: "categoryId", // 외래 키
+      onDelete: "CASCADE", // 카테고리가 삭제되면 관련 데이터 삭제
+    });
+  };
 
-  return data;
+  return Data;
 };

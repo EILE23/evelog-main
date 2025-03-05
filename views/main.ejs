@@ -4,6 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/public/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <body></body>
+  <style></style>
+  <body>
+    <button type="button" onclick="login()">로그인</button>
+    <div class="loginBackground">
+      <div class="loginInbox">
+        <div><img class="welcome" src="../public/img/welcome.png" /></div>
+        <div class="loginInput">
+          <div class="close" onclick="loginClose()">x</div>
+          <h2>로그인</h2>
+
+          <div class="email-text">
+            <input
+              class="textInput"
+              placeholder="이메일을 입력하세요"
+              type="text"
+              name="email"
+            /><button onclick="checkLogin()">로그인</button>
+          </div>
+          <input name="password" class="textInput" type="text" />
+
+          <div class="findBox">
+            <span>아이디 찾기</span><span>비밀번호 찾기</span>
+          </div>
+
+          <div>아직 회원이 아니신가요? <a href="/join">회원가입</a></div>
+        </div>
+      </div>
+    </div>
+    <script src="/public/js/main.js"></script>
+  </body>
 </html>

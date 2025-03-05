@@ -3,17 +3,22 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // users 테이블을 생성
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("User", {
       id: {
         type: Sequelize.INTEGER, // 컬럼 타입 설정
         allowNull: false, // 필수값 (NOT NULL)
         primaryKey: true, // 기본 키 지정
         autoIncrement: true, // 자동 증가 설정
       },
+      nickname: {
+        type: Sequelize.STRING, // 문자열 타입
+        allowNull: false, // 필수값
+        // 고유값
+      },
       username: {
         type: Sequelize.STRING, // 문자열 타입
         allowNull: false, // 필수값
-        unique: true, // 고유값
+        // 고유값
       },
       email: {
         type: Sequelize.STRING,
@@ -27,12 +32,11 @@ module.exports = {
       gender: {
         type: Sequelize.STRING, // 문자열 타입
         allowNull: false, // 필수값
-        unique: true, // 고유값
+        // 고유값
       },
       address: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
       },
       phone: {
         type: Sequelize.STRING,
@@ -52,6 +56,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // 테이블을 삭제
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("User");
   },
 };

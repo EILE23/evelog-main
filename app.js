@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const db = require("./models");
 const mainRoutes = require("./routes/mainRoutes");
+
 const cookieparser = require("cookie-parser");
 const ws = require("ws");
 
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use("/", mainRoutes);
 
 db.sequelize
-  .sync({ alter: false }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x
+  .sync({ alter: false, force: false }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x
   .then(() => {
     console.log("DB 연결 성공, 테이블 생성됨");
   })
