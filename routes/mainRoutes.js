@@ -34,5 +34,6 @@ router.post("/login", controller.checkLogin);
 router.get("/logout", controller.logout);
 router.get("/join", controller.join);
 router.get("/checkCookie", controller.cookieCheck);
+router.get("/getCategory", controller.getCategory);
 
 module.exports = router;

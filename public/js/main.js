@@ -84,6 +84,23 @@ function cookieCheck() {
   });
 }
 
+function categoryGet() {
+  axios({
+    metohd: "get",
+    url: "/getCategory",
+  }).then((res) => {
+    const categoryBox = document.querySelector(".categoryBox");
+    categoryBox.innerHTML = `<div class = "categoryBtn"><img class = "icon_category"src = "../public/img/circle.png"/>ALL</div>`;
+    res.data.category.map((item) => {
+      categoryBox.innerHTML += `<div class = "categoryBtn"><img class = "icon_category"src = "../public/img/circle.png"/>${item.name}</div>`;
+    });
+  });
+}
+function newWrite() {
+  window.location.href = "/write";
+}
+
 window.onload = () => {
   cookieCheck();
+  categoryGet();
 };

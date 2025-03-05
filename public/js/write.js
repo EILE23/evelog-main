@@ -85,7 +85,7 @@ axios
       const id = `category-${index}`;
       const radioDiv = document.createElement("div");
       radioDiv.innerHTML = `
-                        <input type="radio" id="${id}" name="category" value="${categoryName}">
+                        <input type="radio" id="${id}" name="category" value="${category.id}">
                         <label for="${id}">${categoryName}</label>
                     `;
       categoryDiv.appendChild(radioDiv);

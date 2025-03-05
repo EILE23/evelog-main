@@ -8,12 +8,7 @@ const secret = process.env.JWT_SECRET;
 
 const getCategory = async (req, res) => {
   try {
-    const categories = await models.Category.findAll({
-      attributes: [
-        [models.sequelize.fn("DISTINCT", models.sequelize.col("name")), "name"],
-      ],
-      raw: true,
-    });
+    const categories = await models.Category.findAll({});
 
     console.log("Categories from DB:", categories); // Log the results
 
@@ -26,7 +21,6 @@ const getCategory = async (req, res) => {
 
 const createData = async (req, res) => {
   try {
-    console.log(req.body);
     const { title, content, categoryId, imgsrc } = req.body;
 
     await models.Data.create({

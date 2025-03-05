@@ -126,8 +126,11 @@ const write = (req, res) => {
 
 const getCategory = async (req, res) => {
   try {
-    const category = models.Category;
-  } catch (e) {}
+    const category = await models.Category.findAll({});
+    res.json({ category: category });
+  } catch (e) {
+    res.send("error");
+  }
 };
 
 module.exports = {
@@ -139,4 +142,5 @@ module.exports = {
   cookieCheck,
   logout,
   write,
+  getCategory,
 };

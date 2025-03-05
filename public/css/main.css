@@ -118,7 +118,7 @@
   margin-top: 20px;
 
   padding: 30px;
-  background-color: aqua;
+  background-color: whitesmoke;
 }
 
 .newWrite {
@@ -167,4 +167,24 @@
 }
 .dropdown div:hover {
   background-color: black;
+}
+
+.icon_category {
+  aspect-ratio: 1/1;
+  width: 30px;
+}
+.categoryBox {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.categoryBtn {
+  display: flex;
+  align-items: center;
+}
+
+.subHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }

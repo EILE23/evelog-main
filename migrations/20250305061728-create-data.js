@@ -17,8 +17,14 @@ module.exports = {
         allowNull: false,
       },
       categoryid: {
-        type: Sequelize.STRING,
-        allowNull: false,
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Category",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       imgsrc: {
         type: Sequelize.TEXT("long"),
