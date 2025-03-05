@@ -1,0 +1,11 @@
+#toast-ui-container {
+  width: 50vw; /* 50% of the viewport width */
+  height: 100vh; /* 100% of the viewport height */
+  position: fixed; /* Important to make it full height, and so it stays in place on scroll */
+  top: 0; /* ensures it starts at the top of the viewport */
+  left: 0; /* ensures it starts at the left of the viewport */
+}
+
+#toast-ui-editor {
+  height: 100%; /* Ensure Toast UI fills the container */
+}
