@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const models = require("../models");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const salt = 10;
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
@@ -82,12 +82,11 @@ const checkLogin = async (req, res) => {
     console.log(data.password);
     const pwChc = bcryptCompare(req.body.password, data.password);
     if (pwChc && data) {
-      res.json({ result: true, message: "로그인 성공" });
       const email = req.body.email;
       const token = jwtToken(email);
 
       res.cookie("token", token, { maxAge: 1000 * 60 * 60 });
-      console.log(token);
+      res.json({ result: true, message: "로그인 성공" });
     } else if (pwChc) {
       res.json({ result: false, message: "비밀번호가 틀립니다." });
     } else if (!data) {
@@ -102,7 +101,29 @@ const write = (req, res) => {
   res.render("write");
 };
 
-//extract column names from the db table 'Category'
+const logout = async (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "로그아웃" });
+};
+
+const cookieCheck = async (req, res) => {
+  if (req.cookies.token) {
+    try {
+      const check = jwt.verify(req.cookies.token, secret);
+      if (check) {
+        res.json({ result: true, email: check.email });
+        console.log("검증완료");
+      } else {
+        res.json({ result: false, message: "검증되지 않은 유저 입니다." });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  } else {
+    res.json({ result: false, message: "검증되지 않은 이메일 입니다." });
+  }
+};
+
 const getCategory = async (req, res) => {
   try {
     const categories = await models.Category.findAll({
@@ -139,7 +160,6 @@ const createData = async (req, res) => {
     res.status(500).json({ result: false, error: "Error creating data" });
   }
 };
-
 module.exports = {
   main,
   getData,
@@ -147,6 +167,8 @@ module.exports = {
   checkId,
   checkLogin,
   join,
+  cookieCheck,
+  logout,
   getCategory,
   createData,
 };

@@ -28,13 +28,14 @@ const upload = multer({ storage });
 
 //route to 'write page'
 router.get("/write", controller.write);
-//route to 'category'
 router.get("/categories", controller.getCategory);
 router.post("/saveData", controller.createData);
 router.get("/", controller.main);
 router.post("/idCheck", controller.checkId);
 router.post("/getData", upload.none(), controller.getData);
 router.post("/login", controller.checkLogin);
+router.get("/logout", controller.logout);
 router.get("/join", controller.join);
+router.get("/checkCookie", controller.cookieCheck);
 
 module.exports = router;

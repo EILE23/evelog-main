@@ -9,7 +9,24 @@
   </head>
   <style></style>
   <body>
-    <button type="button" onclick="login()">로그인</button>
+    <header class="header">
+      <div class="navibar">
+        <!-- <div class="title">evelog</div>
+        <div class="iconBox">
+          <img class="icon" onclick="login()" src="../public/img/alam.png" />
+          <img class="icon" onclick="login()" src="../public/img/search.png" />
+          <img class="icon" onclick="login()" src="../public/img/menu.png" />
+
+          <button class="loginBtn" type="button" onclick="login()">
+            로그인
+          </button>
+        </div> -->
+      </div>
+    </header>
+
+    <div class="subHeader">
+      <div class="categoryBox"></div>
+    </div>
     <div class="loginBackground">
       <div class="loginInbox">
         <div><img class="welcome" src="../public/img/welcome.png" /></div>
@@ -25,7 +42,7 @@
               name="email"
             /><button onclick="checkLogin()">로그인</button>
           </div>
-          <input name="password" class="textInput" type="text" />
+          <input name="password" class="textInput" type="password" />
 
           <div class="findBox">
             <span>아이디 찾기</span><span>비밀번호 찾기</span>

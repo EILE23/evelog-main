@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const cookieparser = require("cookie-parser");
 const ws = require("ws");
 
+app.use(cookieparser());
 app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use("/public", express.static("public"));
@@ -18,7 +19,6 @@ app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.json({ limit: "50mb" })); // Adjust limit as needed
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true })); // Adjust limit as needed
 
-app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/", mainRoutes);
