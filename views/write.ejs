@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="/public/css/write.css" />
     <link
       rel="stylesheet"
       href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
     />
+    <link rel="stylesheet" href="/public/css/write.css" />
     <link
       rel="icon"
       href="https://nitter.net/pic/pbs.twimg.com%2Fprofile_images%2F1228368893321736193%2FOv0og7E8.jpg"
@@ -15,11 +15,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>새 글 작성</title>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <div id="toast_ui_container">
-      <div id="toast_ui_editor"></div>
-    </div>
+    <form id="toast_form">
+      <div id="toast_container">
+        <div id="toast_title">
+          <input type="text" id="toast_title" placeholder="제목을 입력하세요" />
+        </div>
+        <div id="toast_category"></div>
+        <div id="toast_ui_container">
+          <div id="toast_ui_editor"></div>
+        </div>
+        <div id="buttons_container">
+          <div id="exit_button">
+            <img src="/public/img/arrow_black.png" alt="" />
+            나가기
+          </div>
+          <button id="publish_button">출간하기</button>
+        </div>
+      </div>
+      <div id="preview_container"></div>
+    </form>
     <script src="/public/js/write.js"></script>
   </body>
 </html>

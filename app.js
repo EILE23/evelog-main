@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 const db = require("./models");
 const mainRoutes = require("./routes/mainRoutes");
+const bodyParser = require("body-parser");
 
 const cookieparser = require("cookie-parser");
 const ws = require("ws");
@@ -12,6 +13,10 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 app.use("/public", express.static("public"));
 app.use("/uploads", express.static("uploads"));
+
+// Increase payload limit
+app.use(bodyParser.json({ limit: "50mb" })); // Adjust limit as needed
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true })); // Adjust limit as needed
 
 app.use(cookieparser());
 app.use(express.urlencoded({ extended: true }));

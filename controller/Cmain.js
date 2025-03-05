@@ -86,7 +86,7 @@ const checkLogin = async (req, res) => {
       const email = req.body.email;
       const token = jwtToken(email);
 
-      res.cookie("token", token, { maxAge: 1000 * 60 * 60 })
+      res.cookie("token", token, { maxAge: 1000 * 60 * 60 });
       console.log(token);
     } else if (pwChc) {
       res.json({ result: false, message: "비밀번호가 틀립니다." });
@@ -102,4 +102,51 @@ const write = (req, res) => {
   res.render("write");
 };
 
-module.exports = { main, getData, write, checkId, checkLogin, join };
+//extract column names from the db table 'Category'
+const getCategory = async (req, res) => {
+  try {
+    const categories = await models.Category.findAll({
+      attributes: [
+        [models.sequelize.fn("DISTINCT", models.sequelize.col("name")), "name"],
+      ],
+      raw: true,
+    });
+
+    console.log("Categories from DB:", categories); // Log the results
+
+    res.json(categories);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).json({ error: "Error fetching categories" });
+  }
+};
+
+const createData = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { title, content, categoryId, imgsrc } = req.body;
+
+    await models.Data.create({
+      title: title,
+      content: content,
+      categoryId: categoryId,
+      imgsrc: imgsrc,
+    });
+
+    res.json({ result: true, message: "Data created successfully" }); // Send the created data
+  } catch (error) {
+    console.error("Error creating data:", error);
+    res.status(500).json({ result: false, error: "Error creating data" });
+  }
+};
+
+module.exports = {
+  main,
+  getData,
+  write,
+  checkId,
+  checkLogin,
+  join,
+  getCategory,
+  createData,
+};

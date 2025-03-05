@@ -1,11 +1,86 @@
-#toast-ui-container {
-  width: 50vw; /* 50% of the viewport width */
-  height: 100vh; /* 100% of the viewport height */
-  position: fixed; /* Important to make it full height, and so it stays in place on scroll */
-  top: 0; /* ensures it starts at the top of the viewport */
-  left: 0; /* ensures it starts at the left of the viewport */
+#toast_container {
+  width: 50vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack children vertically */
 }
 
-#toast-ui-editor {
-  height: 100%; /* Ensure Toast UI fills the container */
+#toast_title input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px; /* Add padding to the input itself */
+  border: none;
+  height: 100px;
+}
+
+#toast_category {
+  padding: 10px;
+}
+
+#toast_ui_container {
+  flex-grow: 1; /* Allow editor to take up remaining space */
+}
+
+#toast_category {
+  display: flex;
+}
+
+#buttons_container {
+  display: flex; /* Arrange buttons horizontally */
+  justify-content: space-between; /* Distribute space evenly */
+  padding: 10px;
+}
+
+#exit_button,
+#publish_button {
+  padding: 8px 16px;
+}
+
+.toastui-editor-defaultUI {
+  border: none; /* Changes all sides to red */
+}
+
+.toastui-editor-md-tab-container,
+.toastui-editor-defaultUI-toolbar {
+  background-color: transparent;
+}
+
+.ProseMirror.toastui-editor-contents,
+.toastui-editor.ww-mode {
+  outline: none;
+}
+.toastui-editor-mode-switch {
+  border-top: none;
+}
+
+.toastui-editor-defaultUI-toolbar {
+  border-bottom: none;
+}
+
+#publish_button {
+  border: none;
+  background-color: #12b886;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#exit_button {
+  display: flex; /* Enable flexbox */
+  align-items: center; /* Vertically align items */
+  /* Add other styles as needed (e.g., padding, border) */
+}
+
+#exit_button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px; /* Add some space between the image and text */
+  /* Add other image styles as needed (e.g., width, height) */
+}
+
+#buttons_container {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 }
