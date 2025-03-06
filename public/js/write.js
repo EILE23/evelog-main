@@ -83,7 +83,9 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
   const form = document.getElementById("toast_form").elements;
   const toast_title = form["toast_title"].value;
   const toast_ui_editor = editor.getMarkdown();
-  const toast_images = previewImageContainer.value;
+  const toast_images = extractImages().markdown
+    ? extractImages().markdown
+    : extractImages().html;
 
   const selectedCategory = document.querySelector(
     'input[name="category"]:checked'
@@ -94,13 +96,15 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
   }
   const toast_category = selectedCategory.value;
   const imgsrc = document.querySelector("#preview_image");
-  const src = imgsrc.querySelector("img").src;
+  const src = imgsrc.querySelector("img").s;
+  rc;
   axios
     .post("/write/saveData", {
       title: toast_title,
       content: toast_ui_editor,
       categoryId: toast_category,
       imgsrc: src, // Save image URLs to the database
+      userid: id,
     })
     .then((response) => {
       console.log("Data saved:", response.data);
@@ -248,3 +252,26 @@ const parent = modeSwitch.parentElement;
 if (parent) {
   parent.removeChild(modeSwitch);
 }
+
+let id = 0;
+
+window.onload = () => {
+  function cookieCheck() {
+    axios({
+      method: "get",
+      url: "/checkCookie",
+    }).then((res) => {
+      if (res.data.result) {
+        let userData = res.data.email;
+        axios.post("/idInfo", { email: userData }).then((res) => {
+          console.log(res.data);
+          id = userData;
+        });
+      } else {
+        console.error(`${res.data.message}`);
+        window.location.href = "/";
+      }
+    });
+  }
+  cookieCheck();
+};

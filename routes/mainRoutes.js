@@ -33,5 +33,6 @@ router.post("/findPass", controller.findPw);
 router.post("/passwordChange", controller.changePw);
 router.post("/getFile", upload.single("file"), controller.fileUpload);
 router.delete("/delFile", controller.fileRemove);
+router.get("/detail", controller.detail);
 
 module.exports = router;

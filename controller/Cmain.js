@@ -35,6 +35,10 @@ const like = (req, res) => {
   res.render("like");
 };
 
+const detail = (req, res) => {
+  res.redner("detail");
+};
+
 const getData = async (req, res) => {
   console.log(req.body);
   try {
@@ -271,4 +275,5 @@ module.exports = {
   changePw,
   fileUpload,
   fileRemove,
+  detail,
 };
