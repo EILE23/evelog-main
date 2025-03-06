@@ -4,6 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/public/css/info.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <body></body>
+  <body>
+    <%- include("global/header") %>
+    <div class="main-wrap">
+      <div class="container">
+        <div class="edit-box">
+          <div class="imgArea">
+            <input class="input_file" type="file" name="file" />
+            <div>
+              <img class="img_File" src="/public/img/user-thumbnail.png" />
+            </div>
+            <div class="imgBtnBox">
+              <button>이미지 업로드</button>
+              <button>이미지 제거</button>
+            </div>
+          </div>
+        </div>
+        <div class="editArea">
+          <h4>nickname</h4>
+          <p>comment</p>
+          <button class="editBtn">수정</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/public/js/info.js"></script>
+  </body>
 </html>

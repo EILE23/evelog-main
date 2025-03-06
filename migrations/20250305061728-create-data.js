@@ -28,7 +28,7 @@ module.exports = {
       },
       imgsrc: {
         type: Sequelize.TEXT("long"),
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

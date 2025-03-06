@@ -5,7 +5,10 @@ const bcrypt = require("bcryptjs");
 const salt = 10;
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
-
+const marked = require("marked");
+marked.setOptions({
+  breaks: true, // 줄바꿈 유지
+});
 const bcryptPass = (pw) => {
   return bcrypt.hashSync(pw, salt);
 };
@@ -23,6 +26,13 @@ const main = (req, res) => {
 
 const join = (req, res) => {
   res.render("join");
+};
+
+const info = (req, res) => {
+  res.render("info");
+};
+const like = (req, res) => {
+  res.render("like");
 };
 
 const getData = async (req, res) => {
@@ -132,6 +142,77 @@ const getCategory = async (req, res) => {
     res.send("error");
   }
 };
+const getContent = async (req, res) => {
+  try {
+    const content = await models.Data.findAll({ limit: 50 });
+    const title = content.map((item) => item.title);
+    const contentData = content.map((item) => marked.parse(item.content));
+    const img = content.map((item) => item.imgsrc);
+    const total = contentData.map((item, i) => ({
+      title: title[i],
+      img: img[i],
+      text: item,
+    }));
+
+    res.json(total);
+  } catch (e) {
+    console.error(e);
+    res.send(e);
+  }
+};
+
+const getOneId = async (req, res) => {
+  const IDdata = await models.User.findOne({
+    where: { email: req.body.email },
+  });
+  res.json(IDdata);
+};
+
+const findId = async (req, res) => {
+  try {
+    const email = await models.User.findOne({
+      where: { phone: req.body.phone },
+    });
+    res.json({ result: true, email: email.email });
+  } catch (e) {
+    res.json({ result: false });
+  }
+};
+
+const findPw = async (req, res) => {
+  try {
+    const email = await models.User.findOne({
+      where: { email: req.body.email },
+    });
+    if (email) {
+      res.json({
+        result: true,
+        message: "비밀번호 변경을 할 수 있습니다",
+        id: email.id,
+      });
+    } else {
+      res.json({ result: false, message: "올바른 아이디가 아닙니다." });
+    }
+  } catch (e) {
+    res.json({ result: false, message: "접근 실패" });
+  }
+};
+
+const changePw = async (req, res) => {
+  try {
+    if (req.body) {
+      const pw = bcryptPass(req.body.pw);
+      await models.User.update(
+        { password: pw },
+        { where: { id: req.body.id } }
+      );
+      res.json({ result: true });
+    }
+  } catch (e) {
+    console.error(e);
+    res.json({ result: false, message: "검증 실패" });
+  }
+};
 
 module.exports = {
   main,
@@ -142,5 +223,12 @@ module.exports = {
   cookieCheck,
   logout,
   write,
+  info,
+  like,
   getCategory,
+  getContent,
+  getOneId,
+  findPw,
+  findId,
+  changePw,
 };

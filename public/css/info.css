@@ -1,0 +1,40 @@
+.main-wrap {
+  width: 100%;
+}
+
+.container {
+  margin: 0 auto;
+  width: 70%;
+  background-color: aliceblue;
+  display: flex;
+}
+
+.input_file {
+  display: none;
+}
+
+.imgBtnBox {
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.img_File {
+  border-radius: 50%;
+}
+
+.imgArea {
+  padding: 10px 20px;
+}
+.editArea {
+  padding: 10px 20px;
+  position: relative;
+  width: 70%;
+}
+
+.editBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

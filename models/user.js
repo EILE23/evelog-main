@@ -40,6 +40,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      comment: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       charset: "utf8",

@@ -32,7 +32,6 @@ module.exports = {
       gender: {
         type: Sequelize.STRING, // 문자열 타입
         allowNull: false, // 필수값
-        // 고유값
       },
       address: {
         type: Sequelize.STRING,
@@ -41,6 +40,10 @@ module.exports = {
       phone: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      comment: {
+        type: Sequelize.TEXT,
+        allowNull: true,
       },
 
       createdAt: {

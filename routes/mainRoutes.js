@@ -35,5 +35,12 @@ router.get("/logout", controller.logout);
 router.get("/join", controller.join);
 router.get("/checkCookie", controller.cookieCheck);
 router.get("/categories", controller.getCategory);
+router.get("/contentGet", controller.getContent);
+router.get("/infoPage", controller.info);
+router.get("/likePage", controller.like);
+router.post("/idinfo", controller.getOneId);
+router.post("/findEmail", controller.findId);
+router.post("/findPass", controller.findPw);
+router.post("/passwordChange", controller.changePw);
 
 module.exports = router;
