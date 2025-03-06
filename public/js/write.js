@@ -96,7 +96,7 @@ axios
   });
 
 //
-//
+//this is to delete tab options at the bottom of the default toast editor
 const modeSwitch = document.querySelector(".toastui-editor-mode-switch");
 const parent = modeSwitch.parentElement;
 if (parent) {
