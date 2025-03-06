@@ -28,5 +28,13 @@
     "dev": "nodemon app.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EILE23/evelog-main.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EILE23/evelog-main/issues"
+  },
+  "homepage": "https://github.com/EILE23/evelog-main#readme"
 }

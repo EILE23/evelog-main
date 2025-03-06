@@ -1,9 +1,20 @@
+#writeContainer {
+  display: flex;
+  width: 100%; /* Or a specific width if needed */
+  margin: 0;
+}
+
+#toast_container,
+#preview_container {
+  flex: 1; /* Equal space distribution */
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
 #toast_container {
   width: 50vw;
   height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
+
   display: flex; /* Use flexbox for layout */
   flex-direction: column; /* Stack children vertically */
 }
@@ -84,3 +95,15 @@
 #buttons_container {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 8px;
 }
+
+#preview_container {
+  background-color: beige;
+  display: flex;
+  flex-direction: column;
+}
+
+/* #preview_image img {
+  object-fit: cover;
+  width: 200px;
+  height: 150px;
+} */

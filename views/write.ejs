@@ -21,23 +21,33 @@
   </head>
   <body>
     <form id="toast_form">
-      <div id="toast_container">
-        <div id="toast_title">
-          <input type="text" id="toast_title" placeholder="제목을 입력하세요" />
-        </div>
-        <div id="toast_category"></div>
-        <div id="toast_ui_container">
-          <div id="toast_ui_editor"></div>
-        </div>
-        <div id="buttons_container">
-          <div id="exit_button">
-            <img src="/public/img/arrow_black.png" alt="" />
-            나가기
+      <div id="writeContainer">
+        <div id="toast_container">
+          <div id="toast_title">
+            <input
+              type="text"
+              id="toast_title"
+              placeholder="제목을 입력하세요"
+            />
           </div>
-          <button id="publish_button">출간하기</button>
+          <div id="toast_category"></div>
+          <div id="toast_ui_container">
+            <div id="toast_ui_editor"></div>
+          </div>
+          <div id="buttons_container">
+            <div id="exit_button">
+              <img src="/public/img/arrow_black.png" alt="" />
+              나가기
+            </div>
+            <button id="publish_button">출간하기</button>
+          </div>
+        </div>
+        <div id="preview_container">
+          <div id="preview_title"></div>
+          <div id="preview_content"></div>
+          <div id="preview_image"></div>
         </div>
       </div>
-      <div id="preview_container"></div>
     </form>
     <script src="/public/js/write.js"></script>
   </body>
