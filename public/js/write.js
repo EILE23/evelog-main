@@ -96,8 +96,8 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
   }
   const toast_category = selectedCategory.value;
   const imgsrc = document.querySelector("#preview_image");
-  const src = imgsrc.querySelector("img").s;
-  rc;
+  const src = imgsrc.querySelector("img").src;
+
   axios
     .post("/write/saveData", {
       title: toast_title,

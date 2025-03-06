@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT("long"),
         allowNull: true,
       },
+      userid: {
+        type: DataTypes.TEXT("long"),
+        allowNull: true,
+      },
     },
     {
       charset: "utf8",

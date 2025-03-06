@@ -19,13 +19,14 @@ const getCategory = async (req, res) => {
 
 const createData = async (req, res) => {
   try {
-    const { title, content, categoryId, imgsrc } = req.body;
+    const { title, content, categoryId, imgsrc, userid } = req.body;
 
     await models.Data.create({
       title: title,
       content: content,
       categoryId: categoryId,
       imgsrc: imgsrc,
+      userid: userid,
     });
 
     res.json({ result: true, message: "Data created successfully" }); // Send the created data
