@@ -19,8 +19,7 @@ const editor = new toastui.Editor({
   },
   events: {
     change: function () {
-      const previewImage = editor.getMarkdown();
-      document.querySelector("#preview_content").innerHTML = editor.getHTML();
+      updatePreview();
     },
   },
 });
@@ -94,14 +93,14 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
     return;
   }
   const toast_category = selectedCategory.value;
-  const imgsrc = document.querySelector("img#preview_img").src;
-  // const src = imgsrc.getElementsByTagName("img").src;
+  const imgsrc = document.querySelector("#preview_image");
+  const src = imgsrc.querySelector("img").src;
   axios
     .post("/write/saveData", {
       title: toast_title,
       content: toast_ui_editor,
       categoryId: toast_category,
-      imgsrc: imgsrc, // Save image URLs to the database
+      imgsrc: src, // Save image URLs to the database
     })
     .then((response) => {
       console.log("Data saved:", response.data);

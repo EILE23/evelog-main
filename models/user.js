@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      imgsrc: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       charset: "utf8",

@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/public/css/info.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
     <%- include("global/header") %>
@@ -18,8 +19,8 @@
               <img class="img_File" src="/public/img/user-thumbnail.png" />
             </div>
             <div class="imgBtnBox">
-              <button>이미지 업로드</button>
-              <button>이미지 제거</button>
+              <button onclick="fileUpload()">이미지 업로드</button>
+              <button onclick="fileRemove()">이미지 제거</button>
             </div>
           </div>
         </div>
@@ -27,6 +28,45 @@
           <h4>nickname</h4>
           <p>comment</p>
           <button class="editBtn">수정</button>
+        </div>
+      </div>
+      <div class="profile_container">
+        프로필 변경
+        <div>
+          <h3>비밀번호 변경</h3>
+          <div class="passwordChange"><button>수정</button></div>
+        </div>
+        <div>
+          <h3>주소지 변경</h3>
+          <div class="addressChange">
+            <input type="text" id="sample4_postcode" placeholder="우편번호" />
+            <input
+              type="button"
+              onclick="sample4_execDaumPostcode(8)"
+              value="우편번호 찾기"
+            /><br />
+            <input
+              type="text"
+              name="RoadAddress"
+              id="sample4_roadAddress"
+              placeholder="도로명주소"
+            />
+            <span id="guide" style="color: #999; display: none"></span>
+            <input
+              type="text"
+              name="detailAddress"
+              id="sample4_detailAddress"
+              placeholder="상세주소"
+            />
+            <button>수정</button>
+          </div>
+        </div>
+        <div>
+          <h3>소셜 정보 등록</h3>
+          <div class="socialChange"><button>정보 등록</button></div>
+        </div>
+        <div>
+          <h3>회원 탈퇴</h3>
         </div>
       </div>
     </div>

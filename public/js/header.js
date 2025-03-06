@@ -50,13 +50,15 @@ function cookieCheck() {
     const loginWrap = document.querySelector(".navibar");
     if (res.data.result) {
       userData = res.data.email;
+      let src = res.data.src ? res.data.src : "/public/img/user-thumbnail.png";
+
       loginWrap.innerHTML = `<div class="title">evelog</div>
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
             <button class = "newWrite" onclick = "newWrite()" type = "button">새글작성</button>
             <div class="myInfo">
-                <img class="icon_person" src="/public/img/user-thumbnail.png" />
+                <img class="icon_person" src="${src}" />
                 <img class="icon_drop"src="/public/img/arrowdrop.png"/>
                 
                    <div class = "dropdown">
@@ -173,7 +175,7 @@ function loginClose() {
   loginBox.classList.remove("active");
   setTimeout(() => {
     loginWrap.style.display = "none";
-    loginBox.innerHTML = `<div><img class="welcome" src="../public/img/welcome.png" /></div>
+    loginBox.innerHTML = `
         <div class="loginInput">
           <div class="close" onclick="loginClose()">x</div>
           <h2>로그인</h2>

@@ -9,18 +9,7 @@ const storage = multer.diskStorage({
     cb(null, "uploads/"); // 업로드할 폴더 경로
   },
   filename: (req, file, cb) => {
-    const basename = path.basename(
-      file.originalname,
-      path.extname(file.originalname)
-    ); // 확장자 제외한 파일명
-    const ext = path.extname(file.originalname); // 확장자
-    const timestamp = Date.now(); // 현재 타임스탬프
-
-    // 중복 체크: 해당 파일이 이미 존재하는지 확인
-    const newFilename = basename + "_" + timestamp + "_" + ext;
-
-    // 파일명에 타임스탬프를 추가하여 중복을 방지
-    cb(null, newFilename);
+    cb(null, file.originalname); // 원본 파일명 그대로 저장
   },
 });
 
@@ -42,5 +31,7 @@ router.post("/idinfo", controller.getOneId);
 router.post("/findEmail", controller.findId);
 router.post("/findPass", controller.findPw);
 router.post("/passwordChange", controller.changePw);
+router.post("/getFile", upload.single("file"), controller.fileUpload);
+router.delete("/delFile", controller.fileRemove);
 
 module.exports = router;

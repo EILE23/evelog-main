@@ -57,6 +57,7 @@ const getData = async (req, res) => {
         gender: req.body.gender,
         phone: req.body.phone,
         address: address,
+        src: "/public/img/user-thumbnail.png",
       });
       res.json({ result: true });
     } else {
@@ -116,8 +117,13 @@ const cookieCheck = async (req, res) => {
   if (req.cookies.token) {
     try {
       const check = jwt.verify(req.cookies.token, secret);
+      const user = await models.User.findOne({
+        where: { email: check.email },
+      });
+      let src = user.imgsrc;
+
       if (check) {
-        res.json({ result: true, email: check.email });
+        res.json({ result: true, email: check.email, src: src });
         console.log("검증완료");
       } else {
         res.json({ result: false, message: "검증되지 않은 유저 입니다." });
@@ -214,6 +220,38 @@ const changePw = async (req, res) => {
   }
 };
 
+const fileUpload = async (req, res) => {
+  try {
+    const src = req.body.src;
+    await models.User.update(
+      { imgsrc: src },
+      { where: { id: req.body.id }, raw: true }
+    );
+
+    res.json({ result: true, src: src });
+  } catch (e) {
+    console.error(e);
+    res.json({ result: false });
+  }
+};
+
+const fileRemove = async (req, res) => {
+  try {
+    if (!req.body.src) {
+      await models.User.update(
+        { imgsrc: null },
+        { where: { id: req.body.id } }
+      );
+      res.json({ result: true });
+    } else {
+      res.json({ result: false });
+    }
+  } catch (e) {
+    console.error(e);
+    res.json({ result: false });
+  }
+};
+
 module.exports = {
   main,
   getData,
@@ -231,4 +269,6 @@ module.exports = {
   findPw,
   findId,
   changePw,
+  fileUpload,
+  fileRemove,
 };
