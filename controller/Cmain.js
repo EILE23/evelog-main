@@ -62,6 +62,7 @@ const getData = async (req, res) => {
         phone: req.body.phone,
         address: address,
         src: "/public/img/user-thumbnail.png",
+        title: "evelog",
       });
       res.json({ result: true });
     } else {

@@ -48,6 +48,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      title: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
     },
     {
       charset: "utf8",
