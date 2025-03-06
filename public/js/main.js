@@ -7,7 +7,7 @@ function removeTags(item) {
 function categoryGet() {
   axios({
     method: "get",
-    url: "/getCategory",
+    url: "/categories",
   }).then((res) => {
     const categoryBox = document.querySelector(".categoryBox");
     categoryBox.innerHTML = `<div class = "categoryBtn"><img class = "icon_category"src = "../public/img/circle.png"/>ALL</div>`;
