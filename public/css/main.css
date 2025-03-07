@@ -1,3 +1,7 @@
+.big-wrap {
+  width: 100%;
+}
+
 .icon_category {
   aspect-ratio: 1/1;
   width: 30px;
@@ -16,4 +20,28 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.main-container {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.content-box {
+  width: 300px;
+  height: 400px;
+  box-shadow: 0px 1px 5px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-box img {
+  width: 200px;
+  aspect-ratio: 1/1;
 }

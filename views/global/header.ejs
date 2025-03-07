@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="/public/css/header.css" />
+    <script
+      src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
+      charset="utf-8"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <header class="header">
@@ -36,7 +41,7 @@
             /><button onclick="checkLogin()">로그인</button>
           </div>
           <input name="password" class="textInput" type="password" />
-
+          <div id="naverIdLogin"></div>
           <div class="findBox">
             <span onclick="findID()">아이디 찾기</span
             ><span onclick="findPW()">비밀번호 찾기</span>

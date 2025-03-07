@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/public/css/info.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <%- include("global/header") %>
@@ -27,46 +28,44 @@
         <div class="editArea">
           <h4>nickname</h4>
           <p>comment</p>
-          <button class="editBtn">수정</button>
+          <div class="editBtnArea editBtn">
+            <button class="editCbtn" onclick="editChange()">수정</button>
+          </div>
         </div>
       </div>
       <div class="profile_container">
         프로필 변경
         <div>
-          <h3>비밀번호 변경</h3>
-          <div class="passwordChange"><button>수정</button></div>
+          <h3>내 블로그 제목 변경</h3>
+          <div class="titleChange">
+            <button class="titleCbtn" onclick="titleChange()">수정</button>
+          </div>
         </div>
         <div>
-          <h3>주소지 변경</h3>
+          <h3>비밀번호 변경</h3>
+          <div class="passwordChange">
+            <button class="passCbtn" onclick="passChange()">수정</button>
+          </div>
+        </div>
+        <div>
+          <h3>주소지 등록</h3>
           <div class="addressChange">
-            <input type="text" id="sample4_postcode" placeholder="우편번호" />
-            <input
-              type="button"
-              onclick="sample4_execDaumPostcode(8)"
-              value="우편번호 찾기"
-            /><br />
-            <input
-              type="text"
-              name="RoadAddress"
-              id="sample4_roadAddress"
-              placeholder="도로명주소"
-            />
-            <span id="guide" style="color: #999; display: none"></span>
-            <input
-              type="text"
-              name="detailAddress"
-              id="sample4_detailAddress"
-              placeholder="상세주소"
-            />
-            <button>수정</button>
+            <button class="addressCbtn" onclick="addressChange()">수정</button>
           </div>
         </div>
         <div>
           <h3>소셜 정보 등록</h3>
-          <div class="socialChange"><button>정보 등록</button></div>
+          <div class="socialChange">
+            <button class="socialCbtn" onclick="socialChange()">
+              정보 등록
+            </button>
+            <button class="socialSbtn" onclick="socialSubmit()">
+              수정완료
+            </button>
+          </div>
         </div>
         <div>
-          <h3>회원 탈퇴</h3>
+          <h3 onclick="userDestroy()">회원 탈퇴</h3>
         </div>
       </div>
     </div>

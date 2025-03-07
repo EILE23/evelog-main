@@ -1,9 +1,9 @@
 const passwordR =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=])[A-Za-z\d!@#$%^&*()\-_+=]{8,}$/;
-
+let userData;
 const emailR = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const phoneR = /-/g;
-let checkArea = Array(9).fill(false);
+let checkArea = Array(7).fill(false);
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode(num) {
   new daum.Postcode({
@@ -51,14 +51,12 @@ function sample4_execDaumPostcode(num) {
   checkArea[Number(num)] = true;
 }
 
-//가입 버튼 클릭시
 function dataOn() {
   const form = document.forms["data"];
   const formdata = new FormData(form);
   const some = !checkArea.some((i) => i === false);
-  const Address = document.querySelector("#sample4_roadAddress").value;
 
-  if (some && Address.length > 0) {
+  if (some) {
     axios({
       method: "post",
       url: "/getData",
@@ -172,3 +170,79 @@ function textCheck(input, type, num) {
   }
   console.log(checkArea);
 }
+
+function userInfo() {
+  axios.get("/userGet").then((res) => {
+    if (res.data !== null) {
+      userData = res.data;
+      console.log(userData);
+      const form = document.querySelector(".main-wrap");
+      form.innerHTML = `<div>
+      별명
+      <input
+        type="text"
+        name="nickname"
+      />
+      <p class="errorCode"></p>
+    </div><button type = "button" onclick = "join()">가입하기</button>`;
+    }
+  });
+}
+function join() {
+  const nickname = document.querySelector("input[name='nickname']").value;
+
+  if (nickname.length == 0) {
+    alert("닉네임을 입력해주세요.");
+  } else {
+    axios
+      .post("/getData", {
+        userid: userData.email,
+        nickname: nickname,
+        name: userData.name,
+        gender: userData.gender,
+        social: "naver",
+        age: new Date().getFullYear() - Number(userData.birthyear),
+      })
+      .then((res) => {
+        axios.get("/logout").then((res) => {
+          naverLogin.logout();
+          window.location.href = "/";
+        });
+      });
+  }
+}
+
+userInfo();
+
+const naverLogin = new naver.LoginWithNaverId({
+  clientId: "TszMj1_6QxbXSBEx3B5e",
+  callbackUrl: "http://localhost:3000/join",
+  buttonType: 2,
+  loginButton: { color: "green", type: 1, height: 40 },
+});
+
+naverLogin.init();
+naverLogin.getLoginStatus(function (status) {
+  if (status) {
+    const userInfo = {
+      email: naverLogin.user.getEmail(),
+      age: naverLogin.user.getAge(),
+      birthyear: naverLogin.user.getBirthyear(),
+      gender: naverLogin.user.getGender() === "M" ? "남자" : "여자",
+      name: naverLogin.user.getName(),
+      social: "naver",
+    };
+    axios.post("/idCheck", { email: userInfo.email }).then((res) => {
+      if (res.data.result) {
+        console.log("data", res.data.result);
+        axios.get("/logout").then((res) => {
+          axios.post("/joinData", { userInfo });
+        });
+      } else {
+        alert("이미 가입되어 있는 회원입니다.");
+        naverLogin.logout();
+        window.location.href = "/";
+      }
+    });
+  }
+});

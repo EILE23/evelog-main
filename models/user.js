@@ -12,12 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       nickname: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
       },
       email: {
         type: DataTypes.STRING,
@@ -26,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: DataTypes.STRING,
@@ -34,11 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       comment: {
         type: DataTypes.TEXT,
@@ -49,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       title: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      social: {
         type: DataTypes.TEXT,
         allowNull: false,
       },

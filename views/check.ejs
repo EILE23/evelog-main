@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    로그인 처리중입니다....
+    <script>
+      function getAccessToken() {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const token = params.get("access_token");
+
+        axios.post("/checktoken", { accessToken: token }).then((res) => {});
+      }
+      getAccessToken();
+    </script>
+  </body>
+</html>

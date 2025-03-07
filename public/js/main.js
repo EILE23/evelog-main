@@ -38,10 +38,6 @@ function contentGet() {
   });
 }
 
-function newWrite() {
-  window.location.href = "/write";
-}
-
 window.onload = () => {
   categoryGet();
   contentGet();

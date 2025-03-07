@@ -6,10 +6,16 @@ const salt = 10;
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const marked = require("marked");
+const axios = require("axios");
+let joinData = null;
+
 marked.setOptions({
   breaks: true, // 줄바꿈 유지
 });
 const bcryptPass = (pw) => {
+  if (!pw) {
+    return null;
+  }
   return bcrypt.hashSync(pw, salt);
 };
 const bcryptCompare = (pw, dbpw) => {
@@ -51,18 +57,17 @@ const getData = async (req, res) => {
     }
     if (req.body) {
       const pw = bcryptPass(req.body.password);
-      const address = req.body.RoadAddress + req.body.detailAddress;
+
       await models.User.create({
         email: req.body.userid,
         nickname: req.body.nickname,
-        password: pw,
+        password: pw ? pw : null,
         username: req.body.name,
         age: req.body.age,
         gender: req.body.gender,
-        phone: req.body.phone,
-        address: address,
         src: "/public/img/user-thumbnail.png",
         title: "evelog",
+        social: req.body.social ? req.body.social : "local",
       });
       res.json({ result: true });
     } else {
@@ -106,16 +111,19 @@ const checkLogin = async (req, res) => {
     } else if (pwChc) {
       res.json({ result: false, message: "비밀번호가 틀립니다." });
     } else if (!data) {
-      res.json({ result: false, message: "아이디가 틀립니다." });
+      res.json({ result: false, message: "등록되지 않은 아이디입니다." });
+    } else {
+      res.json({ result: false, message: "등록되지 않은 아이디입니다." });
     }
   } catch (e) {
     console.error(e);
+    res.json({ result: false, message: "올바르지 않은 형식입니다." });
   }
 };
 
 const logout = async (req, res) => {
   res.clearCookie("token");
-  res.json({ message: "로그아웃" });
+  res.redirect("/");
 };
 
 const cookieCheck = async (req, res) => {
@@ -128,7 +136,12 @@ const cookieCheck = async (req, res) => {
       let src = user.imgsrc;
 
       if (check) {
-        res.json({ result: true, email: check.email, src: src });
+        res.json({
+          result: true,
+          email: check.email,
+          src: src,
+          social: user.social,
+        });
         console.log("검증완료");
       } else {
         res.json({ result: false, message: "검증되지 않은 유저 입니다." });
@@ -225,35 +238,61 @@ const changePw = async (req, res) => {
   }
 };
 
-const fileUpload = async (req, res) => {
-  try {
-    const src = req.body.src;
-    await models.User.update(
-      { imgsrc: src },
-      { where: { id: req.body.id }, raw: true }
-    );
+const findOne = async (req, res) => {
+  if (req.body) {
+    try {
+      const data = await models.User.findOne({ where: { id: req.body.id } });
+      res.json({ result: true, data });
+    } catch (e) {
+      res.json({ result: false, message: "올바르지 않은 요청입니다" });
+    }
+  } else {
+    res.json({ result: false, message: "올바르지 않은 요청입니다" });
+  }
+};
 
-    res.json({ result: true, src: src });
-  } catch (e) {
-    console.error(e);
+const userInfo = async (req, res) => {
+  if (req.body) {
+    try {
+      joinData = req.body.userInfo;
+      res.json({ result: true });
+    } catch (e) {
+      res.json({ result: false, error: e });
+    }
+  } else {
     res.json({ result: false });
   }
 };
 
-const fileRemove = async (req, res) => {
-  try {
-    if (!req.body.src) {
-      await models.User.update(
-        { imgsrc: null },
-        { where: { id: req.body.id } }
-      );
-      res.json({ result: true });
-    } else {
-      res.json({ result: false });
+const userGet = async (req, res) => {
+  res.json(joinData);
+  joinData = null;
+};
+
+const getToken = async (req, res) => {
+  const token = jwtToken(req.body.email);
+  res.cookie("token", token, { maxAge: 1000 * 60 * 60 });
+  res.json({ result: true });
+};
+
+const checkNaver = (req, res) => {
+  res.render("check");
+};
+
+const checkToken = async (req, res) => {
+  if (req.body) {
+    try {
+      const access_token = req.body.accessToken;
+      const response = await axios.get(`https://openapi.naver.com/v1/nid/me`, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      console.log(response);
+    } catch (e) {
+      console.error(e);
     }
-  } catch (e) {
-    console.error(e);
-    res.json({ result: false });
   }
 };
 
@@ -274,7 +313,11 @@ module.exports = {
   findPw,
   findId,
   changePw,
-  fileUpload,
-  fileRemove,
   detail,
+  findOne,
+  userInfo,
+  userGet,
+  getToken,
+  checkNaver,
+  checkToken,
 };

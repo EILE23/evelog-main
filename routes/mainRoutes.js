@@ -17,9 +17,6 @@ const upload = multer({ storage });
 
 router.get("/write", controller.write);
 router.get("/", controller.main);
-router.post("/idCheck", controller.checkId);
-router.post("/getData", upload.none(), controller.getData);
-router.post("/login", controller.checkLogin);
 router.get("/logout", controller.logout);
 router.get("/join", controller.join);
 router.get("/checkCookie", controller.cookieCheck);
@@ -27,12 +24,20 @@ router.get("/categories", controller.getCategory);
 router.get("/contentGet", controller.getContent);
 router.get("/infoPage", controller.info);
 router.get("/likePage", controller.like);
+router.get("/detail", controller.detail);
+router.get("/userGet", controller.userGet);
+router.get("/check", controller.checkNaver);
+
+router.post("/getOne", controller.findOne);
+router.post("/idCheck", controller.checkId);
+router.post("/getData", upload.none(), controller.getData);
+router.post("/login", controller.checkLogin);
 router.post("/idinfo", controller.getOneId);
 router.post("/findEmail", controller.findId);
 router.post("/findPass", controller.findPw);
 router.post("/passwordChange", controller.changePw);
-router.post("/getFile", upload.single("file"), controller.fileUpload);
-router.delete("/delFile", controller.fileRemove);
-router.get("/detail", controller.detail);
+router.post("/joinData", controller.userInfo);
+router.post("/accessToken", controller.getToken);
+router.post("/checktoken", controller.checkToken);
 
 module.exports = router;

@@ -49,10 +49,13 @@ function cookieCheck() {
   }).then((res) => {
     const loginWrap = document.querySelector(".navibar");
     if (res.data.result) {
-      userData = res.data.email;
-      let src = res.data.src ? res.data.src : "/public/img/user-thumbnail.png";
+      if (res.data.social === "local" || res.data.social === null) {
+        userData = res.data.email;
+        let src = res.data.src
+          ? res.data.src
+          : "/public/img/user-thumbnail.png";
 
-      loginWrap.innerHTML = `<div class="title">evelog</div>
+        loginWrap.innerHTML = `<div class="title">evelog</div>
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
@@ -70,9 +73,42 @@ function cookieCheck() {
             </div>
   
           </div>`;
+        const head = document.querySelector(".title");
+        head.addEventListener("click", () => {
+          window.location.href = "/";
+        });
+      } else if (res.data.social == "naver") {
+        userData = res.data.email;
+        let src = res.data.src
+          ? res.data.src
+          : "/public/img/user-thumbnail.png";
+
+        loginWrap.innerHTML = `<div class="title">evelog</div>
+          <div class="iconBox">
+            <img class="icon" onclick="login()" src="/public/img/alam.png" />
+            <img class="icon" onclick="search()" src="/public/img/search.png" />
+            <button class = "newWrite" onclick = "newWrite()" type = "button">새글작성</button>
+            <div class="myInfo">
+                <img class="icon_person" src="${src}" />
+                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
+                
+                   <div class = "dropdown">
+                      <div onclick = "infoPage()">내 정보</div>
+                      <div onclick = "likePage()">읽기 목록</div>
+                      <div onclick = "search()">검색</div>
+                      <div onclick = "naverLogout()">로그아웃</div>
+                   </div>
+            </div>
+  
+          </div>`;
+        const head = document.querySelector(".title");
+        head.addEventListener("click", () => {
+          window.location.href = "/";
+        });
+      }
     } else {
       console.error(`${res.data.message}`);
-      loginWrap.innerHTML = `<div class="title">evelog</div>
+      loginWrap.innerHTML = `<div class="title">evelog   </div>
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
@@ -80,6 +116,10 @@ function cookieCheck() {
               로그인
             </button>
           </div>`;
+      const head = document.querySelector(".title");
+      head.addEventListener("click", () => {
+        window.location.href = "/";
+      });
     }
   });
 }
@@ -189,12 +229,81 @@ function loginClose() {
             /><button onclick="checkLogin()">로그인</button>
           </div>
           <input name="password" class="textInput" type="password" />
-
+            <div onclick="naverInit()" id="naverIdLogin"></div>
           <div class="findBox">
             <span onclick="findID()">아이디 찾기</span
             ><span onclick="findPW()">비밀번호 찾기</span>
           </div>
 
           <div>아직 회원이 아니신가요? <a href="/join">회원가입</a></div>`;
+    naverLogin.init();
   }, 300);
+}
+
+function newWrite() {
+  window.location.href = "/write";
+}
+
+const naverLogin = new naver.LoginWithNaverId({
+  clientId: "TszMj1_6QxbXSBEx3B5e",
+  callbackUrl: "http://localhost:3000/check",
+  buttonType: 2,
+  loginButton: { color: "green", type: 1, height: 40 },
+});
+
+naverLogin.init();
+naverLogin.getLoginStatus(function (status) {
+  if (status) {
+    console.log("status", status);
+    const userInfo = {
+      email: naverLogin.user.getEmail(),
+      age: naverLogin.user.getAge(),
+      birthyear: naverLogin.user.getBirthyear(),
+      gender: naverLogin.user.getGender() === "M" ? "남자" : "여자",
+      name: naverLogin.user.getName(),
+      social: "naver",
+    };
+    axios.post("/idCheck", { email: userInfo.email }).then((res) => {
+      if (res.data.result) {
+        console.log("data", res.data.result);
+        Swal.fire({
+          text: "회원이 아니시네요",
+          title: "회원가입 하시겠습니까?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "green",
+          cancelButtonColor: "#black",
+          confirmButtonText: "YES",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios.post("/joinData", { userInfo }).then((res) => {
+              if (res.data.result) {
+                window.location.href = "/join";
+              } else {
+                console.log(res.data.error);
+              }
+            });
+          } else {
+            naverLogin.logout();
+            axios({
+              method: "get",
+              url: "/logout",
+            }).then((res) => (window.location.href = "/"));
+          }
+        });
+      } else {
+        axios
+          .post("/accessToken", { email: userInfo.email })
+          .then((res) => cookieCheck());
+      }
+    });
+  }
+});
+function naverLogout() {
+  naverLogin.logout();
+  axios({
+    method: "get",
+    url: "/logout",
+  });
+  window.location.href = "/";
 }

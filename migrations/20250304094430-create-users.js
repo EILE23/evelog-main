@@ -35,11 +35,11 @@ module.exports = {
       },
       address: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       comment: {
         type: Sequelize.TEXT,

@@ -8,68 +8,73 @@
       rel="stylesheet"
       href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
     />
+    <script
+      src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
+      charset="utf-8"
+    ></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <h1>회원가입</h1>
-  <form name="data">
-    <div>
-      이메일
-      <input onkeyup="textCheck(this,'email',0)" type="text" name="userid" />
-      <button type="button" onclick="redundancy(7)">중복검사</button>
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      패스워드
-      <input
-        onkeyup="textCheck(this,'pass',1)"
-        type="password"
-        name="password"
-      />
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      패스워드 확인
-      <input
-        onkeyup="textCheck(this,'passCheck',2)"
-        type="password"
-        name="passcheck"
-      />
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      이름
-      <input onkeyup="textCheck(this,'name',3)" type="text" name="name" />
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      별명
-      <input
-        onkeyup="textCheck(this,'nickname',4)"
-        type="text"
-        name="nickname"
-      />
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      나이
-      <input onkeyup="textCheck(this,'age',5)" type="number" name="age" />
-      <p class="errorCode"></p>
-    </div>
-    <div>
-      성별
-      <select name="gender">
-        <option>남자</option>
-        <option>여자</option>
-      </select>
-    </div>
-    <div>
+  <div class="main-wrap">
+    <form name="data">
+      <div>
+        이메일
+        <input onkeyup="textCheck(this,'email',0)" type="text" name="userid" />
+        <button type="button" onclick="redundancy(6)">중복검사</button>
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        패스워드
+        <input
+          onkeyup="textCheck(this,'pass',1)"
+          type="password"
+          name="password"
+        />
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        패스워드 확인
+        <input
+          onkeyup="textCheck(this,'passCheck',2)"
+          type="password"
+          name="passcheck"
+        />
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        이름
+        <input onkeyup="textCheck(this,'name',3)" type="text" name="name" />
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        별명
+        <input
+          onkeyup="textCheck(this,'nickname',4)"
+          type="text"
+          name="nickname"
+        />
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        나이
+        <input onkeyup="textCheck(this,'age',5)" type="number" name="age" />
+        <p class="errorCode"></p>
+      </div>
+      <div>
+        성별
+        <select name="gender">
+          <option>남자</option>
+          <option>여자</option>
+        </select>
+      </div>
+      <!-- <div>
       휴대폰
       <input onkeyup="textCheck(this,'phone',6)" type="text" name="phone" />
       <p class="errorCode"></p>
-    </div>
-    <input type="text" id="sample4_postcode" placeholder="우편번호" />
+    </div> -->
+      <!-- <input type="text" id="sample4_postcode" placeholder="우편번호" />
     <input
       type="button"
       onclick="sample4_execDaumPostcode(8)"
@@ -87,8 +92,11 @@
       name="detailAddress"
       id="sample4_detailAddress"
       placeholder="상세주소"
-    />
-  </form>
-  <button type="button" onclick="dataOn()">가입하기</button>
+    /> -->
+    </form>
+    <button type="button" onclick="dataOn()">가입하기</button>
+    <h4>소셜 회원가입</h4>
+    <div><div id="naverIdLogin"></div></div>
+  </div>
   <script src="/public/js/join.js"></script>
 </html>
