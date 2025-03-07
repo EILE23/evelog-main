@@ -32,6 +32,7 @@ function contentGet() {
           <img src="${item.img}" />
           <h3>${item.title}</h3>
           <p>${removeTags(item.text).slice(0, 30)}</p>
+          <a href="/content/${item.id}">Read More</a>
         </div>
       `;
     });

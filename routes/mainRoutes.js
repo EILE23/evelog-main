@@ -24,7 +24,7 @@ router.get("/categories", controller.getCategory);
 router.get("/contentGet", controller.getContent);
 router.get("/infoPage", controller.info);
 router.get("/likePage", controller.like);
-router.get("/detail", controller.detail);
+router.get("/content/:postId", controller.detail);
 router.get("/userGet", controller.userGet);
 router.get("/check", controller.checkNaver);
 

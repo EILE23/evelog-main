@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "categoryId", // 외래 키
       onDelete: "CASCADE", // 카테고리가 삭제되면 관련 데이터 삭제
     });
+
+    Data.belongsTo(db.User, {
+      foreignKey: "userid",
+      targetKey: "email",
+      as: "User",
+    });
   };
 
   return Data;

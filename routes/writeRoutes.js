@@ -25,8 +25,10 @@ const storage = multer.diskStorage({
 });
 
 router.get("/categories", controller.getCategory);
-router.post("/saveData", controller.createData);
 router.get("/checkCookie", controller.cookieCheck);
+router.get("/content/:userId", controller.exportContentByUser);
+
+router.post("/saveData", controller.createData);
 router.post("/uploadImage");
 
 module.exports = router;

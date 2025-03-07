@@ -65,6 +65,11 @@ module.exports = (sequelize, DataTypes) => {
   // 관계 설정 (필요하면 여기서 추가)
   User.associate = (db) => {
     User.hasMany(db.Like);
+    User.hasMany(db.Data, {
+      foreignKey: "userid",
+      sourceKey: "email",
+      as: "Datas",
+    });
   };
 
   return User;

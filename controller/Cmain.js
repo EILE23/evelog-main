@@ -42,7 +42,7 @@ const like = (req, res) => {
 };
 
 const detail = (req, res) => {
-  res.redner("detail");
+  res.render("detail");
 };
 
 const getData = async (req, res) => {

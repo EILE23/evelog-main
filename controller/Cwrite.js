@@ -53,8 +53,29 @@ const cookieCheck = async (req, res) => {
   }
 };
 
+const exportContentByUser = async (req, res) => {
+  try {
+    const userId = req.query.userId; // Get userId from query parameters
+
+    if (!userId) {
+      return res.status(400).json({ error: "userId is required" }); // Validate userId
+    }
+
+    const data = await models.Data.findAll({
+      where: {
+        userId: userId, // Filter by userId
+      },
+    });
+
+    res.json({ data: data });
+  } catch (error) {
+    console.error("Error exporting data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 module.exports = {
   getCategory,
   createData,
   cookieCheck,
+  exportContentByUser,
 };
