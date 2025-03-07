@@ -172,9 +172,11 @@ const getContent = async (req, res) => {
     const title = content.map((item) => item.title);
     const contentData = content.map((item) => marked.parse(item.content));
     const img = content.map((item) => item.imgsrc);
+    const id = content.map((item) => item.id);
     const total = contentData.map((item, i) => ({
       title: title[i],
       img: img[i],
+      id: id[i],
       text: item,
     }));
 

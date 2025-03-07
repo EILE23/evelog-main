@@ -23,6 +23,7 @@ async function fetchPostDetail(postId) {
 
 // Get postId from URL
 const pathSegments = window.location.pathname.split("/");
-const postId = pathSegments[3];
+const postId = pathSegments[2];
+// console.log("Post ID:", postId);
 
 fetchPostDetail(postId);
