@@ -88,15 +88,15 @@ document.getElementById("publish_button").addEventListener("click", (event) => {
   }
   const toast_category = selectedCategory.value;
   const imgsrc = document.querySelector("#preview_image");
-  const src = imgsrc.querySelector("img").src;
-
+  const srcimg = imgsrc.querySelector("img");
+  const src = srcimg ? srcimg.src : null;
   axios
     .post("/write/saveData", {
       title: toast_title,
       content: toast_ui_editor,
       categoryId: toast_category,
       imgsrc: src, // Save image URLs to the database
-      userid: id,
+      email: id,
     })
     .then((response) => {
       console.log("Data saved:", response.data);

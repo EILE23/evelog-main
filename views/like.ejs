@@ -4,7 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/public/css/like.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <body></body>
+  <body>
+    <%- include("global/header") %>
+    <div class="main-container">
+      <div class="btn-container">
+        <div class="btn-box">
+          <div class="postBtn" id="likedBtn">좋아한 포스트</div>
+          <div class="postBtn" id="recentBtn">최근 읽은 포스트</div>
+          <div class="underLine" id="underLine"></div>
+        </div>
+      </div>
+      <div class="content-container"></div>
+    </div>
+
+    <script>
+      // 버튼 클릭 시 언더라인 이동
+      const likedBtn = document.getElementById("likedBtn");
+      const recentBtn = document.getElementById("recentBtn");
+      const underLine = document.getElementById("underLine");
+
+      // 초기 설정: 첫 번째 버튼에 언더라인을 위치시키기
+      const setUnderLinePosition = (button) => {
+        const buttonRect = button.getBoundingClientRect();
+        underLine.style.width = `${buttonRect.width}px`;
+        underLine.style.left = `${
+          buttonRect.left - button.offsetParent.getBoundingClientRect().left
+        }px`;
+      };
+
+      // 페이지 로드 시 초기 위치 설정
+      window.onload = () => setUnderLinePosition(likedBtn);
+
+      // 각 버튼 클릭 시 위치 이동
+      likedBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // 기본 a 태그 동작 막기
+        setUnderLinePosition(likedBtn);
+        // window.location.href = likedBtn.href; // 페이지 이동
+      });
+
+      recentBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        setUnderLinePosition(recentBtn);
+        // window.location.href = recentBtn.href; // 페이지 이동
+      });
+    </script>
+  </body>
 </html>

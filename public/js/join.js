@@ -1,55 +1,10 @@
 const passwordR =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=])[A-Za-z\d!@#$%^&*()\-_+=]{8,}$/;
-let userData;
 const emailR = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const phoneR = /-/g;
 let checkArea = Array(7).fill(false);
-//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-function sample4_execDaumPostcode(num) {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-      // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-      var roadAddr = data.roadAddress; // 도로명 주소 변수
-      var extraRoadAddr = ""; // 참고 항목 변수
-
-      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-      if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-        extraRoadAddr += data.bname;
-      }
-      // 건물명이 있고, 공동주택일 경우 추가한다.
-      if (data.buildingName !== "" && data.apartment === "Y") {
-        extraRoadAddr +=
-          extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-      }
-      // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-      if (extraRoadAddr !== "") {
-        extraRoadAddr = " (" + extraRoadAddr + ")";
-      }
-
-      // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById("sample4_postcode").value = data.zonecode;
-      document.getElementById("sample4_roadAddress").value = roadAddr;
-
-      // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-
-      //   var guideTextBox = document.getElementById("guide");
-      // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-      //   if (data.autoRoadAddress) {
-      //     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-      //     guideTextBox.innerHTML = "(예상 도로명 주소 : " + expRoadAddr + ")";
-      //     guideTextBox.style.display = "block";
-      //   } else {
-      //     guideTextBox.innerHTML = "";
-      //     guideTextBox.style.display = "none";
-      //   }
-    },
-  }).open();
-  checkArea[Number(num)] = true;
-}
+//조건
+let userData; // social login시 넣을 데이터
 
 function dataOn() {
   const form = document.forms["data"];
@@ -171,24 +126,8 @@ function textCheck(input, type, num) {
   console.log(checkArea);
 }
 
-function userInfo() {
-  axios.get("/userGet").then((res) => {
-    if (res.data !== null) {
-      userData = res.data;
-      console.log(userData);
-      const form = document.querySelector(".main-wrap");
-      form.innerHTML = `<div>
-      별명
-      <input
-        type="text"
-        name="nickname"
-      />
-      <p class="errorCode"></p>
-    </div><button type = "button" onclick = "join()">가입하기</button>`;
-    }
-  });
-}
-function join() {
+//social 로그인시 사용하는 onclick
+function join(social) {
   const nickname = document.querySelector("input[name='nickname']").value;
 
   if (nickname.length == 0) {
@@ -200,7 +139,7 @@ function join() {
         nickname: nickname,
         name: userData.name,
         gender: userData.gender,
-        social: "naver",
+        social: social,
         age: new Date().getFullYear() - Number(userData.birthyear),
       })
       .then((res) => {
@@ -212,37 +151,85 @@ function join() {
   }
 }
 
-userInfo();
-
 const naverLogin = new naver.LoginWithNaverId({
-  clientId: "TszMj1_6QxbXSBEx3B5e",
-  callbackUrl: "http://localhost:3000/join",
+  clientId: "Q5BIVkykzWdlsrohoFLp",
+  callbackUrl: "http://localhost:3000/join/check",
   buttonType: 2,
   loginButton: { color: "green", type: 1, height: 40 },
 });
 
 naverLogin.init();
-naverLogin.getLoginStatus(function (status) {
-  if (status) {
-    const userInfo = {
-      email: naverLogin.user.getEmail(),
-      age: naverLogin.user.getAge(),
-      birthyear: naverLogin.user.getBirthyear(),
-      gender: naverLogin.user.getGender() === "M" ? "남자" : "여자",
-      name: naverLogin.user.getName(),
-      social: "naver",
-    };
-    axios.post("/idCheck", { email: userInfo.email }).then((res) => {
-      if (res.data.result) {
-        console.log("data", res.data.result);
-        axios.get("/logout").then((res) => {
-          axios.post("/joinData", { userInfo });
-        });
-      } else {
+
+function userInfo() {
+  axios.get("/userGet").then((res) => {
+    if (res.data.social == "naver") {
+      userData = res.data;
+      console.log(userData);
+      const form = document.querySelector(".main-wrap");
+      form.innerHTML = `<div>
+      별명
+      <input
+        type="text"
+        name="nickname"
+      />
+      <p class="errorCode"></p>
+    </div><button type = "button" onclick = "join('naver')">가입하기</button>`;
+    } else if (res.data.social == "google") {
+      userData = res.data;
+      console.log(userData);
+      const form = document.querySelector(".main-wrap");
+      form.innerHTML = `<div>
+      별명
+      <input
+        type="text"
+        name="nickname"
+      />
+      <p class="errorCode"></p>
+    </div><button type = "button" onclick = "join('google')">가입하기</button>`;
+    } else {
+      return;
+    }
+  });
+}
+
+userInfo();
+
+window.handleCredentialResponse = function (response) {
+  console.log("handleCredentialResponse 호출");
+  const payload = decode(response.credential); // credential에 데이터를 받아오네요 google은
+
+  sendGooglelogin(payload.name, payload.email);
+};
+
+//google은 data를 jwt형식으로 주기 때문에 decoding이 필요함
+function decode(id_token) {
+  console.log(id_token);
+  const base64Url = id_token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  return JSON.parse(jsonPayload);
+}
+
+//data 보내는 곳
+function sendGooglelogin(name, email) {
+  axios.post("/idcheck", { email: email }).then((res) => {
+    if (!res.data.result) {
+      axios.post("/accessToken", { email: email }).then((res) => {
         alert("이미 가입되어 있는 회원입니다.");
-        naverLogin.logout();
         window.location.href = "/";
-      }
-    });
-  }
-});
+      });
+    } else {
+      const udata = { name: name, email: email, social: "google" };
+      axios.post("/joinData", { userInfo: udata }).then((res) => {
+        window.location.href = "/join";
+      });
+    }
+  });
+}

@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      age: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       nickname: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -28,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       gender: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       address: {
         type: DataTypes.STRING,
@@ -66,9 +70,9 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (db) => {
     User.hasMany(db.Like);
     User.hasMany(db.Data, {
-      foreignKey: "userid",
+      foreignKey: "email",
       sourceKey: "email",
-      as: "Datas",
+      as: "Data",
     });
   };
 

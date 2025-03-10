@@ -130,7 +130,11 @@ const userDestroy = async (req, res) => {
     await models.User.destroy({
       where: { email: req.body.email },
     });
+    des = req.body.des;
+
     res.json({ result: true, message: "탈퇴 성공" });
+    des = false;
+    console.log(des);
   } catch (e) {
     res.json({ result: false, message: "탈퇴 실패" });
   }

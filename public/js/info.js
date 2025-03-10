@@ -15,10 +15,17 @@ function cookieCheck() {
           id = res.data.id;
         })
         .then((res) => {
-          titleChange();
-          editChange();
-          titleSubmit();
-          editSubmit();
+          const editArea = document.querySelector(".editArea");
+          const nicknameInput = editArea.querySelector("h4");
+          const commentInput = editArea.querySelector("p");
+          nicknameInput.innerHTML = `${data.nickname}`;
+          commentInput.innerHTML = `${data.comment}`;
+          const img_input = document.querySelector(".img_File");
+          const titleChange = document.querySelector(".titleChange");
+          titleChange.innerHTML = `<h3>${data.title}</h3><div class="titleCbtn btn" onclick="titleChange()">수정</div>`;
+          img_input.src = data.imgsrc
+            ? data.imgsrc
+            : "/public/img/user-thumbnail.png";
         });
     } else {
       console.error(`${res.data.message}`);
@@ -28,6 +35,7 @@ function cookieCheck() {
 
 window.onload = () => {
   cookieCheck();
+  loadContent();
 };
 
 function fileUpload() {
@@ -38,6 +46,13 @@ fileInput.addEventListener("change", (event) => {
   function fileChange() {
     let file = event.target.files[0];
     let fileUrl = "/uploads/" + event.target.files[0].name;
+    let str = fileUrl.split(".").pop();
+
+    if (str !== "png" && str !== "jpeg" && str !== "jpg") {
+      alert("이미지 파일 형식은 png,jpeg,jpg 파일만 가능합니다.");
+
+      return;
+    }
     let form = new FormData();
     form.append("file", file);
     form.append("src", fileUrl);
@@ -51,8 +66,10 @@ fileInput.addEventListener("change", (event) => {
           const img_input = document.querySelector(".img_File");
           if (res.data.src === null) {
             img_input.src = "/public/img/user-thumbnail.png";
+            window.location.reload();
           } else {
             img_input.src = res.data.src;
+            window.location.reload();
           }
         }
       });
@@ -81,10 +98,10 @@ function editChange() {
   const nicknameText = nicknameInput.textContent;
   const commentText = commentInput.textContent;
 
-  btnArea.innerHTML = `<button class="editCbtn" onclick="editSubmit()">수정완료</button>`;
-  nicknameInput.innerHTML = `<input class = "editInput"type = "text" name = "nickname" value = "${data.nickname}"/>`;
+  btnArea.innerHTML = `<div class="editCbtn btn" onclick="editSubmit()">수정완료</div>`;
+  nicknameInput.innerHTML = `<input class = "editInput"type = "text" name = "nickname" value = "${nicknameText}"/>`;
   commentInput.innerHTML = `<input class = "editInput" type = "text" name = "comment" value = "${
-    data.comment ? data.comment : "나"
+    commentText ? commentText : "나"
   }"/>`;
 }
 
@@ -97,7 +114,7 @@ function editSubmit() {
   const commentInput = editArea.querySelector("p");
   nicknameInput.innerHTML = `${nickname}`;
   commentInput.innerHTML = `${comment}`;
-  btnArea.innerHTML = `<button class="editCbtn" onclick="editChange()">수정</button`;
+  btnArea.innerHTML = `<div class="editCbtn btn" onclick="editChange()">수정</div`;
   axios.post("/update/updateEdit", {
     nickname: nickname,
     comment: comment,
@@ -108,7 +125,7 @@ function editSubmit() {
 function passChange() {
   const pwInput = document.querySelector(".passwordChange");
   pwInput.innerHTML = `<input type = "password" name = "pass" /><input type = "password" name = "passChc" />
-                        <button class="passSbtn" onclick="passSubmit()">수정완료</button>`;
+                        <div class="passSbtn btn" onclick="passSubmit()">수정완료</div>`;
 }
 
 function passSubmit() {
@@ -121,7 +138,7 @@ function passSubmit() {
   if (passwordR.test(pass) && pass == passChc) {
     axios.post("/update/updatePass", { password: pass, id: id });
     const pwInput = document.querySelector(".passwordChange");
-    pwInput.innerHTML = `<button class="passCbtn" onclick="passChange()">수정</button>`;
+    pwInput.innerHTML = `<div class="passCbtn btn" onclick="passChange()">수정</div>`;
   } else if (!passwordR.test(pass)) {
     alert("비밀번호는 대소문자, 특수문자 포함 8자리 이상이어야합니다.");
   } else if (pass !== passChc) {
@@ -135,7 +152,7 @@ function addressChange() {
   const addressInput = document.querySelector(".addressChange");
   addressInput.innerHTML = `<input type="text" id="sample4_postcode" placeholder="우편번호" />
             <input
-              type="button"
+              type="div"
               onclick="sample4_execDaumPostcode(8)"
               value="우편번호 찾기"
             /><br />
@@ -151,9 +168,9 @@ function addressChange() {
               name="detailAddress"
               id="sample4_detailAddress"
               placeholder="상세주소"
-            /> <button class="addressSbtn" onclick="addressSubmit()">
+            /> <div class="addressSbtn btn" onclick="addressSubmit()">
               수정완료
-            </button>`;
+            </div>`;
 }
 
 function addressSubmit() {
@@ -166,14 +183,10 @@ function addressSubmit() {
 
   axios.post("/update/updateAddress", { address: address, id: id });
   const addressInput = document.querySelector(".addressChange");
-  addressInput.innerHTML = ` <button class="socialCbtn" onclick="socialChange()">
+  addressInput.innerHTML = ` <div class="addressCbtn btn" onclick="addressChange()">
               정보 등록
-            </button>`;
+            </div>`;
 }
-
-function socialChange() {}
-
-function socialSubmit() {}
 
 function sample4_execDaumPostcode() {
   new daum.Postcode({
@@ -202,15 +215,17 @@ function sample4_execDaumPostcode() {
 
 function titleChange() {
   const titleInput = document.querySelector(".titleChange");
-  titleInput.innerHTML = `<input type = "text" name = "title" value = "${data.title}" />
-                          <button class="titleSbtn" onclick="titleSubmit()">수정완료</button>`;
+  const titleText = titleInput.querySelector("h3");
+  titleInput.innerHTML = `<input type = "text" name = "title" value = "${titleText.textContent}" />
+                          <div class="titleSbtn btn" onclick="titleSubmit()">수정완료</div>`;
 }
 
 function titleSubmit() {
   const titleInput = document.querySelector("input[name='title']").value;
-  axios.post("/update/updateTitle", { title: titleInput, id: id });
-  const titleChange = document.querySelector(".titleChange");
-  titleChange.innerHTML = `<h3>${titleInput}</h3><button class="titleCbtn" onclick="titleChange()">수정</button>`;
+  axios.post("/update/updateTitle", { title: titleInput, id: id }).then(() => {
+    const titleChange = document.querySelector(".titleChange");
+    titleChange.innerHTML = `<h3>${titleInput}</h3><div class="titleCbtn btn" onclick="titleChange()">수정</div>`;
+  });
 }
 
 function userDestroy() {
@@ -229,16 +244,28 @@ function userDestroy() {
         icon: "success",
       });
       axios.get("/logout").then((res) => {
-        axios.post("/update/userDestroy", { email: data.email }).then((res) => {
-          if (res.data.result) {
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 300);
-          } else {
-            alert(`res.data.message`);
-          }
-        });
+        axios
+          .post("/update/userDestroy", { email: data.email, des: true })
+          .then((res) => {
+            if (res.data.result) {
+              localStorage.removeItem("com.naver.nid.oauth.state_token");
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 500);
+            } else {
+              alert(`res.data.message`);
+            }
+          });
       });
     }
   });
 }
+
+const loadContent = () => {
+  // 가상의 데이터 로딩 과정
+  setTimeout(() => {
+    const body = document.querySelector("body");
+
+    body.classList.remove("blurred-text"); // 블러 효과 제거
+  }, 150);
+};

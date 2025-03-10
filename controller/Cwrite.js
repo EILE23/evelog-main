@@ -19,14 +19,14 @@ const getCategory = async (req, res) => {
 
 const createData = async (req, res) => {
   try {
-    const { title, content, categoryId, imgsrc, userid } = req.body;
+    const { title, content, categoryId, imgsrc, email } = req.body;
 
     await models.Data.create({
       title: title,
       content: content,
       categoryId: categoryId,
       imgsrc: imgsrc,
-      userid: userid,
+      email: email,
     });
 
     res.json({ result: true, message: "Data created successfully" }); // Send the created data
@@ -63,7 +63,7 @@ const exportContentByUser = async (req, res) => {
 
     const data = await models.Data.findAll({
       where: {
-        userId: userId, // Filter by userId
+        email: userId, // Filter by userId
       },
     });
 

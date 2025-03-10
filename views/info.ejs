@@ -9,7 +9,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
-  <body>
+  <body class="blurred-text">
     <%- include("global/header") %>
     <div class="main-wrap">
       <div class="container">
@@ -20,8 +20,12 @@
               <img class="img_File" src="/public/img/user-thumbnail.png" />
             </div>
             <div class="imgBtnBox">
-              <button onclick="fileUpload()">이미지 업로드</button>
-              <button onclick="fileRemove()">이미지 제거</button>
+              <button class="uploadBtn" onclick="fileUpload()">
+                이미지 업로드
+              </button>
+              <button class="removeBtn" onclick="fileRemove()">
+                이미지 제거
+              </button>
             </div>
           </div>
         </div>
@@ -29,41 +33,46 @@
           <h4>nickname</h4>
           <p>comment</p>
           <div class="editBtnArea editBtn">
-            <button class="editCbtn" onclick="editChange()">수정</button>
+            <div class="editCbtn btn" onclick="editChange()">수정</div>
           </div>
         </div>
       </div>
       <div class="profile_container">
-        프로필 변경
-        <div>
+        <h1>프로필 변경</h1>
+        <hr />
+        <br />
+        <div class="sub_container">
           <h3>내 블로그 제목 변경</h3>
-          <div class="titleChange">
-            <button class="titleCbtn" onclick="titleChange()">수정</button>
+          <div class="titleChange sub_sub_container">
+            <div class="titleCbtn btn" onclick="titleChange()">수정</div>
           </div>
         </div>
-        <div>
+        <p>개인 페이지의 좌측 상단에 나타나는 페이지 제목입니다.</p>
+        <hr />
+        <div class="sub_container">
           <h3>비밀번호 변경</h3>
-          <div class="passwordChange">
-            <button class="passCbtn" onclick="passChange()">수정</button>
+          <div class="passwordChange sub_sub_container">
+            <div class="passCbtn btn" onclick="passChange()">수정</div>
           </div>
         </div>
-        <div>
+        <Hr />
+        <div class="sub_container">
+          <h3>연락처 등록</h3>
+          <div class="phoneChange sub_sub_container">
+            <div class="btn" onclick="phoneChange()">수정</div>
+          </div>
+        </div>
+        <Hr />
+        <div class="sub_container">
           <h3>주소지 등록</h3>
-          <div class="addressChange">
-            <button class="addressCbtn" onclick="addressChange()">수정</button>
-          </div>
-        </div>
-        <div>
-          <h3>소셜 정보 등록</h3>
-          <div class="socialChange">
-            <button class="socialCbtn" onclick="socialChange()">
+          <div class="addressChange sub_sub_container">
+            <div class="addressCbtn btn" onclick="addressChange()">
               정보 등록
-            </button>
-            <button class="socialSbtn" onclick="socialSubmit()">
-              수정완료
-            </button>
+            </div>
           </div>
         </div>
+        <br /><br />
+        <hr />
         <div>
           <h3 onclick="userDestroy()">회원 탈퇴</h3>
         </div>

@@ -27,6 +27,7 @@ router.get("/likePage", controller.like);
 router.get("/content/:postId", controller.detail);
 router.get("/userGet", controller.userGet);
 router.get("/check", controller.checkNaver);
+router.get("/join/check", controller.joinCheck);
 
 router.post("/getOne", controller.findOne);
 router.post("/idCheck", controller.checkId);
@@ -39,5 +40,6 @@ router.post("/passwordChange", controller.changePw);
 router.post("/joinData", controller.userInfo);
 router.post("/accessToken", controller.getToken);
 router.post("/checktoken", controller.checkToken);
+router.post("/check", controller.checkNaver);
 
 module.exports = router;

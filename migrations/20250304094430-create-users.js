@@ -10,10 +10,13 @@ module.exports = {
         primaryKey: true, // 기본 키 지정
         autoIncrement: true, // 자동 증가 설정
       },
+      age: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       nickname: {
         type: Sequelize.STRING, // 문자열 타입
-        allowNull: false, // 필수값
-        // 고유값
+        allowNull: false,
       },
       username: {
         type: Sequelize.STRING, // 문자열 타입
@@ -27,11 +30,11 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: Sequelize.STRING, // 문자열 타입
-        allowNull: false, // 필수값
+        allowNull: true, // 필수값
       },
       address: {
         type: Sequelize.STRING,
@@ -39,10 +42,6 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: true,
-      },
-      comment: {
-        type: Sequelize.TEXT,
         allowNull: true,
       },
 

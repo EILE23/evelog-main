@@ -18,11 +18,12 @@
   </style>
   <body>
     <div class="naver"><div id="naverIdLogin"></div></div>
-    로그인 처리중입니다....
+    <div class="cencer">로그인 처리중입니다.....</div>
+
     <script>
       const naverLogin = new naver.LoginWithNaverId({
         clientId: "Q5BIVkykzWdlsrohoFLp",
-        callbackUrl: "http://localhost:3000/check",
+        callbackUrl: "http://localhost:3000/join/check",
         buttonType: 2,
         loginButton: { color: "green", type: 1, height: 40 },
       });
@@ -30,7 +31,6 @@
       naverLogin.getLoginStatus(function (status) {
         console.log(status);
         if (status) {
-          console.log("status", status);
           const userInfo = {
             email: naverLogin.user.getEmail(),
             age: naverLogin.user.getAge(),
@@ -42,43 +42,19 @@
           axios.post("/idCheck", { email: userInfo.email }).then((res) => {
             if (res.data.result) {
               console.log("data", res.data.result);
-              Swal.fire({
-                text: "회원이 아니시네요",
-                title: "회원가입 하시겠습니까?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "green",
-                cancelButtonColor: "#black",
-                confirmButtonText: "YES",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  axios.post("/joinData", { userInfo }).then((res) => {
-                    if (res.data.result) {
-                      window.location.href = "/join";
-                    } else {
-                      console.log(res.data.error);
-                    }
-                  });
-                } else {
-                  naverLogin.logout();
-                  axios({
-                    method: "get",
-                    url: "/logout",
-                  }).then((res) => (window.location.href = "/"));
-                }
+              axios.get("/logout").then((res) => {
+                axios
+                  .post("/joinData", { userInfo })
+                  .then((res) => (window.location.href = "/join"));
               });
             } else {
-              axios
-                .post("/accessToken", { email: userInfo.email })
-                .then((res) => {
-                  window.location.href = "/";
-                });
+              alert("이미 가입되어 있는 회원입니다.");
+              naverLogin.logout();
+              window.location.href = "/";
             }
           });
         }
       });
-
-      // getAccessToken();
     </script>
   </body>
 </html>

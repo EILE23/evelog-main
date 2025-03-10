@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Categories",
+          model: "Category",
           key: "id",
         },
         onDelete: "CASCADE",
@@ -29,8 +29,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT("long"),
         allowNull: true,
       },
-      userid: {
-        type: DataTypes.TEXT("long"),
+      email: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        references: {
+          model: "User",
+          key: "email",
+        },
+        onDelete: "CASCADE",
+      },
+      likecnt: {
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
     },
@@ -47,9 +56,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Data.belongsTo(db.User, {
-      foreignKey: "userid",
+      foreignKey: "email",
       targetKey: "email",
-      as: "User",
+      onDelete: "CASCADE",
     });
   };
 

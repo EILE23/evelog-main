@@ -14,11 +14,11 @@ const getPostDetail = async (req, res) => {
     }
 
     const user = await models.User.findOne({
-      where: { email: post.userid },
+      where: { email: post.email },
     });
 
     if (!user) {
-      console.error(`User not found for email: ${post.userid}`);
+      console.error(`User not found for email: ${post.email}`);
       return res.status(404).json({ error: "User not found" });
     }
 

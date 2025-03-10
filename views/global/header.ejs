@@ -9,6 +9,11 @@
       src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
       charset="utf-8"
     ></script>
+    <meta
+      name="google-signin-client_id"
+      content="328276589647-kesmnun08lbmrde51k04dcn20but3cpv.apps.googleusercontent.com"
+    />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
@@ -40,17 +45,43 @@
               name="email"
             /><button onclick="checkLogin()">로그인</button>
           </div>
-          <input name="password" class="textInput" type="password" />
-          <div id="naverIdLogin"></div>
+          <input
+            name="password"
+            class="textInput textInputPassword"
+            type="password"
+          />
+          <div class="socialBtnBox">
+            <div id="naverIdLogin"></div>
+            <div
+              id="g_id_onload"
+              data-client_id="328276589647-kesmnun08lbmrde51k04dcn20but3cpv.apps.googleusercontent.com"
+              data-context="signup"
+              data-ux_mode="popup"
+              data-callback="handleCredentialResponse
+              "
+              data-auto_prompt="false"
+            ></div>
+            <div
+              class="g_id_signin"
+              data-type="icon"
+              data-shape="rectangular"
+              data-theme="outline"
+              data-size="large"
+            ></div>
+          </div>
           <div class="findBox">
             <span onclick="findID()">아이디 찾기</span
             ><span onclick="findPW()">비밀번호 찾기</span>
           </div>
 
-          <div>아직 회원이 아니신가요? <a href="/join">회원가입</a></div>
+          <div class="joinText">
+            아직 회원이 아니신가요? <a href="/join">회원가입</a>
+          </div>
         </div>
       </div>
     </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
     <script src="/public/js/header.js"></script>
   </body>
 </html>

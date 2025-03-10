@@ -1,0 +1,36 @@
+.btn-container {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+}
+.btn-box {
+  display: flex;
+  position: relative;
+}
+.main-container {
+  width: 100%;
+}
+
+.postBtn {
+  width: 9rem;
+  height: 3rem;
+  font-size: 1.125rem;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-decoration: none;
+  text-wrap: nowrap;
+}
+
+.underLine {
+  height: 2px;
+  width: 50%;
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  background: #343a40;
+  transform: translateX(0rem);
+  transition: width 0.3s ease, left 0.3s ease;
+}

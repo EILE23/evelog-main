@@ -7,6 +7,9 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const marked = require("marked");
 const axios = require("axios");
+let des = false;
+
+const nToken = null;
 let joinData = null;
 
 marked.setOptions({
@@ -46,7 +49,6 @@ const detail = (req, res) => {
 };
 
 const getData = async (req, res) => {
-  console.log(req.body);
   try {
     const emailChc = await models.User.findOne({
       where: { email: req.body.userid },
@@ -68,6 +70,7 @@ const getData = async (req, res) => {
         src: "/public/img/user-thumbnail.png",
         title: "evelog",
         social: req.body.social ? req.body.social : "local",
+        comment: "comment",
       });
       res.json({ result: true });
     } else {
@@ -87,7 +90,11 @@ const checkId = async (req, res) => {
     if (data) {
       res.json({ result: false, message: "중복 아이디입니다." });
     } else {
-      res.json({ result: true, message: "사용 가능한 아이디입니다." });
+      res.json({
+        result: true,
+        message: "사용 가능한 아이디입니다.",
+        des: des,
+      });
     }
   } catch (e) {
     console.error(e);
@@ -95,32 +102,35 @@ const checkId = async (req, res) => {
 };
 
 const checkLogin = async (req, res) => {
-  console.log(req.body);
   try {
     const data = await models.User.findOne({
       where: { email: req.body.email },
     });
-    console.log(data.password);
-    const pwChc = bcryptCompare(req.body.password, data.password);
-    if (pwChc && data) {
-      const email = req.body.email;
-      const token = jwtToken(email);
 
+    if (!data) {
+      return res.json({
+        result: false,
+        message: "등록되지 않은 아이디입니다.",
+      });
+    }
+
+    const pwChc = bcryptCompare(req.body.password, data.password);
+
+    if (pwChc) {
+      const token = jwtToken(req.body.email);
       res.cookie("token", token, { maxAge: 1000 * 60 * 60 });
-      res.json({ result: true, message: "로그인 성공" });
-    } else if (pwChc) {
-      res.json({ result: false, message: "비밀번호가 틀립니다." });
-    } else if (!data) {
-      res.json({ result: false, message: "등록되지 않은 아이디입니다." });
+      return res.json({ result: true, message: "로그인 성공" });
     } else {
-      res.json({ result: false, message: "등록되지 않은 아이디입니다." });
+      return res.json({ result: false, message: "비밀번호가 틀립니다." });
     }
   } catch (e) {
     console.error(e);
-    res.json({ result: false, message: "올바르지 않은 형식입니다." });
+    return res.json({
+      result: false,
+      message: "로그인 처리 중 오류가 발생했습니다.",
+    });
   }
 };
-
 const logout = async (req, res) => {
   res.clearCookie("token");
   res.redirect("/");
@@ -133,8 +143,10 @@ const cookieCheck = async (req, res) => {
       const user = await models.User.findOne({
         where: { email: check.email },
       });
-      let src = user.imgsrc;
-
+      let src;
+      if (user) {
+        src = user.imgsrc;
+      }
       if (check) {
         res.json({
           result: true,
@@ -168,16 +180,56 @@ const getCategory = async (req, res) => {
 };
 const getContent = async (req, res) => {
   try {
-    const content = await models.Data.findAll({ limit: 50 });
+    let content;
+    console.log(req.query.ud);
+    if (req.query.categoryid === "all") {
+      if (req.query.ud === "up") {
+        content = await models.Data.findAll({
+          order: [["updatedAt", "DESC"]],
+          limit: 50,
+        });
+      } else {
+        content = await models.Data.findAll({
+          order: [["updatedAt", "ASC"]],
+          limit: 50,
+        });
+      }
+    } else {
+      if (req.query.ud === "up") {
+        content = await models.Data.findAll({
+          where: { categoryid: Number(req.query.categoryid) },
+          order: [["updatedAt", "DESC"]],
+          limit: 50,
+        });
+      } else {
+        content = await models.Data.findAll({
+          where: { categoryid: Number(req.query.categoryid) },
+          order: [["updatedAt", "ASC"]],
+          limit: 50,
+        });
+      }
+    }
+
     const title = content.map((item) => item.title);
     const contentData = content.map((item) => marked.parse(item.content));
     const img = content.map((item) => item.imgsrc);
     const id = content.map((item) => item.id);
+    const date = content.map((item) => item.updatedAt);
+    const nickname = await Promise.all(
+      content.map(async (item) => {
+        const data = await models.User.findOne({
+          where: { email: item.email },
+        });
+        return { n: data.nickname, img: data.imgsrc };
+      })
+    );
     const total = contentData.map((item, i) => ({
       title: title[i],
       img: img[i],
       id: id[i],
       text: item,
+      date: date[i],
+      nickname: nickname[i],
     }));
 
     res.json(total);
@@ -215,6 +267,7 @@ const findPw = async (req, res) => {
         result: true,
         message: "비밀번호 변경을 할 수 있습니다",
         id: email.id,
+        social: email.social,
       });
     } else {
       res.json({ result: false, message: "올바른 아이디가 아닙니다." });
@@ -282,20 +335,11 @@ const checkNaver = (req, res) => {
 };
 
 const checkToken = async (req, res) => {
-  if (req.body) {
-    try {
-      const access_token = req.body.accessToken;
-      const response = await axios.get(`https://openapi.naver.com/v1/nid/me`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
+  res.send("success");
+};
 
-      console.log(response);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+const joinCheck = (req, res) => {
+  res.render("joincheck");
 };
 
 module.exports = {
@@ -322,4 +366,6 @@ module.exports = {
   getToken,
   checkNaver,
   checkToken,
+  joinCheck,
+  des,
 };
