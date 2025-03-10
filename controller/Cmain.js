@@ -68,7 +68,7 @@ const getData = async (req, res) => {
         age: req.body.age,
         gender: req.body.gender,
         src: "/public/img/user-thumbnail.png",
-        title: "evelog",
+        title: req.body.nickname + ".log",
         social: req.body.social ? req.body.social : "local",
         comment: "comment",
       });

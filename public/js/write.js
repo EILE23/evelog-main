@@ -137,10 +137,6 @@ function extractImages() {
   };
 }
 
-//
-//
-//
-
 axios
   .get("/write/categories")
   .then((response) => {

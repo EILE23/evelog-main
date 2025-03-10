@@ -59,7 +59,7 @@ function cookieCheck() {
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새글작성</button>
+            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
             <div class="myInfo">
                 <img class="icon_person" src="${src}" />
                 <img class="icon_drop"src="/public/img/arrowdrop.png"/>
@@ -77,6 +77,19 @@ function cookieCheck() {
         head.addEventListener("click", () => {
           window.location.href = "/";
         });
+        const myInfo = document.querySelector(".myInfo");
+        const dropdown = document.querySelector(".dropdown");
+        document.addEventListener("click", (event) => {
+          if (
+            !myInfo.contains(event.target) &&
+            !dropdown.contains(event.target)
+          ) {
+            dropdown.classList.remove("show");
+          }
+        });
+        myInfo.addEventListener("click", () => {
+          dropdown.classList.toggle("show");
+        });
       } else if (res.data.social == "naver") {
         userData = res.data.email;
         let src = res.data.src
@@ -87,7 +100,7 @@ function cookieCheck() {
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새글작성</button>
+            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
             <div class="myInfo">
                 <img class="icon_person" src="${src}" />
                 <img class="icon_drop"src="/public/img/arrowdrop.png"/>
@@ -104,6 +117,60 @@ function cookieCheck() {
         const head = document.querySelector(".title");
         head.addEventListener("click", () => {
           window.location.href = "/";
+        });
+        const myInfo = document.querySelector(".myInfo");
+        const dropdown = document.querySelector(".dropdown");
+        document.addEventListener("click", (event) => {
+          if (
+            !myInfo.contains(event.target) &&
+            !dropdown.contains(event.target)
+          ) {
+            dropdown.classList.remove("show");
+          }
+        });
+        myInfo.addEventListener("click", () => {
+          dropdown.classList.toggle("show");
+        });
+      } else if (res.data.social == "google") {
+        userData = res.data.email;
+        let src = res.data.src
+          ? res.data.src
+          : "/public/img/user-thumbnail.png";
+
+        loginWrap.innerHTML = `<div class="title">evelog</div>
+          <div class="iconBox">
+            <img class="icon" onclick="login()" src="/public/img/alam.png" />
+            <img class="icon" onclick="search()" src="/public/img/search.png" />
+            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
+            <div class="myInfo">
+                <img class="icon_person" src="${src}" />
+                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
+                
+                   <div class = "dropdown">
+                      <div onclick = "infoPage()">내 정보</div>
+                      <div onclick = "likePage()">읽기 목록</div>
+                      <div onclick = "search()">검색</div>
+                      <div onclick = "naverLogout()">로그아웃</div>
+                   </div>
+            </div>
+  
+          </div>`;
+        const head = document.querySelector(".title");
+        head.addEventListener("click", () => {
+          window.location.href = "/";
+        });
+        const myInfo = document.querySelector(".myInfo");
+        const dropdown = document.querySelector(".dropdown");
+        document.addEventListener("click", (event) => {
+          if (
+            !myInfo.contains(event.target) &&
+            !dropdown.contains(event.target)
+          ) {
+            dropdown.classList.remove("show");
+          }
+        });
+        myInfo.addEventListener("click", () => {
+          dropdown.classList.toggle("show");
         });
       }
     } else {
@@ -129,8 +196,8 @@ function findID() {
 
   loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
         <div class="find">
-            <input class="findIdValue" type = "text" placeholder = "휴대폰 번호를 입력해주세요"/>
-            <button onclick = "findIDsubmit()"type = "button">아이디 찾기</button>
+           <input class="findInput findIdValue" type = "text" placeholder = "휴대폰 번호를 입력해주세요"/>
+            <button class = "findButton" onclick = "findIDsubmit()"type = "button">찾기</button>
         </div>`;
 }
 function findIDsubmit() {
@@ -159,8 +226,8 @@ function findPW() {
   const loginBox = document.querySelector(".loginInbox");
 
   loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-  <div class="find"><input class="findPwValue" type = "text" placeholder = "이메일을 입력해주세요"/>
-  <button onclick = "findPWsubmit()"type = "button">아이디 찾기</button></div>`;
+  <div class="find"><input class="findInput findPwValue" type = "text" placeholder = "이메일을 입력해주세요"/>
+  <button class = "findButton"onclick = "findPWsubmit()"type = "button">아이디 찾기</button></div>`;
 }
 
 function findPWsubmit() {
@@ -169,11 +236,15 @@ function findPWsubmit() {
   if (emailR.test(email)) {
     axios.post("/findPass", { email: email }).then((res) => {
       if (res.data.result) {
-        const loginBox = document.querySelector(".loginInbox");
-        loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-        <div><h3>비밀번호 변경</h3><input type = "password" name = "password" />
-        <input type = "passcheck" name = "passchc"/>
-        <button onclick = "findPwChange(${res.data.id})"type = "button">변경하기</button></div>`;
+        if (res.data.social !== "local") {
+          alert(`${res.data.social}로 가입되어 있는 회원입니다.`);
+        } else {
+          const loginBox = document.querySelector(".loginInbox");
+          loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
+        <div><h3>비밀번호 변경</h3><input class = "findInput"type = "password" name = "password" />
+        <input class = "findInput"type = "passcheck" name = "passchc"/>
+        <button class = "findButton"onclick = "findPwChange(${res.data.id})"type = "button">변경하기</button></div>`;
+        }
       } else {
         alert(`${res.data.message}`);
         window.location.reload();
@@ -228,15 +299,37 @@ function loginClose() {
               name="email"
             /><button onclick="checkLogin()">로그인</button>
           </div>
-          <input name="password" class="textInput" type="password" />
-            <div onclick="naverInit()" id="naverIdLogin"></div>
+           <input
+            name="password"
+            class="textInput textInputPassword"
+            type="password"
+          />
+          <div class="socialBtnBox">
+            <div id="naverIdLogin"></div>
+             <div id="googleLogin"></div>
+             <div id="kakaoLogin">
+              <a href="/auth/kakao">Login with Kakao</a>
+              <button onclick="kakaoLogin()">Login with Kakao</button>
+            </div>
+          </div>
+            
           <div class="findBox">
             <span onclick="findID()">아이디 찾기</span
             ><span onclick="findPW()">비밀번호 찾기</span>
           </div>
 
-          <div>아직 회원이 아니신가요? <a href="/join">회원가입</a></div>`;
+          <div class="joinText">
+            아직 회원이 아니신가요? <a href="/join">회원가입</a>
+          </div>`;
     naverLogin.init();
+    window.google.accounts.id.renderButton(
+      document.getElementById("googleLogin"),
+      {
+        type: "icon",
+        theme: "outline",
+        size: "large",
+      }
+    );
   }, 300);
 }
 
@@ -245,60 +338,14 @@ function newWrite() {
 }
 
 const naverLogin = new naver.LoginWithNaverId({
-  clientId: "TszMj1_6QxbXSBEx3B5e",
+  clientId: "Q5BIVkykzWdlsrohoFLp",
   callbackUrl: "http://localhost:3000/check",
   buttonType: 2,
   loginButton: { color: "green", type: 1, height: 40 },
 });
 
 naverLogin.init();
-naverLogin.getLoginStatus(function (status) {
-  if (status) {
-    console.log("status", status);
-    const userInfo = {
-      email: naverLogin.user.getEmail(),
-      age: naverLogin.user.getAge(),
-      birthyear: naverLogin.user.getBirthyear(),
-      gender: naverLogin.user.getGender() === "M" ? "남자" : "여자",
-      name: naverLogin.user.getName(),
-      social: "naver",
-    };
-    axios.post("/idCheck", { email: userInfo.email }).then((res) => {
-      if (res.data.result) {
-        console.log("data", res.data.result);
-        Swal.fire({
-          text: "회원이 아니시네요",
-          title: "회원가입 하시겠습니까?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "green",
-          cancelButtonColor: "#black",
-          confirmButtonText: "YES",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            axios.post("/joinData", { userInfo }).then((res) => {
-              if (res.data.result) {
-                window.location.href = "/join";
-              } else {
-                console.log(res.data.error);
-              }
-            });
-          } else {
-            naverLogin.logout();
-            axios({
-              method: "get",
-              url: "/logout",
-            }).then((res) => (window.location.href = "/"));
-          }
-        });
-      } else {
-        axios
-          .post("/accessToken", { email: userInfo.email })
-          .then((res) => cookieCheck());
-      }
-    });
-  }
-});
+
 function naverLogout() {
   naverLogin.logout();
   axios({
@@ -314,7 +361,57 @@ function naverLogout() {
 function kakaoLogin() {
   window.location.href = "/auth/kakao";
 }
+//구글 로그인
+window.handleCredentialResponse = function (response) {
+  const payload = decode(response.credential); // credential에 데이터를 받아오네요 google은
 
+  sendGooglelogin(payload.name, payload.email);
+};
+function decode(id_token) {
+  console.log(id_token);
+  const base64Url = id_token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  return JSON.parse(jsonPayload);
+}
+function sendGooglelogin(name, email) {
+  axios.post("/idcheck", { email: email }).then((res) => {
+    if (!res.data.result) {
+      axios.post("/accessToken", { email: email }).then((res) => {
+        window.location.reload();
+      });
+    } else {
+      Swal.fire({
+        text: "회원이 아니시네요",
+        title: "회원가입 하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "green",
+        cancelButtonColor: "#black",
+        confirmButtonText: "YES",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const udata = { name: name, email: email, social: "google" };
+          axios.post("/joinData", { userInfo: udata }).then((res) => {
+            window.location.href = "/join";
+          });
+        } else {
+          axios({
+            method: "get",
+            url: "/logout",
+          }).then((res) => (window.location.href = "/"));
+        }
+      });
+    }
+  });
+}
 function getUserInfo() {
   axios
     .get("/auth/user")
@@ -332,13 +429,13 @@ function getUserInfo() {
 
 getUserInfo();
 
-function logout() {
-  axios
-    .get("/auth/logout")
-    .then(() => {
-      window.location.href = "/"; // Redirect to home page
-    })
-    .catch((error) => {
-      console.error("Error logging out:", error);
-    });
-}
+// function logout() {
+//   axios
+//     .get("/auth/logout")
+//     .then(() => {
+//       window.location.href = "/"; // Redirect to home page
+//     })
+//     .catch((error) => {
+//       console.error("Error logging out:", error);
+//     });
+// }
