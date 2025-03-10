@@ -7,7 +7,12 @@ const mainRoutes = require("./routes/mainRoutes");
 const writeRoutes = require("./routes/writeRoutes");
 const updateRoutes = require("./routes/updateRoutes");
 const detailRoutes = require("./routes/detailRoutes");
+const kakaoRoutes = require("./routes/kakaoRoutes");
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const session = require("express-session");
+require("./config/passport")(); // Initialize Passport configuration
+require("dotenv").config();
 
 const cookieparser = require("cookie-parser");
 const ws = require("ws");
@@ -28,6 +33,25 @@ app.use("/", mainRoutes);
 app.use("/write", writeRoutes);
 app.use("/update", updateRoutes);
 app.use("/detail", detailRoutes);
+
+//kakaotalk passport module set-up
+app.use(
+  session({
+    secret: process.env.JWT_SECRET, // Replace with a strong secret
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+//
+app.use("/auth", kakaoRoutes); // Use the route file for /auth routes
+
+app.get("/", (req, res) => {
+  res.render("global/header"); // Render the EJS template
+});
+
+//
 
 db.sequelize
   .sync({ alter: false, force: false }) //alter : true 속성이면 테이블이 생성되고 테이블이 생성 되어 있으면 생성x

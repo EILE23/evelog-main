@@ -97,13 +97,71 @@
 }
 
 #preview_container {
-  background-color: beige;
+  background-color: #fffaf0;
   display: flex;
   flex-direction: column;
+  height: 100vh; /* Or a fixed height, e.g., 600px */
 }
 
-/* #preview_image img {
-  object-fit: cover;
-  width: 200px;
-  height: 150px;
-} */
+#preview_title {
+  height: 20%;
+  margin-top: 10vh;
+  /* Add other styling for the title */
+}
+
+#preview_content {
+  height: 40%; /* Adjusted to 40% (30% + 5% + 5%) */
+  /* Add other styling for the content */
+  overflow-y: auto; /* Adds scrollbar if content overflows */
+}
+
+#preview_image {
+  height: 40%; /* Adjusted to 40% (30% + 5% + 5%) */
+  /* Add other styling for the image */
+  display: flex; /* For centering the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+#preview_image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Or cover, depending on your needs */
+}
+
+input#toast_title::placeholder {
+  font-size: 36px;
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input#toast_title {
+  font-size: 36px;
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input#toast_title:focus {
+  outline: none;
+}
+
+.ProseMirror .placeholder {
+  font-style: italic;
+  font-size: 14px; /* Adjust the size as needed */
+  color: #999; /* Optional: Adjust the color */
+}
+
+#toast_category {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+div#preview_title {
+  font-size: 36px;
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+div#preview_content {
+  font-size: 14px;
+}
