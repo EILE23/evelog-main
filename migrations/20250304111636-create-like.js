@@ -12,12 +12,12 @@ module.exports = {
         autoIncrement: true, // 자동 증가 설정
       },
       postid: {
-        type: Sequelize.STRING, // 문자열 타입
+        type: Sequelize.INTEGER,
         allowNull: false, // 필수값
         unique: true, // 고유값
       },
       userid: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         unique: true,
       },

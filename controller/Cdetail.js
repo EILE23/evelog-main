@@ -33,6 +33,7 @@ const getPostDetail = async (req, res) => {
         createdAt: post.createdAt,
       },
       user: {
+        id: user.id,
         vUrl: user.vUrl,
         nickname: user.nickname,
         title: user.title,
@@ -64,4 +65,57 @@ const postGet = async (req, res) => {
   }
 };
 
-module.exports = { getPostDetail, getVelog, postGet };
+const getLike = async (req, res) => {
+  if (req.body) {
+    try {
+      await models.Like.create({
+        userid: req.body.userid,
+        postid: req.body.postid,
+      });
+      res.json({ result: true });
+    } catch (e) {
+      console.error(e);
+      res.json({ result: false, message: "id 확인 필요" });
+    }
+  } else {
+    res.json({ result: false, message: "허용되지 않은 요청입니다." });
+  }
+};
+
+const dontLike = async (req, res) => {
+  if (req.body) {
+    try {
+      await models.Like.destroy({
+        where: { userid: req.body.userid, postid: req.body.postid },
+      });
+      res.json({ result: true });
+    } catch (e) {
+      console.error(e);
+      res.json({ result: false, message: "id 확인 필요" });
+    }
+  } else {
+    res.json({ result: false, message: "허용되지 않은 요청입니다." });
+  }
+};
+
+const likeCheck = async (req, res) => {
+  try {
+    const data = await models.Like.findOne({
+      where: { userid: req.body.userid, postid: req.body.postid },
+    });
+
+    res.json({ result: true });
+  } catch (e) {
+    console.error(e);
+    res.json({ result: false });
+  }
+};
+
+module.exports = {
+  getPostDetail,
+  getVelog,
+  postGet,
+  getLike,
+  dontLike,
+  likeCheck,
+};

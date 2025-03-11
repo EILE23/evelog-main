@@ -21,36 +21,6 @@
       <div class="content-container"></div>
     </div>
 
-    <script>
-      // 버튼 클릭 시 언더라인 이동
-      const likedBtn = document.getElementById("likedBtn");
-      const recentBtn = document.getElementById("recentBtn");
-      const underLine = document.getElementById("underLine");
-
-      // 초기 설정: 첫 번째 버튼에 언더라인을 위치시키기
-      const setUnderLinePosition = (button) => {
-        const buttonRect = button.getBoundingClientRect();
-        underLine.style.width = `${buttonRect.width}px`;
-        underLine.style.left = `${
-          buttonRect.left - button.offsetParent.getBoundingClientRect().left
-        }px`;
-      };
-
-      // 페이지 로드 시 초기 위치 설정
-      window.onload = () => setUnderLinePosition(likedBtn);
-
-      // 각 버튼 클릭 시 위치 이동
-      likedBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // 기본 a 태그 동작 막기
-        setUnderLinePosition(likedBtn);
-        // window.location.href = likedBtn.href; // 페이지 이동
-      });
-
-      recentBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        setUnderLinePosition(recentBtn);
-        // window.location.href = recentBtn.href; // 페이지 이동
-      });
-    </script>
+    <script src="/public/js/like.js"></script>
   </body>
 </html>

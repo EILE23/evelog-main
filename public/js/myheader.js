@@ -1,5 +1,5 @@
 let post;
-let userData;
+let user;
 
 function infoPage() {
   window.location.href = "/infoPage";
@@ -15,6 +15,15 @@ function logout() {
   }).then((res) => {
     window.location.href = "/";
   });
+}
+function login() {
+  const loginWrap = document.querySelector(".loginBackground");
+  const loginBox = document.querySelector(".loginInbox");
+
+  loginWrap.style.display = "block";
+  setTimeout(() => {
+    loginBox.classList.add("active");
+  }, 10);
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -53,7 +62,7 @@ function cookieCheck(post, user) {
 
       loginWrap.innerHTML = `<div class = "head">
                                         <img class = "logo title"src = "/public/img/iconBanner.jpeg">
-                                        <a class = "hA" href = "/detail/${
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${
                                           post.vUrl
                                         }">
                                         <span class = "head">${
@@ -102,7 +111,7 @@ function cookieCheck(post, user) {
 
       loginWrap.innerHTML = `<div class = "head">
                                         <img class = "logo title"src = "/public/img/iconBanner.jpeg">
-                                        <a class = "hA" href = "/detail/${
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${
                                           post.vUrl
                                         }">
                                         <span class = "head">${
@@ -151,7 +160,7 @@ function cookieCheck(post, user) {
 
       loginWrap.innerHTML = `<div class = "head">
                                         <img class = "logo title"src = "/public/img/iconBanner.jpeg">
-                                        <a class = "hA" href = "/detail/${
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${
                                           post.vUrl
                                         }">
                                         <span class = "head">${

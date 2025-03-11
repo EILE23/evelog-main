@@ -79,7 +79,45 @@
         }
       });
 
-      // getAccessToken();
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
+      if (code) {
+        axios.post("/auth/checkKakao", { code: code }).then((res) => {
+          if (res.data.result) {
+            window.location.href = "/";
+          } else {
+            const userInfo = {
+              name: res.data.name,
+              email: res.data.email,
+              social: "kakao",
+            };
+            Swal.fire({
+              text: "회원이 아니시네요",
+              title: "회원가입 하시겠습니까?",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "green",
+              cancelButtonColor: "#black",
+              confirmButtonText: "YES",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios.post("/joinData", { userInfo }).then((res) => {
+                  if (res.data.result) {
+                    window.location.href = "/join";
+                  } else {
+                    console.log(res.data.error);
+                  }
+                });
+              } else {
+                axios({
+                  method: "get",
+                  url: "/logout",
+                }).then((res) => (window.location.href = "/"));
+              }
+            });
+          }
+        });
+      }
     </script>
   </body>
 </html>

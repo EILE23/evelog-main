@@ -49,13 +49,10 @@ function cookieCheck() {
   }).then((res) => {
     const loginWrap = document.querySelector(".navibar");
     if (res.data.result) {
-      if (res.data.social === "local" || res.data.social === null) {
-        userData = res.data.email;
-        let src = res.data.src
-          ? res.data.src
-          : "/public/img/user-thumbnail.png";
+      userData = res.data.email;
+      let src = res.data.src ? res.data.src : "/public/img/user-thumbnail.png";
 
-        loginWrap.innerHTML = `<div class="title">evelog</div>
+      loginWrap.innerHTML = `<div class="title">evelog</div>
           <div class="iconBox">
             <img class="icon" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
@@ -74,108 +71,23 @@ function cookieCheck() {
             </div>
   
           </div>`;
-        const head = document.querySelector(".title");
-        head.addEventListener("click", () => {
-          window.location.href = "/";
-        });
-        const myInfo = document.querySelector(".myInfo");
-        const dropdown = document.querySelector(".dropdown");
-        document.addEventListener("click", (event) => {
-          if (
-            !myInfo.contains(event.target) &&
-            !dropdown.contains(event.target)
-          ) {
-            dropdown.classList.remove("show");
-          }
-        });
-        myInfo.addEventListener("click", () => {
-          dropdown.classList.toggle("show");
-        });
-      } else if (res.data.social == "naver") {
-        userData = res.data.email;
-        let src = res.data.src
-          ? res.data.src
-          : "/public/img/user-thumbnail.png";
-
-        loginWrap.innerHTML = `<div class="title">evelog</div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
-            <div class="myInfo">
-                <img class="icon_person" src="${src}" />
-                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
-                
-                   <div class = "dropdown">
-                       <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
-                      <div onclick = "infoPage()">내 정보</div>
-                      <div onclick = "likePage()">읽기 목록</div>
-                      <div onclick = "search()">검색</div>
-                      <div onclick = "naverLogout()">로그아웃</div>
-                   </div>
-            </div>
-  
-          </div>`;
-        const head = document.querySelector(".title");
-        head.addEventListener("click", () => {
-          window.location.href = "/";
-        });
-        const myInfo = document.querySelector(".myInfo");
-        const dropdown = document.querySelector(".dropdown");
-        document.addEventListener("click", (event) => {
-          if (
-            !myInfo.contains(event.target) &&
-            !dropdown.contains(event.target)
-          ) {
-            dropdown.classList.remove("show");
-          }
-        });
-        myInfo.addEventListener("click", () => {
-          dropdown.classList.toggle("show");
-        });
-      } else if (res.data.social == "google") {
-        userData = res.data.email;
-        let src = res.data.src
-          ? res.data.src
-          : "/public/img/user-thumbnail.png";
-
-        loginWrap.innerHTML = `<div class="title">evelog</div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
-            <div class="myInfo">
-                <img class="icon_person" src="${src}" />
-                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
-                
-                   <div class = "dropdown">
-                      <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
-                      <div onclick = "infoPage()">내 정보</div>
-                      <div onclick = "likePage()">읽기 목록</div>
-                      <div onclick = "search()">검색</div>
-                      <div onclick = "naverLogout()">로그아웃</div>
-                   </div>
-            </div>
-  
-          </div>`;
-        const head = document.querySelector(".title");
-        head.addEventListener("click", () => {
-          window.location.href = "/";
-        });
-        const myInfo = document.querySelector(".myInfo");
-        const dropdown = document.querySelector(".dropdown");
-        document.addEventListener("click", (event) => {
-          if (
-            !myInfo.contains(event.target) &&
-            !dropdown.contains(event.target)
-          ) {
-            dropdown.classList.remove("show");
-          }
-        });
-        myInfo.addEventListener("click", () => {
-          dropdown.classList.toggle("show");
-        });
-      }
+      const head = document.querySelector(".title");
+      head.addEventListener("click", () => {
+        window.location.href = "/";
+      });
+      const myInfo = document.querySelector(".myInfo");
+      const dropdown = document.querySelector(".dropdown");
+      document.addEventListener("click", (event) => {
+        if (
+          !myInfo.contains(event.target) &&
+          !dropdown.contains(event.target)
+        ) {
+          dropdown.classList.remove("show");
+        }
+      });
+      myInfo.addEventListener("click", () => {
+        dropdown.classList.toggle("show");
+      });
     } else {
       console.error(`${res.data.message}`);
       loginWrap.innerHTML = `<div class="title">evelog   </div>
@@ -358,12 +270,6 @@ function naverLogout() {
   window.location.href = "/";
 }
 
-//
-//kakaotalk login
-//
-function kakaoLogin() {
-  window.location.href = "/auth/kakao";
-}
 //구글 로그인
 window.handleCredentialResponse = function (response) {
   const payload = decode(response.credential); // credential에 데이터를 받아오네요 google은
@@ -415,34 +321,14 @@ function sendGooglelogin(name, email) {
     }
   });
 }
-function getUserInfo() {
-  axios
-    .get("/auth/user")
-    .then((response) => {
-      if (response.data.user) {
-        // User is logged in, no need for messages
-      } else {
-        // User is not logged in, no need for messages
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching user data:", error);
-    });
-}
-
-getUserInfo();
-
-// function logout() {
-//   axios
-//     .get("/auth/logout")
-//     .then(() => {
-//       window.location.href = "/"; // Redirect to home page
-//     })
-//     .catch((error) => {
-//       console.error("Error logging out:", error);
-//     });
-// }
 
 function myVelog(hsh) {
   window.location.href = `/detail/evelog/?hsh=${hsh.trim()}`;
+}
+Kakao.init("9bc00597a75e81014f1853097d2c171f");
+function kakaoLogin() {
+  const REST_API_KEY = "9bc00597a75e81014f1853097d2c171f"; // 카카오 REST API 키
+  const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback"; // 리디렉트 URI
+  const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  window.location.href = kakaoLoginUrl; // 로그인 페이지로 이동
 }

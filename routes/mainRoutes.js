@@ -39,7 +39,6 @@ router.post("/findPass", controller.findPw);
 router.post("/passwordChange", controller.changePw);
 router.post("/joinData", controller.userInfo);
 router.post("/accessToken", controller.getToken);
-router.post("/checktoken", controller.checkToken);
 router.post("/check", controller.checkNaver);
 
 module.exports = router;

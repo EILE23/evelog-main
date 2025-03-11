@@ -121,6 +121,10 @@ window.onload = () => {
     });
 };
 
+let arr = JSON.parse(window.localStorage.getItem("readingPage")) || [];
+
 function detailPage(id) {
   window.location.href = `/content/${id}`;
+  arr.push(id);
+  window.localStorage.setItem("readingPage", JSON.stringify(arr));
 }

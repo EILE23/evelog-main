@@ -11,6 +11,7 @@
 .main-wrap {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .nickname {
@@ -23,4 +24,38 @@
 
 #post-title {
   font-size: 40px;
+}
+
+.heartbox {
+  width: 40px;
+  height: 40px;
+  border: 3px solid black;
+  border-radius: 50%;
+  opacity: 0.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 40%;
+  left: -250px;
+  transition: left 0.3s ease-in-out;
+}
+.heartbox:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.like {
+  opacity: 1;
+}
+
+.like:hover {
+  opacity: 0.4;
+}
+.heartRight {
+  left: 50px;
+}
+.heartbox img {
+  width: 80%;
+  height: 80%;
 }

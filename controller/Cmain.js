@@ -8,6 +8,7 @@ const secret = process.env.JWT_SECRET;
 const marked = require("marked");
 const axios = require("axios");
 const crypto = require("crypto");
+
 let des = false;
 
 const nToken = null;
@@ -155,6 +156,7 @@ const cookieCheck = async (req, res) => {
       }
       if (check) {
         res.json({
+          id: user.id,
           result: true,
           email: check.email,
           src: src,
@@ -342,12 +344,55 @@ const checkNaver = (req, res) => {
   res.render("check");
 };
 
-const checkToken = async (req, res) => {
-  res.send("success");
-};
-
 const joinCheck = (req, res) => {
   res.render("joincheck");
+};
+
+const checkKakao = (req, res) => {
+  const code = req.body.code;
+  const clientId = process.env.KAKAO_CLIENT_ID;
+  const redirectUri = process.env.KAKAO_CALLBACK_URL;
+
+  axios
+    .post("https://kauth.kakao.com/oauth/token", null, {
+      params: {
+        grant_type: "authorization_code",
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        code: code,
+      },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+    .then((v) => {
+      const token = v.data.access_token;
+      console.log(token);
+      axios
+        .get("https://kapi.kakao.com/v2/user/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(async (r) => {
+          const name = r.data.kakao_account.profile.nickname;
+          const email = r.data.kakao_account.email;
+          console.log(r.data);
+          console.log(name, email);
+
+          const user = await models.User.findOne({
+            where: { email: email },
+          });
+
+          if (user) {
+            const token = jwtToken(user.email);
+            res.cookie("token", token, { maxAge: 1000 * 60 * 60 });
+            res.json({ result: true });
+          } else {
+            res.json({ result: false, name: name, email: email });
+          }
+        });
+    });
 };
 
 module.exports = {
@@ -373,7 +418,6 @@ module.exports = {
   userGet,
   getToken,
   checkNaver,
-  checkToken,
   joinCheck,
-  des,
+  checkKakao,
 };

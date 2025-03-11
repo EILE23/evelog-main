@@ -10,20 +10,19 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
       },
       postid: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
       },
       userid: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
       },
     },
     {
       charset: "utf8",
       collate: "utf8_general_ci",
       freezeTableName: true,
+      timestamps: false,
     }
   );
 
