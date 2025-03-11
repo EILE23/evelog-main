@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      vUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
 
       createdAt: {
         type: Sequelize.DATE, // 생성일

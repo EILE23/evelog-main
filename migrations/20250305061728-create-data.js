@@ -30,6 +30,10 @@ module.exports = {
         type: Sequelize.TEXT("long"),
         allowNull: true,
       },
+      comment: {
+        type: Sequelize.TEXT("long"),
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

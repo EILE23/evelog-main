@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link
-      rel="icon"
-      href="https://nitter.net/pic/pbs.twimg.com%2Fprofile_images%2F1228368893321736193%2FOv0og7E8.jpg"
-      type="icon/jpg"
-    />
+    <link rel="icon" href="/public/img/iconBanner.jpeg" />
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -49,6 +45,33 @@
         </div>
       </div>
     </form>
+    <div class="publish-wrap">
+      <div class="publish-container">
+        <div class="publish">
+          <h3>포스트 미리보기</h3>
+          <div>
+            <h4>대표 이미지 설정</h4>
+            <input class="post_file" type="file" name="file" />
+            <div class="BtnBox"></div>
+            <div onclick="imgchange()" class="imgBox">
+              <div class="imgUpload">300px * 160px</div>
+            </div>
+            <h4>소개글</h4>
+            <div class="box_textarea">
+              <textarea
+                class="post_intro"
+                placeholder="당신의 포스트를 소개해보세요"
+              ></textarea>
+              <div class="strCount">0/150</div>
+            </div>
+          </div>
+          <div class="publish_BtnBox">
+            <div class="publish_Button_Cansle">취소</div>
+            <div class="publish_Button_Submit">출간하기</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="/public/js/write.js"></script>
   </body>
 </html>

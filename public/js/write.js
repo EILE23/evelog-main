@@ -38,33 +38,17 @@ function displayImagePreview(imageUrl) {
   img.src = imageUrl;
   img.style.maxWidth = "100%";
   img.style.maxHeight = "100%";
-  previewImageContainer.innerHTML = ""; // Clear previous images
+
   previewImageContainer.appendChild(img);
 }
 
 function updatePreview() {
   const previewTitle = document.getElementById("preview_title");
   const previewContent = document.getElementById("preview_content");
-  const previewImageContainer = document.getElementById("preview_image");
-  const titleInput = document.querySelector("input#toast_title"); // Get the input element
+  const titleInput = document.querySelector("input#toast_title");
 
-  // Update title
-  previewTitle.textContent = titleInput.value; // Get the value from the input
-
-  // Update content
-  previewContent.innerHTML = editor.getHTML();
-
-  // Clear existing images and re-add them (if needed)
-  const markdownImageRegex = /!\[.*?\]\((.*?)\)/g;
-  let markdownImageUrls = [];
-  let markdownMatch;
-  let markdownContent = editor.getMarkdown();
-
-  while ((markdownMatch = markdownImageRegex.exec(markdownContent)) !== null) {
-    markdownImageUrls.push(markdownMatch[1]);
-  }
-
-  markdownImageUrls.forEach((url) => displayImagePreview(url));
+  previewTitle.textContent = titleInput.value; // 제목은 그대로 유지
+  previewContent.innerHTML = editor.getHTML(); // 전체 내용을 미리보기에 반영
 }
 document.querySelector("input#toast_title").addEventListener("input", () => {
   updatePreview();
@@ -72,45 +56,8 @@ document.querySelector("input#toast_title").addEventListener("input", () => {
 
 document.getElementById("publish_button").addEventListener("click", (event) => {
   event.preventDefault();
-  const form = document.getElementById("toast_form").elements;
-  const toast_title = form["toast_title"].value;
-  const toast_ui_editor = editor.getMarkdown();
-  const toast_images = extractImages().markdown
-    ? extractImages().markdown
-    : extractImages().html;
 
-  const selectedCategory = document.querySelector(
-    'input[name="category"]:checked'
-  );
-  if (!selectedCategory) {
-    alert("Please select a category.");
-    return;
-  }
-  const toast_category = selectedCategory.value;
-  const imgsrc = document.querySelector("#preview_image");
-  const srcimg = imgsrc.querySelector("img");
-  const src = srcimg ? srcimg.src : null;
-  axios
-    .post("/write/saveData", {
-      title: toast_title,
-      content: toast_ui_editor,
-      categoryId: toast_category,
-      imgsrc: src, // Save image URLs to the database
-      email: id,
-    })
-    .then((response) => {
-      console.log("Data saved:", response.data);
-      if (response.data.result) {
-        window.location.href = "/";
-      } else {
-        alert(`${response.data.message}`);
-      }
-      alert("Data saved successfully!");
-    })
-    .catch((error) => {
-      console.error("Error saving data:", error);
-      alert("Error saving data.");
-    });
+  document.querySelector(".publish-wrap").style.display = "block";
 });
 
 function extractImages() {
@@ -188,3 +135,113 @@ window.onload = () => {
   }
   cookieCheck();
 };
+
+const fileInput = document.querySelector(".post_file");
+const imgBox = document.querySelector(".imgBox");
+
+fileInput.addEventListener("change", function (event) {
+  const file = event.target.files[0]; // 첫 번째 파일 가져오기
+  const BtnBox = document.querySelector(".BtnBox");
+  BtnBox.innerHTML = `<div class = "removeBtn" onclick = "imgRemove()">제거</div>`;
+  if (event.target.files.length !== 0) {
+    if (file && file.type.startsWith("image/")) {
+      // 이미지 파일인 경우
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        imgBox.innerHTML = `<img src="${e.target.result}"/>`;
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      alert("파일 형식이 올바르지 않습니다.");
+    }
+  } else {
+    return;
+  }
+});
+
+function imgchange() {
+  fileInput.click();
+}
+
+function imgRemove() {
+  const BtnBox = document.querySelector(".BtnBox");
+  BtnBox.innerHTML = ``;
+
+  fileInput.value = "";
+  imgBox.innerHTML = `  <div class="imgUpload">300px * 160px</div>
+              `;
+}
+
+const pub_cansle = document.querySelector(".publish_Button_Cansle");
+pub_cansle.addEventListener("click", () => {
+  document.querySelector(".publish-wrap").style.display = "none";
+});
+const textarea = document.querySelector(".post_intro");
+const strCount = document.querySelector(".strCount");
+const maxLength = 150;
+textarea.addEventListener("input", () => {
+  const currentLength =
+    textarea.value.length < 150 ? textarea.value.length : 150; // 현재 입력된 글자 수
+  strCount.textContent = `${currentLength}/${maxLength}`; // 글자 수 업데이트
+
+  // 글자 수가 최대 길이를 초과하지 않도록 처리
+  if (currentLength >= maxLength) {
+    textarea.value = textarea.value.substring(0, maxLength); // 초과 글자 제거
+    strCount.style.color = "red";
+  } else {
+    strCount.style.color = "black";
+  }
+});
+
+document
+  .querySelector(".publish_Button_Submit")
+  .addEventListener("click", () => {
+    const form = document.getElementById("toast_form").elements;
+    const toast_title = form["toast_title"].value;
+    const toast_ui_editor = editor.getMarkdown();
+
+    const selectedCategory = document.querySelector(
+      'input[name="category"]:checked'
+    );
+    if (!selectedCategory) {
+      alert("Please select a category.");
+      return;
+    }
+    const toast_category = selectedCategory.value;
+    const file = document.querySelector(".post_file").files[0];
+    let imgsrc;
+    if (file) {
+      imgsrc = `/uploads/${file.name}`;
+    } else {
+      imgsrc = null;
+    }
+    const postIntro = document.querySelector(".post_intro").value;
+    const comment = postIntro.length > 0 ? postIntro : "";
+
+    const formData = new FormData();
+    formData.append("title", toast_title);
+    formData.append("content", toast_ui_editor);
+    formData.append("categoryId", toast_category);
+    formData.append("file", file);
+    formData.append("imgsrc", imgsrc);
+    formData.append("email", id);
+    formData.append("comment", comment);
+
+    axios
+      .post("/write/saveData", formData)
+      .then((response) => {
+        console.log("Data saved:", response.data);
+        if (response.data.result) {
+          window.location.href = "/";
+        } else {
+          alert(`${response.data.message}`);
+        }
+        alert("Data saved successfully!");
+      })
+      .catch((error) => {
+        console.error("Error saving data:", error);
+        alert("Error saving data.");
+      });
+  });

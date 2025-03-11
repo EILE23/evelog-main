@@ -1,31 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
+    <link rel="icon" href="/public/img/iconBanner.jpeg" />
+    <link rel="stylesheet" href="/public/css/detail.css" />
+    <link rel="stylesheet" href="/public/css/detailheader.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detail</title>
+    <title>evelog</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <h1>hello world</h1>
-    <header>
-      <div class="header">
-        <div class="navibar">
-          <h1 id="post-title"></h1>
-          head
-        </div>
+    <%- include("global/detailheader") %>
+    <div class="main-wrap">
+      <div class="sub-container">
+        <h1 id="post-title"></h1>
+        <p id="post-author"></p>
+
+        <img id="post-image" src="" alt="Post Image" />
+
+        <div id="post-content"></div>
       </div>
-    </header>
-    <div class="sub-container">
-      <p id="post-author"></p>
-      <img id="post-image" src="" alt="Post Image" />
-      <div id="post-content"></div>
-      <p id="post-date"></p>
     </div>
-    <div class="Btnbox">
-      <div class="updateBtn">수정</div>
-      <div class="removeBtn">삭제</div>
-    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </body>
   <script src="/public/js/detail.js"></script>
 </html>

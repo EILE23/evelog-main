@@ -33,6 +33,7 @@ const getPostDetail = async (req, res) => {
         createdAt: post.createdAt,
       },
       user: {
+        vUrl: user.vUrl,
         nickname: user.nickname,
         title: user.title,
       },
@@ -43,4 +44,24 @@ const getPostDetail = async (req, res) => {
   }
 };
 
-module.exports = { getPostDetail };
+const getVelog = (req, res) => {
+  res.render("evelog", { email: req.params.email });
+};
+
+const postGet = async (req, res) => {
+  if (req.query) {
+    try {
+      const post = await models.User.findOne({
+        where: { vUrl: req.query.hsh },
+      });
+      res.json({ result: true, post: post, message: "데이터 전송 완료" });
+    } catch (e) {
+      console.error(e);
+      res.json({ result: false, message: e });
+    }
+  } else {
+    res.json({ result: false, message: "올바른 경로가 아닙니다." });
+  }
+};
+
+module.exports = { getPostDetail, getVelog, postGet };

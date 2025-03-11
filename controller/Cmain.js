@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 const marked = require("marked");
 const axios = require("axios");
+const crypto = require("crypto");
 let des = false;
 
 const nToken = null;
@@ -15,6 +16,10 @@ let joinData = null;
 marked.setOptions({
   breaks: true, // 줄바꿈 유지
 });
+
+function emailHash(email) {
+  return crypto.createHash("sha256").update(email).digest("hex");
+}
 const bcryptPass = (pw) => {
   if (!pw) {
     return null;
@@ -71,6 +76,7 @@ const getData = async (req, res) => {
         title: req.body.nickname + ".log",
         social: req.body.social ? req.body.social : "local",
         comment: "comment",
+        vUrl: `${emailHash(req.body.userid)}`,
       });
       res.json({ result: true });
     } else {
@@ -153,6 +159,8 @@ const cookieCheck = async (req, res) => {
           email: check.email,
           src: src,
           social: user.social,
+          vUrl: user.vUrl,
+          title: user.title,
         });
         console.log("검증완료");
       } else {
@@ -211,7 +219,7 @@ const getContent = async (req, res) => {
     }
 
     const title = content.map((item) => item.title);
-    const contentData = content.map((item) => marked.parse(item.content));
+    const contentData = content.map((item) => item.comment);
     const img = content.map((item) => item.imgsrc);
     const id = content.map((item) => item.id);
     const date = content.map((item) => item.updatedAt);

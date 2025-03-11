@@ -64,12 +64,12 @@ function contentGet(id, ud) {
     res.data.map((item) => {
       const nowDate = new Date().toISOString().split("T")[0];
       const contentDate = item.date.split("T")[0];
-      console.log(nowDate, contentDate);
+
       const nowTime = new Date(nowDate);
       const contentTime = new Date(contentDate);
       const time = Math.abs(nowTime - contentTime);
       const result = Math.floor(time / 86400000);
-      console.log(item.date);
+
       let date =
         result < 5
           ? `${result}일 전`
@@ -80,16 +80,14 @@ function contentGet(id, ud) {
       if (date === `0일 전`) {
         date = "오늘";
       }
-      console.log(result);
 
       const img = item.img ? item.img : "/public/img/brokenimg.png";
-      console.log(img);
 
       mainwrap.innerHTML += `
         <div class = "content-box" onclick = detailPage(${item.id})>
           <img src="${img}" />
           <h3>${item.title}</h3>
-          <p>${removeTags(item.text).slice(20, 70)}</p>
+          <p>${item.text}</p>
           <div>${date}</div>
           <div class = "hr"><hr/></div>
           <div class = "nickname"/><img class = "profileImg"src = "${

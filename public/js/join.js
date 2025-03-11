@@ -186,6 +186,18 @@ function userInfo() {
       />
       <p class="errorCode"></p>
     </div><button type = "button" onclick = "join('google')">가입하기</button>`;
+    } else if (res.data.social == "kakao") {
+      userData = res.data;
+      console.log(userData);
+      const form = document.querySelector(".main-wrap");
+      form.innerHTML = `<div>
+      별명
+      <input
+        type="text"
+        name="nickname"
+      />
+      <p class="errorCode"></p>
+    </div><button type = "button" onclick = "join('kakao')">가입하기</button>`;
     } else {
       return;
     }

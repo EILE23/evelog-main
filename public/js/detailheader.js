@@ -1,3 +1,24 @@
+let head;
+
+async function fetchPostDetail(postId) {
+  try {
+    const response = await axios.get(`/detail/post/${postId}`);
+
+    const post = response.data.post;
+    const user = response.data.user;
+    head = user.title;
+
+    cookieCheck(head, user.vUrl);
+  } catch (error) {
+    console.error("Error fetching post:", error);
+  }
+}
+
+// Get postId from URL
+const pathSegments = window.location.pathname.split("/");
+const postId = pathSegments[2];
+// console.log("Post ID:", postId);
+
 function infoPage() {
   window.location.href = "/infoPage";
 }
@@ -42,7 +63,7 @@ function checkLogin() {
   });
 }
 
-function cookieCheck() {
+function cookieCheck(hd, vUrl) {
   axios({
     method: "get",
     url: "/checkCookie",
@@ -55,25 +76,30 @@ function cookieCheck() {
           ? res.data.src
           : "/public/img/user-thumbnail.png";
 
-        loginWrap.innerHTML = `<div class="title">evelog</div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
-            <div class="myInfo">
-                <img class="icon_person" src="${src}" />
-                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
-                
-                   <div class = "dropdown">
-                      <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
-                      <div onclick = "infoPage()">내 정보</div>
-                      <div onclick = "likePage()">읽기 목록</div>
-                      <div onclick = "search()">검색</div>
-                      <div onclick = "logout()">로그아웃</div>
-                   </div>
-            </div>
-  
-          </div>`;
+        loginWrap.innerHTML = `<div class = "head">
+                                        <img class = "logo title"src = "/public/img/iconBanner.jpeg">
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
+                                        <span class = "head">${hd}</span>
+                                        </a>
+                                </div>
+            <div class="iconBox">
+              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon" onclick="search()" src="/public/img/search.png" />
+              <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
+              <div class="myInfo">
+                  <img class="icon_person" src="${src}" />
+                  <img class="icon_drop"src="/public/img/arrowdrop.png"/>
+                  
+                     <div class = "dropdown">
+                        <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
+                        <div onclick = "infoPage()">내 정보</div>
+                        <div onclick = "likePage()">읽기 목록</div>
+                        <div onclick = "search()">검색</div>
+                        <div onclick = "logout()">로그아웃</div>
+                     </div>
+              </div>
+    
+            </div>`;
         const head = document.querySelector(".title");
         head.addEventListener("click", () => {
           window.location.href = "/";
@@ -97,25 +123,30 @@ function cookieCheck() {
           ? res.data.src
           : "/public/img/user-thumbnail.png";
 
-        loginWrap.innerHTML = `<div class="title">evelog</div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
-            <div class="myInfo">
-                <img class="icon_person" src="${src}" />
-                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
-                
-                   <div class = "dropdown">
-                       <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
-                      <div onclick = "infoPage()">내 정보</div>
-                      <div onclick = "likePage()">읽기 목록</div>
-                      <div onclick = "search()">검색</div>
-                      <div onclick = "naverLogout()">로그아웃</div>
-                   </div>
-            </div>
-  
-          </div>`;
+        loginWrap.innerHTML = `<div class = "head">
+                                        <img class = "logo title"src = "/public/img/iconBanner.jpeg">
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
+                                        <span class = "head">${hd}</span>
+                                        </a>
+                                </div>
+            <div class="iconBox">
+              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon" onclick="search()" src="/public/img/search.png" />
+              <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
+              <div class="myInfo">
+                  <img class="icon_person" src="${src}" />
+                  <img class="icon_drop"src="/public/img/arrowdrop.png"/>
+                  
+                     <div class = "dropdown">
+                         <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
+                        <div onclick = "infoPage()">내 정보</div>
+                        <div onclick = "likePage()">읽기 목록</div>
+                        <div onclick = "search()">검색</div>
+                        <div onclick = "naverLogout()">로그아웃</div>
+                     </div>
+              </div>
+    
+            </div>`;
         const head = document.querySelector(".title");
         head.addEventListener("click", () => {
           window.location.href = "/";
@@ -139,25 +170,30 @@ function cookieCheck() {
           ? res.data.src
           : "/public/img/user-thumbnail.png";
 
-        loginWrap.innerHTML = `<div class="title">evelog</div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
-            <div class="myInfo">
-                <img class="icon_person" src="${src}" />
-                <img class="icon_drop"src="/public/img/arrowdrop.png"/>
-                
-                   <div class = "dropdown">
-                      <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
-                      <div onclick = "infoPage()">내 정보</div>
-                      <div onclick = "likePage()">읽기 목록</div>
-                      <div onclick = "search()">검색</div>
-                      <div onclick = "naverLogout()">로그아웃</div>
-                   </div>
-            </div>
-  
-          </div>`;
+        loginWrap.innerHTML = `<div class = "head">
+                                        <img class = "logo title"src = "/public/img/iconBanner.jpeg">
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
+                                        <span class = "head">${hd}</span>
+                                        </a>
+                                </div>
+            <div class="iconBox">
+              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon" onclick="search()" src="/public/img/search.png" />
+              <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
+              <div class="myInfo">
+                  <img class="icon_person" src="${src}" />
+                  <img class="icon_drop"src="/public/img/arrowdrop.png"/>
+                  
+                     <div class = "dropdown">
+                        <div onclick = "myVelog('${res.data.vUrl.trim()}')">내 블로그</div>
+                        <div onclick = "infoPage()">내 정보</div>
+                        <div onclick = "likePage()">읽기 목록</div>
+                        <div onclick = "search()">검색</div>
+                        <div onclick = "naverLogout()">로그아웃</div>
+                     </div>
+              </div>
+    
+            </div>`;
         const head = document.querySelector(".title");
         head.addEventListener("click", () => {
           window.location.href = "/";
@@ -178,14 +214,19 @@ function cookieCheck() {
       }
     } else {
       console.error(`${res.data.message}`);
-      loginWrap.innerHTML = `<div class="title">evelog   </div>
-          <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
-            <img class="icon" onclick="search()" src="/public/img/search.png" />
-            <button class="loginBtn" type="button" onclick="login()">
-              로그인
-            </button>
-          </div>`;
+      loginWrap.innerHTML = `<div class = "head">
+                                        <img class = "logo title"src = "/public/img/iconBanner.jpeg">
+                                        <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
+                                        <span class = "head">${hd}</span>
+                                        </a>
+                                </div>
+            <div class="iconBox">
+              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon" onclick="search()" src="/public/img/search.png" />
+              <button class="loginBtn" type="button" onclick="login()">
+                로그인
+              </button>
+            </div>`;
       const head = document.querySelector(".title");
       head.addEventListener("click", () => {
         window.location.href = "/";
@@ -198,10 +239,10 @@ function findID() {
   const loginBox = document.querySelector(".loginInbox");
 
   loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-        <div class="find">
-           <input class="findInput findIdValue" type = "text" placeholder = "휴대폰 번호를 입력해주세요"/>
-            <button class = "findButton" onclick = "findIDsubmit()"type = "button">찾기</button>
-        </div>`;
+          <div class="find">
+             <input class="findInput findIdValue" type = "text" placeholder = "휴대폰 번호를 입력해주세요"/>
+              <button class = "findButton" onclick = "findIDsubmit()"type = "button">찾기</button>
+          </div>`;
 }
 function findIDsubmit() {
   const phoneR = /-/g;
@@ -229,8 +270,8 @@ function findPW() {
   const loginBox = document.querySelector(".loginInbox");
 
   loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-  <div class="find"><input class="findInput findPwValue" type = "text" placeholder = "이메일을 입력해주세요"/>
-  <button class = "findButton"onclick = "findPWsubmit()"type = "button">아이디 찾기</button></div>`;
+    <div class="find"><input class="findInput findPwValue" type = "text" placeholder = "이메일을 입력해주세요"/>
+    <button class = "findButton"onclick = "findPWsubmit()"type = "button">아이디 찾기</button></div>`;
 }
 
 function findPWsubmit() {
@@ -244,9 +285,9 @@ function findPWsubmit() {
         } else {
           const loginBox = document.querySelector(".loginInbox");
           loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-        <div><h3>비밀번호 변경</h3><input class = "findInput"type = "password" name = "password" />
-        <input class = "findInput"type = "passcheck" name = "passchc"/>
-        <button class = "findButton"onclick = "findPwChange(${res.data.id})"type = "button">변경하기</button></div>`;
+          <div><h3>비밀번호 변경</h3><input class = "findInput"type = "password" name = "password" />
+          <input class = "findInput"type = "passcheck" name = "passchc"/>
+          <button class = "findButton"onclick = "findPwChange(${res.data.id})"type = "button">변경하기</button></div>`;
         }
       } else {
         alert(`${res.data.message}`);
@@ -280,8 +321,6 @@ function findPwChange(id) {
   }
 }
 
-cookieCheck();
-
 function loginClose() {
   const loginWrap = document.querySelector(".loginBackground");
   const loginBox = document.querySelector(".loginInbox");
@@ -290,40 +329,40 @@ function loginClose() {
   setTimeout(() => {
     loginWrap.style.display = "none";
     loginBox.innerHTML = `
-        <div class="loginInput">
-          <div class="close" onclick="loginClose()">x</div>
-          <h2>로그인</h2>
-
-          <div class="email-text">
-            <input
-              class="textInput"
-              placeholder="이메일을 입력하세요"
-              type="text"
-              name="email"
-            /><div onclick="checkLogin()">로그인</div>
-          </div>
-           <input
-            name="password"
-            class="textInput textInputPassword"
-            type="password"
-          />
-          <div class="socialBtnBox">
-            <div id="naverIdLogin"></div>
-             <div id="googleLogin"></div>
-            <div id="kakaoLogin">
-              <a href="/auth/kakao">Login with Kakao</a>
-              <button onclick="kakaoLogin()">Login with Kakao</button>
+          <div class="loginInput">
+            <div class="close" onclick="loginClose()">x</div>
+            <h2>로그인</h2>
+  
+            <div class="email-text">
+              <input
+                class="textInput"
+                placeholder="이메일을 입력하세요"
+                type="text"
+                name="email"
+              /><div onclick="checkLogin()">로그인</div>
             </div>
-          </div>
-            
-          <div class="findBox">
-            <span onclick="findID()">아이디 찾기</span
-            ><span onclick="findPW()">비밀번호 찾기</span>
-          </div>
-
-          <div class="joinText">
-            아직 회원이 아니신가요? <a href="/join">회원가입</a>
-          </div>`;
+             <input
+              name="password"
+              class="textInput textInputPassword"
+              type="password"
+            />
+            <div class="socialBtnBox">
+              <div id="naverIdLogin"></div>
+               <div id="googleLogin"></div>
+              <div id="kakaoLogin">
+                <a href="/auth/kakao">Login with Kakao</a>
+                <button onclick="kakaoLogin()">Login with Kakao</button>
+              </div>
+            </div>
+              
+            <div class="findBox">
+              <span onclick="findID()">아이디 찾기</span
+              ><span onclick="findPW()">비밀번호 찾기</span>
+            </div>
+  
+            <div class="joinText">
+              아직 회원이 아니신가요? <a href="/join">회원가입</a>
+            </div>`;
     naverLogin.init();
     window.google.accounts.id.renderButton(
       document.getElementById("googleLogin"),
@@ -430,18 +469,7 @@ function getUserInfo() {
     });
 }
 
-getUserInfo();
-
-// function logout() {
-//   axios
-//     .get("/auth/logout")
-//     .then(() => {
-//       window.location.href = "/"; // Redirect to home page
-//     })
-//     .catch((error) => {
-//       console.error("Error logging out:", error);
-//     });
-// }
+fetchPostDetail(postId);
 
 function myVelog(hsh) {
   window.location.href = `/detail/evelog/?hsh=${hsh.trim()}`;

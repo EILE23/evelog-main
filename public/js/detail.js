@@ -7,23 +7,19 @@ async function fetchPostDetail(postId) {
     const user = response.data.user;
 
     // Display the post details on the page
+    const data = new Date(post.createdAt).toLocaleString().split(".");
+    const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
     document.getElementById("post-title").textContent = post.title;
     document.getElementById(
       "post-author"
-    ).textContent = `By ${user.nickname} - ${user.title}`;
+    ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
     document.getElementById("post-image").src = post.imgsrc;
     document.getElementById("post-content").innerHTML = post.content;
-    document.getElementById("post-date").textContent = new Date(
-      post.createdAt
-    ).toLocaleString();
   } catch (error) {
     console.error("Error fetching post:", error);
   }
 }
 
-// Get postId from URL
-const pathSegments = window.location.pathname.split("/");
-const postId = pathSegments[2];
-// console.log("Post ID:", postId);
-
-fetchPostDetail(postId);
+window.onload = () => {
+  fetchPostDetail(postId);
+};
