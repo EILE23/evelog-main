@@ -30,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
-  Comments.associate = (models) => {
-    Comments.belongsTo(models.Data, {
+  Follows.associate = (models) => {
+    Follows.belongsTo(models.Data, {
       foreignKey: "targetid",
       onDelete: "CASCADE",
     });
-    Comments.belongsTo(models.User, {
+    Follows.belongsTo(models.User, {
       foreignKey: "userid",
       onDelete: "CASCADE",
     });
