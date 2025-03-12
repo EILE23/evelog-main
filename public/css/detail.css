@@ -53,9 +53,42 @@
   opacity: 0.4;
 }
 .heartRight {
-  left: 50px;
+  left: 15%;
 }
 .heartbox img {
   width: 80%;
   height: 80%;
+}
+.comment-container {
+  margin: 0 auto;
+  width: 55%;
+  display: flex;
+}
+.comment-areaBox {
+  margin: 0 auto;
+  width: 55%;
+}
+.comment-container textarea {
+  width: 60%;
+  height: 100%;
+  border: none;
+  resize: none;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.comment-container .comment-btn {
+  padding: 8px;
+  background-color: #12b886;
+  color: white;
+  font-weight: 600;
+  width: 6.25rem;
+  text-align: center;
+}
+.comment-container .comment-btn:hover {
+  filter: brightness(1.2);
+}
+
+.replyArea {
+  margin-left: 100px;
 }

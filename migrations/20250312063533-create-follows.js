@@ -1,37 +1,29 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Data", {
+    await queryInterface.createTable("Follows", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      content: {
-        type: Sequelize.TEXT("long"),
-        allowNull: false,
-      },
-      title: {
-        type: Sequelize.TEXT("long"),
-        allowNull: false,
-      },
-      categoryid: {
+      targetid: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Category",
+          model: "User",
           key: "id",
         },
-        onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      imgsrc: {
-        type: Sequelize.TEXT("long"),
-        allowNull: true,
-      },
-      comment: {
-        type: Sequelize.TEXT("long"),
-        allowNull: true,
+      userid: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "User",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       createdAt: {
         allowNull: false,
@@ -47,7 +39,8 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Category");
+    await queryInterface.dropTable("Follows");
   },
 };

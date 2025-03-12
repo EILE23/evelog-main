@@ -107,13 +107,9 @@ function cookieCheck() {
 }
 
 function findID() {
-  const loginBox = document.querySelector(".loginInbox");
-
-  loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-        <div class="find">
-           <input class="findInput findIdValue" type = "text" placeholder = "휴대폰 번호를 입력해주세요"/>
-            <button class = "findButton" onclick = "findIDsubmit()"type = "button">찾기</button>
-        </div>`;
+  const loginBox = document.querySelector(".loginInput");
+  loginBox.classList.add("none");
+  document.querySelector(".find-id-wrap").classList.remove("none");
 }
 function findIDsubmit() {
   const phoneR = /-/g;
@@ -138,14 +134,13 @@ function findIDsubmit() {
 }
 
 function findPW() {
-  const loginBox = document.querySelector(".loginInbox");
-
-  loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-  <div class="find"><input class="findInput findPwValue" type = "text" placeholder = "이메일을 입력해주세요"/>
-  <button class = "findButton"onclick = "findPWsubmit()"type = "button">아이디 찾기</button></div>`;
+  const loginBox = document.querySelector(".loginInput");
+  loginBox.classList.add("none");
+  document.querySelector(".find-pw-wrap").classList.remove("none");
 }
 
 function findPWsubmit() {
+  document.querySelector(".find-pw-wrap").classList.add("none");
   const emailR = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   let email = document.querySelector(".findPwValue").value;
   if (emailR.test(email)) {
@@ -154,11 +149,9 @@ function findPWsubmit() {
         if (res.data.social !== "local") {
           alert(`${res.data.social}로 가입되어 있는 회원입니다.`);
         } else {
-          const loginBox = document.querySelector(".loginInbox");
-          loginBox.innerHTML = ` <div class="close" onclick="loginClose()">x</div>
-        <div><h3>비밀번호 변경</h3><input class = "findInput"type = "password" name = "password" />
-        <input class = "findInput"type = "passcheck" name = "passchc"/>
-        <button class = "findButton"onclick = "findPwChange(${res.data.id})"type = "button">변경하기</button></div>`;
+          const inBox = document.querySelector(".find-pw-wrap-local");
+          inBox.classList.remove("none");
+          document.querySelector(".USERID").textContent = `${res.data.id}`;
         }
       } else {
         alert(`${res.data.message}`);
@@ -167,25 +160,29 @@ function findPWsubmit() {
     });
   } else {
     alert("등록되지 않은 이메일입니다.");
-    window.location.href = "/";
   }
 }
 
-function findPwChange(id) {
+function findPwChange() {
+  let id = document.querySelector(".USERID").textContent;
+  id = Number(id);
+  document.querySelector(".USERID").textContent = "";
   const passwordR =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_+=])[A-Za-z\d!@#$%^&*()\-_+=]{8,}$/;
-  const password = document.querySelector("input[name ='password']").value;
+  const password = document.querySelector("input[name ='password2']").value;
   const passchc = document.querySelector("input[name='passchc']").value;
   if (passwordR.test(password) && password == passchc) {
     axios.post("/passwordChange", { pw: password, id: id }).then((res) => {
       if (res.data.result) {
         alert("비밀번호 변경이 완료되었습니다.");
+
         window.location.reload();
       } else {
         alert(`${res.data.message}`);
       }
     });
   } else if (password !== passchc) {
+    console.log("password:", password, "passchc", passchc);
     alert("동일한 비밀번호를 입력해주세요.");
   } else {
     alert("비밀번호는 대소문자특수문자 숫자 포함 8자리 이상이어야 합니다. ");
@@ -195,57 +192,16 @@ function findPwChange(id) {
 cookieCheck();
 
 function loginClose() {
-  const loginWrap = document.querySelector(".loginBackground");
-  const loginBox = document.querySelector(".loginInbox");
-
-  loginBox.classList.remove("active");
-  setTimeout(() => {
-    loginWrap.style.display = "none";
-    loginBox.innerHTML = `
-        <div class="loginInput">
-          <div class="close" onclick="loginClose()">x</div>
-          <h2>로그인</h2>
-
-          <div class="email-text">
-            <input
-              class="textInput"
-              placeholder="이메일을 입력하세요"
-              type="text"
-              name="email"
-            /><div onclick="checkLogin()">로그인</div>
-          </div>
-           <input
-            name="password"
-            class="textInput textInputPassword"
-            type="password"
-          />
-          <div class="socialBtnBox">
-            <div id="naverIdLogin"></div>
-             <div id="googleLogin"></div>
-            <div id="kakaoLogin">
-              <a href="/auth/kakao">Login with Kakao</a>
-              <button onclick="kakaoLogin()">Login with Kakao</button>
-            </div>
-          </div>
-            
-          <div class="findBox">
-            <span onclick="findID()">아이디 찾기</span
-            ><span onclick="findPW()">비밀번호 찾기</span>
-          </div>
-
-          <div class="joinText">
-            아직 회원이 아니신가요? <a href="/join">회원가입</a>
-          </div>`;
-    naverLogin.init();
-    window.google.accounts.id.renderButton(
-      document.getElementById("googleLogin"),
-      {
-        type: "icon",
-        theme: "outline",
-        size: "large",
-      }
-    );
-  }, 300);
+  const a = document.querySelector(".find-pw-wrap-local");
+  const b = document.querySelector(".find-pw-wrap");
+  const c = document.querySelector(".find-id-wrap");
+  const loginBox = document.querySelector(".loginInput");
+  a.classList.add("none");
+  b.classList.add("none");
+  c.classList.add("none");
+  loginBox.classList.remove("none");
+  const loginBoxBox = document.querySelector(".loginInbox");
+  loginBoxBox.classList.remove("active");
 }
 
 function newWrite() {
@@ -325,7 +281,9 @@ function sendGooglelogin(name, email) {
 function myVelog(hsh) {
   window.location.href = `/detail/evelog/?hsh=${hsh.trim()}`;
 }
-Kakao.init("9bc00597a75e81014f1853097d2c171f");
+if (!Kakao.isInitialized()) {
+  Kakao.init("9bc00597a75e81014f1853097d2c171f");
+}
 function kakaoLogin() {
   const REST_API_KEY = "9bc00597a75e81014f1853097d2c171f"; // 카카오 REST API 키
   const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback"; // 리디렉트 URI

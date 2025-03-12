@@ -111,6 +111,32 @@ const likeCheck = async (req, res) => {
   }
 };
 
+const pushComment = async (req, res) => {
+  try {
+    const data = await models.Comments.create({
+      userid: req.body.userid,
+      postid: req.body.postid,
+      content: req.body.content,
+      nickname: req.body.nickname,
+      parentid: req.body.parentid,
+    });
+    res.json({ result: true, comments: data });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const getComment = async (req, res) => {
+  try {
+    const data = await models.Comments.findAll({
+      where: { postid: Number(req.body.postid) },
+    });
+    res.json({ comments: data });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 module.exports = {
   getPostDetail,
   getVelog,
@@ -118,4 +144,6 @@ module.exports = {
   getLike,
   dontLike,
   likeCheck,
+  pushComment,
+  getComment,
 };

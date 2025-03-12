@@ -44,7 +44,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      comment: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       vUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      imgsrc: {
         type: Sequelize.STRING,
         allowNull: true,
       },

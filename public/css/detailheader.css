@@ -286,3 +286,6 @@ body {
   aspect-ratio: 1/1;
   border-radius: 8px;
 }
+.none {
+  display: none;
+}

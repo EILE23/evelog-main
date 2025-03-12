@@ -156,6 +156,7 @@ const cookieCheck = async (req, res) => {
       }
       if (check) {
         res.json({
+          nickname: user.nickname,
           id: user.id,
           result: true,
           email: check.email,

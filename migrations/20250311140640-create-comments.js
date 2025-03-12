@@ -1,37 +1,44 @@
+"use strict";
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Data", {
+    await queryInterface.createTable("Comments", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      content: {
-        type: Sequelize.TEXT("long"),
-        allowNull: false,
-      },
-      title: {
-        type: Sequelize.TEXT("long"),
-        allowNull: false,
-      },
-      categoryid: {
+      parentid: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Category",
+          model: "Comments", // 자기 자신을 참조 (대댓글)
           key: "id",
         },
-        onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      imgsrc: {
-        type: Sequelize.TEXT("long"),
-        allowNull: true,
+      postid: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Data", // 게시글 테이블 참조
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
-      comment: {
-        type: Sequelize.TEXT("long"),
-        allowNull: true,
+      userid: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "User", // 유저 테이블 참조
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
+      content: {
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -47,7 +54,8 @@ module.exports = {
       },
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Category");
+    await queryInterface.dropTable("Comments");
   },
 };

@@ -84,6 +84,44 @@
             아직 회원이 아니신가요? <a href="/join">회원가입</a>
           </div>
         </div>
+        <div class="find-id-wrap none">
+          <div class="close" onclick="loginClose()">x</div>
+          <div class="find">
+            <input
+              class="findInput findIdValue"
+              type="text"
+              placeholder="휴대폰 번호를 입력해주세요"
+            />
+            <button class="findButton" onclick="findIDsubmit()" type="button">
+              찾기
+            </button>
+          </div>
+        </div>
+        <div class="find-pw-wrap none">
+          <div class="close" onclick="loginClose()">x</div>
+          <div class="find">
+            <input
+              class="findInput findPwValue"
+              type="text"
+              placeholder="이메일을 입력해주세요"
+            />
+            <p class="none USERID"></p>
+            <button class="findButton" onclick="findPWsubmit()" type="button">
+              찾기
+            </button>
+          </div>
+        </div>
+        <div class="find-pw-wrap-local none">
+          <div class="close" onclick="loginClose()">x</div>
+          <div>
+            <h3>비밀번호 변경</h3>
+            <input class="findInput" type="password" name="password2" />
+            <input class="findInput" type="password" name="passchc" />
+            <button class="findButton" onclick="findPwChange()" type="button">
+              변경하기
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
