@@ -196,12 +196,12 @@ const getContent = async (req, res) => {
     if (req.query.categoryid === "all") {
       if (req.query.ud === "up") {
         content = await models.Data.findAll({
-          order: [["updatedAt", "DESC"]],
+          order: [["updatedAt", "ASC"]],
           limit: 50,
         });
       } else {
         content = await models.Data.findAll({
-          order: [["updatedAt", "ASC"]],
+          order: [["updatedAt", "DESC"]],
           limit: 50,
         });
       }
@@ -209,18 +209,18 @@ const getContent = async (req, res) => {
       if (req.query.ud === "up") {
         content = await models.Data.findAll({
           where: { categoryid: Number(req.query.categoryid) },
-          order: [["updatedAt", "DESC"]],
+          order: [["updatedAt", "ASC"]],
           limit: 50,
         });
       } else {
         content = await models.Data.findAll({
           where: { categoryid: Number(req.query.categoryid) },
-          order: [["updatedAt", "ASC"]],
+          order: [["updatedAt", "DESC"]],
           limit: 50,
         });
       }
     }
-
+    const commentCnt = content.map((item) => item.commentCnt);
     const title = content.map((item) => item.title);
     const contentData = content.map((item) => item.comment);
     const img = content.map((item) => item.imgsrc);
@@ -241,6 +241,7 @@ const getContent = async (req, res) => {
       text: item,
       date: date[i],
       nickname: nickname[i],
+      commentCnt: commentCnt[i],
     }));
 
     res.json(total);

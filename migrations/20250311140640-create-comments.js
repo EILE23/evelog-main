@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      replyCnt: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

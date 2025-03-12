@@ -294,6 +294,7 @@ body {
   width: 296px;
   height: 100px;
 }
+
 @media screen and (max-width: 1270px) {
   .imgBox {
     width: 200px;

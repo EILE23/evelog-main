@@ -56,6 +56,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      followCnt: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      followerCnt: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
 
       createdAt: {
         type: Sequelize.DATE, // 생성일

@@ -81,14 +81,25 @@ function contentGet(id, ud) {
         date = "오늘";
       }
 
-      const img = item.img ? item.img : "/public/img/brokenimg.png";
-
+      const img =
+        item.img !== null &&
+        item.img !== undefined &&
+        item.img !== "" &&
+        item.img !== "null"
+          ? item.img
+          : "/public/img/noimage.jpeg";
+      console.log(img);
+      let cnt = item.commentCnt > 0 ? item.commentCnt : 0;
+      let text =
+        item.text.slice(0, 80).length > 40
+          ? `${item.text.slice(0, 80)}. . .`
+          : item.text;
       mainwrap.innerHTML += `
         <div class = "content-box" onclick = detailPage(${item.id})>
-          <img src="${img}" />
+          <img src=${img} />
           <h3>${item.title}</h3>
-          <p>${item.text}</p>
-          <div>${date}</div>
+          <p>${text}</p>
+          <div class = "timeComment"><div>${date}</div><div>${cnt}개의 댓글</div></div>
           <div class = "hr"><hr/></div>
           <div class = "nickname"/><img class = "profileImg"src = "${
             item.nickname.img

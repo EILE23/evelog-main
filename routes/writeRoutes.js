@@ -18,7 +18,10 @@ const upload = multer({ storage });
 router.get("/categories", controller.getCategory);
 router.get("/checkCookie", controller.cookieCheck);
 router.get("/content/:userId", controller.exportContentByUser);
+router.get("/search", controller.searchPage);
 
 router.post("/saveData", upload.single("file"), controller.createData);
+router.post("/likeP", controller.getLikePost);
+router.post("/recentP", controller.getRecentPost);
 
 module.exports = router;
