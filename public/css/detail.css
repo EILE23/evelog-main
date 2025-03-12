@@ -85,10 +85,46 @@
   width: 6.25rem;
   text-align: center;
 }
+
 .comment-container .comment-btn:hover {
   filter: brightness(1.2);
+  cursor: pointer;
 }
 
 .replyArea {
   margin-left: 100px;
+}
+
+.reply-btn {
+  padding: 4px;
+  background-color: #12b886;
+  color: white;
+  font-weight: 600;
+  width: 4.25rem;
+  text-align: center;
+  border: none;
+}
+.reply-btn:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
+.commentBox {
+  margin-top: 20px;
+  display: flex;
+}
+.commentBox div {
+  font-weight: 700;
+}
+
+.commentBox p {
+  font-weight: 400;
+}
+.com-contentBox {
+  display: flex;
+}
+
+.commentarea {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

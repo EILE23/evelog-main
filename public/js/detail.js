@@ -10,13 +10,60 @@ async function fetchPostDetail(postId) {
     console.log(post, user);
     // Display the post details on the page
     axios.get("/checkCookie").then((res) => {
-      axios
-        .post("/detail/checkLike", { userid: res.data.id, postid: post.id })
-        .then((r) => {
-          if (r.data.result) {
-            document.querySelector(".heartbox").classList.toggle("like");
+      if (res.data.result) {
+        axios
+          .post("/detail/checkLike", { userid: res.data.id, postid: post.id })
+          .then((r) => {
+            if (r.data.result) {
+              document.querySelector(".heartbox").classList.toggle("like");
+            }
+          });
+      }
+    });
+    axios.get("/checkCookie").then((res) => {
+      axios.post("/detail/commentRequest", { postid: post.id }).then((r) => {
+        const cArea = document.querySelector(".commentarea");
+
+        r.data.comments.map((v) => {
+          if (v.parentid === null) {
+            if (v.nickname === res.data.nickname) {
+              cArea.innerHTML += `<div class = "commentBox"><div>${v.nickname}
+                          <p>${v.content} </p>
+                          <button  class = "reply-btn" onclick = "replyComment(${v.id},this)">대댓글</button><button class = "reply-btn"onclick = "removeComment()">삭제</button>
+                          <div class = "comment-replyArea${v.id} replyArea"></div>
+                      </div></div>`;
+            } else {
+              cArea.innerHTML += `<div class = "commentBox"><div>${v.nickname}
+                          <p>${v.content} </p>
+                          <button  class = "reply-btn" onclick = "replyComment(${v.id},this)">대댓글</button>
+                          <div class = "comment-replyArea${v.id} replyArea"></div>
+                      </div>`;
+            }
+          } else {
+            const area = document.querySelector(
+              `.comment-replyArea${v.parentid}`
+            );
+            if (area) {
+              if (v.nickname === res.data.nickname) {
+                area.innerHTML += `<div class = "commentBox"><div>${v.nickname}<p>${v.content} </p><button class = "reply-btn" onclick = "replyRComment(${v.parentid},this)">대대댓글</button><div class = "comment-replyArea-replyArea${v.parentid}"><button class = "reply-btn"onclick = "removeComment()">삭제</button></div></div>`;
+              } else {
+                area.innerHTML += `<div class = "commentBox"><div>${v.nickname}<p>${v.content} </p><button class = "reply-btn" onclick = "replyRComment(${v.parentid},this)">대대댓글</button><div class = "comment-replyArea-replyArea${v.parentid}"></div></div>`;
+              }
+            } else {
+              const rarea = document.querySelector(
+                `.comment-replyArea-replyArea${v.parentid}`
+              );
+              if (rarea) {
+                if (v.nickname === res.data.nickname) {
+                  rarea.innerHTML += `<div class = "commentBox"><div>${v.nickname}<p>${v.content} </p><button class = "reply-btn" onclick = "replyRComment(${v.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${v.id}"><button class = "reply-btn"onclick = "removeComment()">삭제</button></div></div>`;
+                } else {
+                  rarea.innerHTML += `<div class = "commentBox"><div>${v.nickname}<p>${v.content} </p><button class = "reply-btn" onclick = "replyRComment(${v.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${v.id}"></div></div>`;
+                }
+              }
+            }
           }
         });
+      });
     });
     const data = new Date(post.createdAt).toLocaleString().split(".");
     const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
@@ -26,11 +73,8 @@ async function fetchPostDetail(postId) {
     ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
     document.getElementById("post-image").src = post.imgsrc;
     document.getElementById("post-content").innerHTML = post.content;
-    axios.post("/detail/commentRequest", { postid: post.id }).then((r) => {
-      console.log(r.data);
-    });
   } catch (error) {
-    console.error("Error fetching post:", error);
+    console.error("error", error);
   }
 }
 
@@ -116,11 +160,11 @@ function commentSubmit() {
         .then((res) => {
           console.log(res.data);
           const cArea = document.querySelector(".commentarea");
-          cArea.innerHTML += `<div>${res.data.comments.nickname}
+          cArea.innerHTML += `<div class = "commentBox"><div>${res.data.comments.nickname}
                                   <p>${res.data.comments.content} </p>
-                                  <button onclick = "replyComment(${res.data.comments.id},this)">대댓글</button>
+                                  <button class = "reply-btn" onclick = "replyComment(${res.data.comments.id},this)">대댓글</button>
                                   <div class = "comment-replyArea${res.data.comments.id} replyArea"></div>
-                              </div>`;
+                              </div></div>`;
         });
     } else if (content.length === 0) {
       return;
@@ -134,7 +178,7 @@ function replyComment(id) {
   if (replychc === false) {
     const area = document.querySelector(`.comment-replyArea${id}`);
     replychc = true;
-    area.innerHTML += `<input class = "replyInput${id}" type = "text"/><button class = "replyBtn${id}"onclick = "replySubmit(${id})">작성</button>`;
+    area.innerHTML += `<input class = "replyInput${id}" type = "text"/><button class = "replyBtn${id} reply-btn"onclick = "replySubmit(${id})">작성</button>`;
   } else {
     return;
   }
@@ -143,7 +187,7 @@ function replyRComment(id) {
   if (replychc === false) {
     const area = document.querySelector(`.comment-replyArea-replyArea${id}`);
     replychc = true;
-    area.innerHTML += `<input class = "replyInput${id}" type = "text"/><button class = "replyBtn${id}"onclick = "replyRSubmit(${id})">작성</button>`;
+    area.innerHTML += `<input class = "replyInput${id}" type = "text"/><button class = "replyBtn${id} reply-btn"onclick = "replyRSubmit(${id})">작성</button>`;
   } else {
     return;
   }
@@ -170,7 +214,7 @@ function replySubmit(id) {
             replychc = false;
             input.remove();
             btn.remove();
-            area.innerHTML += `<div>${res.data.comments.nickname}<p>${res.data.comments.content} </p><button onclick = "replyRComment(${res.data.comments.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${res.data.comments.id}"></div></div>`;
+            area.innerHTML += `<div class = "commentBox"><div>${res.data.comments.nickname}<p>${res.data.comments.content} </p><button class = "reply-btn"onclick = "replyRComment(${res.data.comments.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${res.data.comments.id}"></div></div></div>`;
           });
       } else {
         alert("로그인 후 이용가능합니다.");
@@ -200,7 +244,7 @@ function replyRSubmit(id) {
             replychc = false;
             input.remove();
             btn.remove();
-            area.innerHTML += `<div>${res.data.comments.nickname}<p>${res.data.comments.content} </p><button onclick = "replyRComment(${res.data.comments.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${res.data.comments.id}"></div></div>`;
+            area.innerHTML += `<div class = "commentBox"><div>${res.data.comments.nickname}<p>${res.data.comments.content} </p><button class = "reply-btn"onclick = "replyRComment(${res.data.comments.id},this)">대대댓글</button><div class = "comment-replyArea-replyArea${res.data.comments.id}"></div></div></div>`;
           });
       } else {
         alert("로그인 후 이용가능합니다.");

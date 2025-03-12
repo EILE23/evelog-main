@@ -140,6 +140,16 @@ const userDestroy = async (req, res) => {
   }
 };
 
+const getMypost = async (req, res) => {
+  try {
+    const EMAIL = await models.User.findOne({ where: { vUrl: req.body.vUrl } });
+    const post = await models.Data.findAll({ where: { email: EMAIL.email } });
+
+    res.json({ post: post });
+  } catch (e) {
+    console.error(e);
+  }
+};
 module.exports = {
   updateAddress,
   updatePass,
@@ -148,4 +158,5 @@ module.exports = {
   fileRemove,
   fileUpload,
   userDestroy,
+  getMypost,
 };

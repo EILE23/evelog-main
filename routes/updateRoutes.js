@@ -21,6 +21,7 @@ router.post("/updateAddress", controller.updateAddress);
 router.post("/updateTitle", controller.updateTitle);
 router.post("/getFile", upload.single("file"), controller.fileUpload);
 router.post("/userDestroy", controller.userDestroy);
+router.post("/getmypost", controller.getMypost);
 
 router.delete("/delFile", controller.fileRemove);
 

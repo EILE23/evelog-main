@@ -36,16 +36,20 @@
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  width: 90%;
+  /* width: 90%; */
   margin: 0 auto;
 }
 
+.select {
+  margin-right: 30px;
+}
+
 .main-container {
-  width: 100%;
+  /* width: 90%; */
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 기본적으로 4개씩 표시 */
-  gap: 20px; /* 각 아이템 간의 간격 */
+  gap: 20px;
 }
 
 .content-box {

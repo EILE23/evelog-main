@@ -46,7 +46,7 @@ const getPostDetail = async (req, res) => {
 };
 
 const getVelog = (req, res) => {
-  res.render("evelog", { email: req.params.email });
+  res.render("evelog", { vUrl: req.query.hsh });
 };
 
 const postGet = async (req, res) => {
@@ -103,8 +103,11 @@ const likeCheck = async (req, res) => {
     const data = await models.Like.findOne({
       where: { userid: req.body.userid, postid: req.body.postid },
     });
-
-    res.json({ result: true });
+    if (data) {
+      res.json({ result: true });
+    } else {
+      res.json({ result: false });
+    }
   } catch (e) {
     console.error(e);
     res.json({ result: false });
