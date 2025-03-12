@@ -126,46 +126,7 @@
     </div>
 
     <p id="token-result"></p>
-    <script>
-      const KaApiKey = "ddff36a507d10a48af5cd1c1cc5cbabe";
-      //2. 카카오 초기화
-      Kakao.init(KaApiKey);
-      Kakao.isInitialized();
-      //3. 카카오로그인 코드 확인
-      function loginWithKakao() {
-        Kakao.Auth.login({
-          success: function (authObj) {
-            console.log(authObj); //access토큰 값
-            Kakao.Auth.setAccessToken(authObj.access_token); //access 토큰 값 저장
-            getInfo();
-          },
-          fail: function (err) {
-            console.log(err);
-          },
-        });
-      }
-
-      // 아래는 데모를 위한 UI 코드입니다.
-      function getInfo() {
-        Kakao.API.request({
-          url: "/v2/user/me",
-          success: function (res) {
-            console.log(res);
-            var id = res.id;
-            var profile_nickname = res.kakao_account.profile.nickname;
-            localStorage.setItem("nickname", profile_nickname);
-            localStorage.setItem("id", id);
-            console.log(profile_nickname);
-            console.log(id);
-          },
-          fail: function (error) {
-            alert("카카오 로그인 실패" + JSON.stringify(error));
-          },
-        });
-      }
-    </script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
     <script src="/public/js/header.js"></script>
   </body>
 </html>
