@@ -9,14 +9,11 @@
   </head>
   <body>
     <%- include("global/myheader") %> my velog
-
-    <script>
-      const urlParam = new URLSearchParams(window.location.search);
-      const hsh2 = urlParam.get("hsh");
-      console.log(hsh2);
-      axios.post("/update/getmypost", { vUrl: hsh2 }).then((res) => {
-        console.log(res.data.post);
-      });
-    </script>
+    <div id="followsContainer">
+      <div id="followers"></div>
+      <div id="followings"></div>
+    </div>
+    <div id="postsContainer"></div>
   </body>
+  <script src="/public/js/evelog.js"></script>
 </html>

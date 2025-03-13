@@ -150,6 +150,7 @@ const getMypost = async (req, res) => {
     console.error(e);
   }
 };
+
 module.exports = {
   updateAddress,
   updatePass,
