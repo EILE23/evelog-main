@@ -6,6 +6,10 @@ const salt = 10;
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
 
+const searchPage = async (req, res) => {
+  res.render("search");
+};
+
 const getCategory = async (req, res) => {
   try {
     const categories = await models.Category.findAll({});
@@ -75,9 +79,30 @@ const exportContentByUser = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+const getLikePost = async (req, res) => {
+  let post = await models.Like.findAll({ where: { userid: req.body.id } });
+  let posts = post.map((item) => {
+    return item.postid;
+  });
+
+  post = await models.Data.findAll({ where: { id: posts } });
+
+  res.json(post);
+};
+
+const getRecentPost = async (req, res) => {
+  let post = await models.Data.findAll({ where: { id: req.body.post } });
+
+  res.json(post);
+};
+
 module.exports = {
   getCategory,
   createData,
   cookieCheck,
   exportContentByUser,
+  getLikePost,
+  getRecentPost,
+  searchPage,
 };

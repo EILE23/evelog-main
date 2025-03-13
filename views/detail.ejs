@@ -9,30 +9,42 @@
     <title>evelog</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <body>
+  <body class="blurred-text">
     <%- include("global/detailheader") %>
     <div class="main-wrap">
       <div class="sub-container">
         <h1 id="post-title"></h1>
         <p id="post-author"></p>
-
-        <img id="post-image" src="" alt="Post Image" />
+        <div id="imgBox"></div>
 
         <div id="post-content"></div>
       </div>
 
-      <div class="heartbox">
-        <img src="/public/img/like_heart.png" />
+      <div class="upHeart">
+        <img class="heartbox" src="/public/img/like_heart.png" />
+        <hr />
+        <img class="upbox" src="/public/img/upicon.png" />
+      </div>
+      <div class="profile-area">
+        <img src="/public/img/user-thumbnail.png" />
+        <div class="profile-text">
+          <h3>title</h3>
+          <p>comment</p>
+        </div>
+      </div>
+      <div class="cntbox">
+        <p><span class="cmtCnt">0</span>개의 댓글</p>
+      </div>
+      <div class="comment-container">
+        <div class="comment-box">
+          <textarea placeholder="댓글을 작성하세요"></textarea>
+          <div class="comment-btn" onclick="commentSubmit()">댓글 달기</div>
+        </div>
       </div>
 
-      <div class="comment-container">
-        <textarea></textarea>
-        <div class="comment-btn" onclick="commentSubmit()">댓글 달기</div>
-      </div>
-      <div class="comment-areaBox">
-        <div class="commentarea"></div>
-      </div>
+      <div class="comment-areaBox"></div>
     </div>
+
     <script src="https://apis.google.com/js/platform.js" async defer></script>
   </body>
   <script src="/public/js/detail.js"></script>

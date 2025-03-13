@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.TEXT("long"),
         allowNull: true,
       },
+      commentCnt: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

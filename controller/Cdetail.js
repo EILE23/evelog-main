@@ -1,6 +1,6 @@
 const models = require("../models");
 const marked = require("marked");
-
+const { Sequelize } = require("../models");
 const getPostDetail = async (req, res) => {
   try {
     const postId = req.params.postId;
@@ -29,6 +29,7 @@ const getPostDetail = async (req, res) => {
         id: post.id,
         imgsrc: post.imgsrc,
         title: post.title,
+        commentCnt: post.commentCnt,
         content: htmlContent,
         createdAt: post.createdAt,
       },
@@ -37,6 +38,8 @@ const getPostDetail = async (req, res) => {
         vUrl: user.vUrl,
         nickname: user.nickname,
         title: user.title,
+        imgsrc: user.imgsrc,
+        comment: user.comment,
       },
     });
   } catch (error) {
@@ -123,6 +126,33 @@ const pushComment = async (req, res) => {
       nickname: req.body.nickname,
       parentid: req.body.parentid,
     });
+
+    if (req.body.parentid) {
+      await models.Comments.update(
+        {
+          replyCnt: Sequelize.literal(`
+          CASE 
+            WHEN replyCnt IS NULL THEN 1 
+            ELSE replyCnt + 1 
+          END
+        `),
+        },
+        { where: { id: Number(req.body.parentid) } }
+      );
+    } else {
+      await models.Data.update(
+        {
+          commentCnt: Sequelize.literal(`
+        CASE 
+          WHEN commentCnt IS NULL THEN 1 
+          ELSE commentCnt + 1 
+        END
+      `),
+        },
+        { where: { id: Number(req.body.postid) } }
+      );
+    }
+
     res.json({ result: true, comments: data });
   } catch (e) {
     console.error(e);
@@ -133,7 +163,14 @@ const getComment = async (req, res) => {
   try {
     const data = await models.Comments.findAll({
       where: { postid: Number(req.body.postid) },
+      include: [
+        {
+          model: models.User, // User 테이블 조인
+          attributes: ["id", "nickname", "vUrl", "imgsrc"], // 필요한 필드만 가져오기
+        },
+      ],
     });
+
     res.json({ comments: data });
   } catch (e) {
     console.error(e);

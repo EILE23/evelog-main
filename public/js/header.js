@@ -4,6 +4,9 @@ function infoPage() {
 function likePage() {
   window.location.href = "/likePage";
 }
+function search() {
+  window.location.href = "/write/search";
+}
 
 function logout() {
   axios({
@@ -54,7 +57,7 @@ function cookieCheck() {
 
       loginWrap.innerHTML = `<div class="title">evelog</div>
           <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
+            <img class="icon" onclick="alam()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
             <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
             <div class="myInfo">
@@ -202,6 +205,9 @@ function loginClose() {
   loginBox.classList.remove("none");
   const loginBoxBox = document.querySelector(".loginInbox");
   loginBoxBox.classList.remove("active");
+  setTimeout(() => {
+    document.querySelector(".loginBackground").style.display = "none";
+  }, 150);
 }
 
 function newWrite() {
@@ -289,4 +295,8 @@ function kakaoLogin() {
   const REDIRECT_URI = "http://localhost:3000/auth/kakao/callback"; // 리디렉트 URI
   const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   window.location.href = kakaoLoginUrl; // 로그인 페이지로 이동
+}
+
+function alam() {
+  alert("미구현 기능입니다.");
 }

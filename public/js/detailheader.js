@@ -1,4 +1,7 @@
 let head;
+function search() {
+  window.location.href = "/write/search";
+}
 
 async function fetchPostDetail(postId) {
   try {
@@ -80,7 +83,7 @@ function cookieCheck(hd, vUrl) {
                                         </a>
                                 </div>
             <div class="iconBox">
-              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon" onclick="alam()" src="/public/img/alam.png" />
               <img class="icon" onclick="search()" src="/public/img/search.png" />
               <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
               <div class="myInfo">
@@ -231,6 +234,9 @@ function loginClose() {
   loginBox.classList.remove("none");
   const loginBoxBox = document.querySelector(".loginInbox");
   loginBoxBox.classList.remove("active");
+  setTimeout(() => {
+    document.querySelector(".loginBackground").style.display = "none";
+  }, 150);
 }
 
 function newWrite() {
@@ -336,4 +342,8 @@ fetchPostDetail(postId);
 
 function myVelog(hsh) {
   window.location.href = `/detail/evelog/?hsh=${hsh.trim()}`;
+}
+
+function alam() {
+  alert("미구현 기능입니다.");
 }

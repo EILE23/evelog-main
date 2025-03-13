@@ -1,5 +1,8 @@
 let post;
 let user;
+function search() {
+  window.location.href = "/write/search";
+}
 
 function infoPage() {
   window.location.href = "/infoPage";
@@ -216,6 +219,9 @@ function loginClose() {
   loginBox.classList.remove("none");
   const loginBoxBox = document.querySelector(".loginInbox");
   loginBoxBox.classList.remove("active");
+  setTimeout(() => {
+    document.querySelector(".loginBackground").style.display = "none";
+  }, 150);
 }
 function newWrite() {
   window.location.href = "/write";

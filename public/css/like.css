@@ -23,7 +23,12 @@
   text-decoration: none;
   text-wrap: nowrap;
 }
-
+.postBtn:hover {
+  cursor: pointer;
+}
+#recentBtn {
+  color: grey;
+}
 .underLine {
   height: 2px;
   width: 50%;

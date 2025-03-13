@@ -12,10 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       postid: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "Data",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
       userid: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: "User",
+          key: "id",
+        },
+        onDelete: "CASCADE",
       },
     },
     {
@@ -26,10 +36,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  // 관계 설정 (필요하면 여기서 추가)
+  // 관계 설정
   Like.associate = (db) => {
-    Like.belongsTo(db.User, { foreignKey: "userid" });
-    // 예시: Like.belongsTo(db.Post, { foreignKey: 'postid' });
+    Like.belongsTo(db.User, {
+      foreignKey: "userid",
+      targetKey: "id",
+      onDelete: "CASCADE",
+    });
+    Like.belongsTo(db.Data, {
+      foreignKey: "postid",
+      targetKey: "id",
+      onDelete: "CASCADE",
+    });
   };
 
   return Like;

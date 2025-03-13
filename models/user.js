@@ -62,6 +62,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      followCnt: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      followerCnt: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
     {
       charset: "utf8",

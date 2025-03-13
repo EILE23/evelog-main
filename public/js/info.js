@@ -262,10 +262,9 @@ function userDestroy() {
 }
 
 const loadContent = () => {
-  // 가상의 데이터 로딩 과정
   setTimeout(() => {
     const body = document.querySelector("body");
 
-    body.classList.remove("blurred-text"); // 블러 효과 제거
-  }, 150);
+    body.classList.remove("blurred-text");
+  }, 120);
 };

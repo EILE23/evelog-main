@@ -1,7 +1,5 @@
 let data = JSON.parse(window.localStorage.getItem("readingPage"));
 
-let content = new Set([...data]);
-
 const likedBtn = document.getElementById("likedBtn");
 const recentBtn = document.getElementById("recentBtn");
 const underLine = document.getElementById("underLine");
@@ -15,17 +13,18 @@ const underline = (button) => {
   }px`;
 };
 
-window.onload = () => underline(likedBtn);
-
-likedBtn.addEventListener("click", (e) => {
+window.onload = () => {
   underline(likedBtn);
+};
+
+likedBtn.addEventListener("click", () => {
+  underline(likedBtn);
+  likedBtn.style.color = "black";
+  recentBtn.style.color = "grey";
   axios.get("/checkCookie").then((res) => {
     if (res.data.result) {
-      axios.post("/update/likeP", { id: res.data.id }).then((r) => {
-        const likeP = document.querySelector(".content-container");
-        r.data.map((item) => {
-          likeP.innerHTML += item.title;
-        });
+      axios.post("/write/likeP", { id: res.data.id }).then((r) => {
+        console.log(r.data);
       });
     }
   });
@@ -33,8 +32,10 @@ likedBtn.addEventListener("click", (e) => {
 
 recentBtn.addEventListener("click", (e) => {
   underline(recentBtn);
-  axios.post("/update/recentP", { post: content }).then((res) => {
-    if (res.data.result) {
-    }
+  likedBtn.style.color = "grey";
+  recentBtn.style.color = "black";
+  let content = new Set([...data]);
+  axios.post("/write/recentP", { post: content }).then((res) => {
+    console.log(res.data);
   });
 });
