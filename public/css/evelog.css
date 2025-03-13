@@ -5,7 +5,13 @@
 #postsContainer {
   display: flex;
   flex-direction: column;
-  margin: auto 100px;
+  width: 55%;
+  margin: 0 auto;
+}
+
+.post-content-container {
+  border-bottom: 1px solid #888;
+  margin-bottom: 20px;
 }
 
 .post {
@@ -16,35 +22,37 @@
   padding-bottom: 20px; /* Add padding below the line */
 }
 
-.post-thumbnail {
+.post-thumbnail img {
   width: 100%; /* Thumbnail takes full width */
   max-height: 500px; /* Adjust as needed */
   object-fit: contain; /* or cover, depending on desired behavior */
   margin-bottom: 20px; /* Margin between thumbnail and text */
 }
 
-/* .post-content-text {
-  margin: auto 100px;
-} */
-
 .post-title {
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.post-content {
-  font-size: 16px;
+.post-comment {
   margin-bottom: 10px;
 }
 
-.post-content-image {
-  max-width: 100%;
-  max-height: 300px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.post-created-at {
+.post-footer-container {
+  display: flex;
+  margin-bottom: 40px;
   font-size: 14px;
   color: #888;
+}
+
+.post-comments {
+  margin-left: 10px;
+}
+
+.post-likes {
+  margin-left: 10px;
+}
+
+.post-likes img {
+  height: 12px;
 }
