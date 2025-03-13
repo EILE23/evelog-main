@@ -30,13 +30,18 @@ a {
   display: flex;
   justify-content: space-between;
 }
-.upbtnbox div {
+.upbtnBox {
+  display: flex;
+}
+.upbtnBox div {
   padding: 4px;
   background-color: #12b886;
   color: white;
   font-weight: bolder;
+  margin: 3px;
+  border-radius: 4px;
 }
-.upbtnbox div:hover {
+.upbtnBox div:hover {
   cursor: pointer;
   filter: brightness(1.1);
 }

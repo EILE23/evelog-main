@@ -101,10 +101,10 @@ function fetchPosts() {
     
         <div class="buttons-container">
         <div class="edit-button">
-        <button>수정</button>
+        <button onclick = "edit(${post.id})">수정</button>
         </div>
         <div class="delete-button">
-        <button>삭제</button>
+        <button onclick = "remove(${post.id})">삭제</button>
         </div>
         </div>
         </div>
@@ -113,6 +113,28 @@ function fetchPosts() {
     });
   });
 }
+function remove(id) {
+  Swal.fire({
+    title: "정말로 삭제하시겠습니까?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.post("/update/postDestroy", { id: id }).then((res) => {
+        console.log("삭제 성공");
+        window.location.href = "/";
+      });
+    } else {
+      return;
+    }
+  });
+}
 
+function edit(id) {
+  window.location.href = `/update/edit/?i=${id}`;
+}
 // Initial fetch
 fetchPosts();

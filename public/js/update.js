@@ -135,6 +135,11 @@ window.onload = () => {
     });
   }
   cookieCheck();
+
+  const urlp = new URLSearchParams(window.location.search);
+  const postID = urlp.get("i");
+  console.log(postID);
+  getData(postID);
 };
 
 const fileInput = document.querySelector(".post_file");
@@ -250,7 +255,10 @@ function cancel() {
   window.location.href = "/";
 }
 
-function getData() {
-  const urlp = new URLSearchParams(window.location.search);
-  const postID = urlp.get("i");
+function getData(id) {
+  axios.get(`/update/getEditPost/${id}`).then((res) => {
+    console.log(res.data);
+    document.querySelector(".toast_title").value = res.data.title;
+    editor.setHTML(res.data.content);
+  });
 }

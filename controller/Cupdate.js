@@ -151,6 +151,30 @@ const getMypost = async (req, res) => {
   }
 };
 
+const postDestroy = async (req, res) => {
+  try {
+    await models.Data.destroy({ where: { id: req.body.id } });
+    res.json({ result: true });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const editPage = (req, res) => {
+  res.render("update");
+};
+
+const getEditPost = async (req, res) => {
+  try {
+    const post = await models.Data.findOne({
+      where: { id: Number(req.params.id) },
+    });
+    res.json(post);
+  } catch (e) {
+    console.error(E);
+  }
+};
+
 module.exports = {
   updateAddress,
   updatePass,
@@ -160,4 +184,7 @@ module.exports = {
   fileUpload,
   userDestroy,
   getMypost,
+  postDestroy,
+  editPage,
+  getEditPost,
 };

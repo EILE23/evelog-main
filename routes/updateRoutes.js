@@ -15,6 +15,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get("/getEditPost/:id", controller.getEditPost);
+router.get("/edit", controller.editPage);
+
 router.post("/updateEdit", controller.updateEdit);
 router.post("/updatePass", controller.updatePass);
 router.post("/updateAddress", controller.updateAddress);
@@ -22,6 +25,7 @@ router.post("/updateTitle", controller.updateTitle);
 router.post("/getFile", upload.single("file"), controller.fileUpload);
 router.post("/userDestroy", controller.userDestroy);
 router.post("/getmypost", controller.getMypost);
+router.post("/postDestroy", controller.postDestroy);
 
 router.delete("/delFile", controller.fileRemove);
 

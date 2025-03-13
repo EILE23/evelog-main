@@ -1,5 +1,5 @@
 let post, user;
-let loginuser = 0;
+
 function myevelog(vUrl) {
   window.location.href = `/detail/evelog/?hsh=${vUrl}`;
 }
@@ -14,11 +14,30 @@ async function fetchPostDetail(postId) {
 
     console.log(post, user);
     // Display the post details on the page
-
+    let loginuser;
     axios.get("/checkCookie").then((res) => {
       if (res.data.result) {
+        console.log("res.dataid:", res.data.id);
         loginuser = res.data.id;
+        console.log("loginuser:", loginuser);
 
+        const data = new Date(post.createdAt).toLocaleString().split(".");
+        const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
+        document.getElementById("post-title").textContent = post.title;
+        console.log("log", loginuser);
+        if (loginuser === user.id) {
+          document.getElementById(
+            "post-author"
+          ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div><div class="upbtnBox"><div onclick = "edit(${post.id})">수정</div><div onclick = "remove(${post.id})">삭제</div></div>`;
+        } else {
+          document.getElementById(
+            "post-author"
+          ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+        }
+        document.getElementById("imgBox").innerHTML = post.imgsrc
+          ? ` <img id="post-image" src="${post.imgsrc}" alt="Post Image" />`
+          : "";
+        document.getElementById("post-content").innerHTML = post.content;
         axios
           .post("/detail/checkLike", { userid: res.data.id, postid: post.id })
           .then((r) => {
@@ -148,27 +167,6 @@ async function fetchPostDetail(postId) {
         ).innerHTML = `<a href = "/detail/evelog/?hsh=${user.vUrl}">${user.comment}</a>`;
       });
     });
-
-    const data = new Date(post.createdAt).toLocaleString().split(".");
-    const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
-    document.getElementById("post-title").textContent = post.title;
-    console.log(loginuser, user.id);
-    if (loginuser === user.id) {
-      document.getElementById(
-        "post-author"
-      ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
-      document.querySelector(
-        ".upbtnBox"
-      ).innerHTML = `<div onclick = "edit(${post.id})">수정</div><div onclick = "remove(${post.id})">삭제</div>`;
-    } else {
-      document.getElementById(
-        "post-author"
-      ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
-    }
-    document.getElementById("imgBox").innerHTML = post.imgsrc
-      ? ` <img id="post-image" src="${post.imgsrc}" alt="Post Image" />`
-      : "";
-    document.getElementById("post-content").innerHTML = post.content;
   } catch (error) {
     console.error("error", error);
   }
@@ -417,3 +415,27 @@ const loadContent = () => {
     body.classList.remove("blurred-text");
   }, 1);
 };
+
+function remove(id) {
+  Swal.fire({
+    title: "정말로 삭제하시겠습니까?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.post("/update/postDestroy", { id: id }).then((res) => {
+        console.log("삭제 성공");
+        window.location.href = "/";
+      });
+    } else {
+      return;
+    }
+  });
+}
+
+function edit(id) {
+  window.location.href = `/update/edit/?i=${id}`;
+}
