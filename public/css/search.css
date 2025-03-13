@@ -28,3 +28,73 @@
   opacity: 0.5;
   padding-left: 10px;
 }
+
+.bold {
+  font-weight: 1000;
+}
+
+#postsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+  margin: 40px auto;
+}
+#postsContainer span {
+  font-size: 25px;
+  color: rgb(193, 188, 188);
+}
+.post-content-container {
+  border-bottom: 1px solid #888;
+  margin-bottom: 20px;
+}
+
+.post {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack thumbnail and text vertically */
+  margin-bottom: 20px; /* Space between posts */
+  border-bottom: 1px solid #ccc; /* Add horizontal line */
+  padding-bottom: 20px; /* Add padding below the line */
+}
+
+.post-thumbnail img {
+  width: 100%; /* Thumbnail takes full width */
+  max-height: 500px; /* Adjust as needed */
+  object-fit: contain; /* or cover, depending on desired behavior */
+  margin-bottom: 20px; /* Margin between thumbnail and text */
+}
+
+.post-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  margin: 20px 0;
+}
+
+.post-comment {
+  margin-bottom: 30px;
+}
+
+.post-footer-container {
+  display: flex;
+  margin-bottom: 40px;
+  font-size: 14px;
+  color: #888;
+}
+
+.post-comments {
+  margin-left: 10px;
+}
+
+.post-likes {
+  margin-left: 10px;
+}
+
+.post-likes img {
+  height: 12px;
+}
+
+@media screen and (max-width: 768px) {
+  .input {
+    font-size: 18px;
+  }
+}

@@ -23,5 +23,6 @@ router.get("/search", controller.searchPage);
 router.post("/saveData", upload.single("file"), controller.createData);
 router.post("/likeP", controller.getLikePost);
 router.post("/recentP", controller.getRecentPost);
+router.post("/searchInput", controller.getSearchPost);
 
 module.exports = router;

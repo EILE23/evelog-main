@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 const salt = 10;
 const jwt = require("jsonwebtoken");
 const secret = process.env.JWT_SECRET;
-
+const { Op } = require("sequelize");
 const searchPage = async (req, res) => {
   res.render("search");
 };
@@ -97,6 +97,30 @@ const getRecentPost = async (req, res) => {
   res.json(post);
 };
 
+const getSearchPost = async (req, res) => {
+  try {
+    let text = req.body.text;
+
+    let post = await models.Data.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${text}%` } },
+          { comment: { [Op.like]: `%${text}%` } },
+          { content: { [Op.like]: `%${text}%` } },
+        ],
+      },
+    });
+    if (post.length > 0) {
+      res.json({ result: true, post: post });
+    } else {
+      res.json({ result: false, message: "검색 결과가 없습니다." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "서버 오류 발생" });
+  }
+};
+
 module.exports = {
   getCategory,
   createData,
@@ -105,4 +129,5 @@ module.exports = {
   getLikePost,
   getRecentPost,
   searchPage,
+  getSearchPost,
 };

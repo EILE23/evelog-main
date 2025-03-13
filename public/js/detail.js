@@ -1,5 +1,5 @@
 let post, user;
-
+let loginuser = 0;
 function myevelog(vUrl) {
   window.location.href = `/detail/evelog/?hsh=${vUrl}`;
 }
@@ -11,10 +11,14 @@ async function fetchPostDetail(postId) {
     // console.log(response.data);
     post = response.data.post;
     user = response.data.user;
+
     console.log(post, user);
     // Display the post details on the page
+
     axios.get("/checkCookie").then((res) => {
       if (res.data.result) {
+        loginuser = res.data.id;
+
         axios
           .post("/detail/checkLike", { userid: res.data.id, postid: post.id })
           .then((r) => {
@@ -23,9 +27,6 @@ async function fetchPostDetail(postId) {
             }
           });
       }
-    });
-
-    axios.get("/checkCookie").then((res) => {
       axios.post("/detail/commentRequest", { postid: post.id }).then((r) => {
         const cArea = document.querySelector(".comment-areaBox");
         const noParent = r.data.comments.filter(
@@ -151,9 +152,19 @@ async function fetchPostDetail(postId) {
     const data = new Date(post.createdAt).toLocaleString().split(".");
     const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
     document.getElementById("post-title").textContent = post.title;
-    document.getElementById(
-      "post-author"
-    ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+    console.log(loginuser, user.id);
+    if (loginuser === user.id) {
+      document.getElementById(
+        "post-author"
+      ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+      document.querySelector(
+        ".upbtnBox"
+      ).innerHTML = `<div onclick = "edit(${post.id})">수정</div><div onclick = "remove(${post.id})">삭제</div>`;
+    } else {
+      document.getElementById(
+        "post-author"
+      ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+    }
     document.getElementById("imgBox").innerHTML = post.imgsrc
       ? ` <img id="post-image" src="${post.imgsrc}" alt="Post Image" />`
       : "";
@@ -218,6 +229,8 @@ function scroll() {
 }
 window.onload = () => {
   loadContent();
+  const pathname = window.location.pathname;
+  const postId = pathname.split("/").pop();
   fetchPostDetail(postId);
   if (scroll()) {
     updateHeartBox();

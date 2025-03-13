@@ -96,9 +96,9 @@ axios
       const id = `category-${index}`;
       const radioDiv = document.createElement("div");
       radioDiv.innerHTML = `
-                        <input type="radio" id="${id}" name="category" value="${category.id}">
-                        <label for="${id}">${categoryName}</label>
-                    `;
+                          <input type="radio" id="${id}" name="category" value="${category.id}">
+                          <label for="${id}">${categoryName}</label>
+                      `;
       categoryDiv.appendChild(radioDiv);
     });
   })
@@ -172,7 +172,7 @@ function imgRemove() {
 
   fileInput.value = "";
   imgBox.innerHTML = `  <div class="imgUpload">300px * 160px</div>
-              `;
+                `;
 }
 
 const pub_cansle = document.querySelector(".publish_Button_Cansle");
@@ -246,7 +246,11 @@ document
         alert("Error saving data.");
       });
   });
-
 function cancel() {
   window.location.href = "/";
+}
+
+function getData() {
+  const urlp = new URLSearchParams(window.location.search);
+  const postID = urlp.get("i");
 }

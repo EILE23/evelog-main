@@ -27,8 +27,19 @@ a {
 
 #post-author {
   margin-bottom: 70px;
+  display: flex;
+  justify-content: space-between;
 }
-
+.upbtnbox div {
+  padding: 4px;
+  background-color: #12b886;
+  color: white;
+  font-weight: bolder;
+}
+.upbtnbox div:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
 #post-title {
   font-size: 40px;
 }
