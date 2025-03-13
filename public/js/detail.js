@@ -134,7 +134,9 @@ async function fetchPostDetail(postId) {
         document.querySelector(
           ".profile-text h3"
         ).innerHTML = `<a href = "/detail/evelog/?hsh=${user.vUrl}">${user.nickname}</a>`;
-        document.querySelector(".profile-area img").src = user.imgsrc;
+        document.querySelector(".profile-area img").src = user.imgsrc
+          ? user.imgsrc
+          : "/public/img/user-thumbnail.png";
         document
           .querySelector(".profile-area img")
           .addEventListener("click", (e) => {

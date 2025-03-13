@@ -13,6 +13,9 @@ function fetchPosts() {
     .post("/update/getmypost", { vUrl: hsh2 })
     .then((res) => {
       const posts = res.data.post;
+      const user = res.data.user;
+
+      console.log(posts, user);
       const container = document.getElementById("postsContainer");
 
       if (!container) {

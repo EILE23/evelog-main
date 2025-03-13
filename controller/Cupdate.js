@@ -145,7 +145,7 @@ const getMypost = async (req, res) => {
     const EMAIL = await models.User.findOne({ where: { vUrl: req.body.vUrl } });
     const post = await models.Data.findAll({ where: { email: EMAIL.email } });
 
-    res.json({ post: post });
+    res.json({ post: post, user: EMAIL });
   } catch (e) {
     console.error(e);
   }
