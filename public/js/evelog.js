@@ -6,7 +6,30 @@ function fetchPosts() {
     const posts = res.data.post;
     const user = res.data.user;
 
-    console.log("posts", posts);
+    const profile = document.getElementById("userContainer");
+    const img =
+      user.imgsrc !== null &&
+      user.imgsrc !== undefined &&
+      user.imgsrc !== "" &&
+      user.imgsrc !== "null"
+        ? user.imgsrc
+        : "/public/img/noimage.jpeg";
+    profile.innerHTML = `
+        <div class="profileContainer">
+        <div class="profilePicture">
+        <img src="${img}" />
+        </div>
+        
+        <div class="namesContainer">
+        <div class="username">
+        ${user.username}
+        </div>
+        <div class="nickname">
+        ${user.nickname}
+        </div>
+        </div>
+        </div>
+    `;
 
     const container = document.getElementById("postsContainer");
     container.innerHTML = "";
@@ -26,10 +49,6 @@ function fetchPosts() {
         const day = String(createdAtDate.getDate()).padStart(2, "0");
         createdAtText = `${year}년${month}월${day}일`;
       }
-      //   const createdAtParagraph = document.createElement("p");
-      //   createdAtParagraph.textContent = `${createdAtText}`;
-      //   createdAtParagraph.classList.add("post-created-at"); // Add class for styling
-      //   contentTextDiv.appendChild(createdAtParagraph);
 
       const img =
         post.imgsrc !== null &&
@@ -39,7 +58,22 @@ function fetchPosts() {
           ? post.imgsrc
           : "/public/img/noimage.jpeg";
 
-      //   container.innerHTML += `<a href = /detail/post/${post.id}> <img src="${post.imgsrc}"/></a>`;
+      const likes =
+        post.likecnt !== null &&
+        post.likecnt !== undefined &&
+        post.likecnt !== "" &&
+        post.likecnt !== "null"
+          ? post.likecnt
+          : "0";
+
+      const comments =
+        post.commentCnt !== null &&
+        post.commentCnt !== undefined &&
+        post.commentCnt !== "" &&
+        post.commentCnt !== "null"
+          ? post.commentCnt
+          : "0";
+
       container.innerHTML += `
         <div class="post-content-container">
         <div class="post-thumbnail">
@@ -52,65 +86,32 @@ function fetchPosts() {
         ${post.comment}
         </div>
         <div class="post-footer-container">
+        <div class="footer-wrap">
         <div class="post-created-at">
         ${createdAtText}
         </div>
         <div class="post-comments">
-        ${post.commentCnt}개의 댓글
+        ${comments}개의 댓글
         </div>
         <div class="post-likes">
         <img src="/public/img/heart.png" />
-        ${post.likecnt}
+        ${likes}
         </div>
         </div>
-
+    
+        <div class="buttons-container">
+        <div class="edit-button">
+        <button>수정</button>
+        </div>
+        <div class="delete-button">
+        <button>삭제</button>
+        </div>
+        </div>
+        </div>
         </div>
         `;
     });
   });
-
-  //   posts.forEach((post) => {
-  //     const postDiv = document.createElement("div");
-  //     postDiv.classList.add("post");
-
-  //     // Thumbnail (imgsrc) first
-  //     if (post.imgsrc) {
-  //       const img = document.createElement("img");
-  //       img.src = post.imgsrc;
-  //       img.alt = "Post Image";
-  //       img.classList.add("post-thumbnail"); // Add class for styling
-  //       postDiv.appendChild(img);
-  //     }
-
-  //     const contentTextDiv = document.createElement("div"); // Div to hold text content
-  //     contentTextDiv.classList.add("post-content-text");
-  //     postDiv.appendChild(contentTextDiv);
-
-  //     // Title
-  //     const titleHeader = document.createElement("h3");
-  //     titleHeader.textContent = post.title || "Untitled";
-  //     titleHeader.classList.add("post-title"); // Add class for styling
-  //     contentTextDiv.appendChild(titleHeader);
-
-  //     // Content
-  //     const parts = post.content.split("!");
-  //     const textContent = parts[0] || "";
-  //     const textParagraph = document.createElement("p");
-  //     textParagraph.textContent = textContent;
-  //     textParagraph.classList.add("post-content"); // Add class for styling
-  //     contentTextDiv.appendChild(textParagraph);
-
-  //     // Image in content
-  //     if (parts.length > 1) {
-  //       const imgMatch = parts[1].match(/\[Uploaded Image]\((.*?)\)/);
-  //       if (imgMatch && imgMatch[1]) {
-  //         const contentImg = document.createElement("img");
-  //         contentImg.src = imgMatch[1];
-  //         contentImg.alt = "Content Image";
-  //         contentImg.classList.add("post-content-image");
-  //         contentTextDiv.appendChild(contentImg);
-  //       }
-  //     }
 }
 
 // Initial fetch

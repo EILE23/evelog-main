@@ -15,6 +15,7 @@ const underline = (button) => {
 
 window.onload = () => {
   underline(likedBtn);
+  likedBtn.click();
 };
 
 likedBtn.addEventListener("click", () => {

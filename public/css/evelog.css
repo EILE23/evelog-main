@@ -2,6 +2,39 @@
   font-weight: 1000;
 }
 
+#userContainer {
+  width: 55%;
+  margin: 0 auto;
+  border-bottom: 1px solid #ccc; /* Add horizontal line */
+}
+
+.profileContainer {
+  display: flex;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.namesContainer {
+  margin-left: 15px;
+  line-height: 64px;
+}
+
+.username {
+  font-size: 28px;
+  font-weight: bolder;
+}
+
+.nickname {
+  font-size: 20px;
+  color: grey;
+}
+
+.profilePicture img {
+  height: 128px;
+  border-radius: 50%;
+}
+
 #postsContainer {
   display: flex;
   flex-direction: column;
@@ -11,7 +44,7 @@
 
 .post-content-container {
   border-bottom: 1px solid #888;
-  margin-bottom: 20px;
+  margin: 30px 0px;
 }
 
 .post {
@@ -30,21 +63,30 @@
 }
 
 .post-title {
-  font-size: 24px;
+  font-size: 40px;
+  margin-top: 10px;
   margin-bottom: 10px;
+  font-weight: bolder;
 }
 
 .post-comment {
-  margin-bottom: 10px;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #888;
 }
 
 .post-footer-container {
   display: flex;
+  justify-content: space-between; /* Distribute space */
   margin-bottom: 40px;
   font-size: 14px;
   color: #888;
 }
 
+.footer-wrap {
+  display: flex;
+}
 .post-comments {
   margin-left: 10px;
 }
@@ -55,4 +97,18 @@
 
 .post-likes img {
   height: 12px;
+}
+
+.buttons-container {
+  display: flex;
+}
+
+.buttons-container button {
+  color: white;
+  background-color: #12b886;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 5px;
+  font-size: 12px;
+  margin: 5px;
 }
