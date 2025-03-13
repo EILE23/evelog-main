@@ -11,7 +11,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 100000;
   display: none;
 }
 .icon:hover {
@@ -21,7 +21,6 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, 0%) rotateX(70deg);
   transition: opacity 0.1s ease, transform 0.2s ease-in-out;
   z-index: 12;
@@ -44,26 +43,32 @@ body {
 }
 
 .loginInput {
-  margin-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 310px;
+  /* height: 310px; */
 }
-.loginInput H2 {
-  margin-bottom: 10px;
+.loginTitle {
+  font-size: 25px;
   font-weight: bolder;
+  color: #999999;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .email-text {
   display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 .email-text div {
   text-wrap: nowrap;
-  padding: 3px;
+  padding: 3px 0;
   height: 31px;
-  width: 80px;
+  width: 100%;
+  min-width: 270px;
   background-color: #12b886;
-
   color: whitesmoke;
   font-weight: 700;
   transition: background-color 0.3s ease;
@@ -79,16 +84,19 @@ body {
 }
 .textInput {
   height: 32px;
-  width: 250px;
   transition: border-color 0.3s ease;
   border: 2px solid #12b886;
   /* border-radius: 8px; */
   padding-left: 10px;
 }
-
 .textInputPassword {
   width: 336px;
 }
+
+/* .textInputPassword {
+  width: 250px;
+  height: 32px;
+} */
 
 .textInput:focus {
   border: 2px solid rgb(99, 140, 124) !important;
@@ -96,17 +104,14 @@ body {
 }
 .findBox {
   display: flex;
-  gap: 20px;
-  font-weight: 700;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  color: gray;
 }
 .findBox span:hover {
   color: #12b886;
   cursor: pointer;
-}
-.close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
 }
 
 .navibar {
@@ -230,17 +235,47 @@ body {
 }
 
 .joinText {
-  position: absolute;
+  /* position: absolute; */
+  margin-top: 5px;
   font-weight: 100;
-  font-size: 14px;
-  color: grey;
-  bottom: 10px;
-  right: 10px;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-end;
+  color: gray;
 }
 
 .close {
-  font-weight: 700;
   cursor: pointer;
+  width: 25px;
+  height: 25px;
+}
+
+.snsBox {
+  display: flex;
+  flex-basis: 80%;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.35);
+  font-size: 14px;
+  margin: 8px 0px;
+}
+
+.snsBox::before {
+  content: "";
+  flex-grow: 1;
+  margin: 0px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
+}
+.snsBox::after {
+  content: "";
+  flex-grow: 1;
+  margin: 0px 16px;
+  background: rgba(0, 0, 0, 0.35);
+  height: 1px;
+  font-size: 0px;
+  line-height: 0px;
 }
 
 .findInput {
@@ -265,6 +300,7 @@ body {
 .socialBtnBox {
   display: flex;
   gap: 10px;
+  justify-content: center;
 }
 #kakaoLogin {
   margin-left: 8px;
@@ -289,5 +325,48 @@ body {
   .loginInbox {
     width: 100%;
     height: 100%;
+    padding: 50px;
+  }
+  .loginInput {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+  }
+  .textInput {
+    width: 98%;
+  }
+  .textInputPassword {
+    width: 98%;
+  }
+  .joinText {
+    bottom: 15%;
+    right: 15%;
+  }
+  .snsBox {
+    display: flex;
+    flex-basis: 25%;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 14px;
+    margin: 0px 0px;
+  }
+
+  .snsBox::before {
+    content: "";
+    flex-grow: 1;
+    margin: 0px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+  }
+  .snsBox::after {
+    content: "";
+    flex-grow: 1;
+    margin: 0px 16px;
+    background: rgba(0, 0, 0, 0.35);
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
   }
 }

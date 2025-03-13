@@ -134,6 +134,9 @@
   .main-container {
     grid-template-columns: repeat(3, 1fr);
   }
+  .content-box {
+    width: 300px;
+  }
 }
 @media screen and (max-width: 1000px) {
   .main-container {
@@ -151,7 +154,7 @@
     grid-template-columns: repeat(1, 1fr);
   }
   .content-box {
-    width: 450px;
+    width: 400px;
     height: 400px;
   }
 }

@@ -1,0 +1,30 @@
+.input {
+  border: none;
+  background-color: whitesmoke;
+  outline: none;
+  font-size: 30px;
+  width: 100%;
+  padding-right: 10px;
+}
+.input:focus {
+  border: none;
+}
+.main-wrap {
+  width: 100%;
+}
+.container {
+  width: 55%;
+  margin: 0 auto;
+}
+.inInput {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(193, 188, 188);
+  height: 4rem;
+}
+.inputicon {
+  width: 40px;
+  height: 40px;
+  opacity: 0.5;
+  padding-left: 10px;
+}

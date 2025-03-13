@@ -38,9 +38,14 @@
     <div class="loginBackground">
       <div class="loginInbox">
         <div class="loginInput">
-          <div class="close" onclick="loginClose()">x</div>
-          <h2>로그인</h2>
-
+          <div class="loginTitle">
+            <span>로그인</span>
+            <img
+              class="close"
+              src="/public/img/close.png"
+              onclick="loginClose()"
+            />
+          </div>
           <div class="email-text">
             <input
               class="textInput"
@@ -48,13 +53,15 @@
               type="text"
               name="email"
             />
+
+            <input
+              name="password"
+              class="textInput textInputPassword"
+              type="password"
+            />
             <div onclick="checkLogin()">로그인</div>
           </div>
-          <input
-            name="password"
-            class="textInput textInputPassword"
-            type="password"
-          />
+          <div class="snsBox">소셜 로그인</div>
           <div class="socialBtnBox">
             <div id="naverIdLogin"></div>
             <div
@@ -77,8 +84,9 @@
             </div>
           </div>
           <div class="findBox">
-            <span onclick="findID()">아이디 찾기</span
-            ><span onclick="findPW()">비밀번호 찾기</span>
+            <span onclick="findID()">아이디 찾기</span>
+            <span>/</span>
+            <span onclick="findPW()">비밀번호 찾기</span>
           </div>
 
           <div class="joinText">
@@ -86,7 +94,14 @@
           </div>
         </div>
         <div class="find-id-wrap none">
-          <div class="close" onclick="loginClose()">x</div>
+          <div class="loginTitle">
+            <span>이메일 찾기</span>
+            <img
+              class="close"
+              src="/public/img/close.png"
+              onclick="loginClose()"
+            />
+          </div>
           <div class="find">
             <input
               class="findInput findIdValue"
@@ -99,7 +114,14 @@
           </div>
         </div>
         <div class="find-pw-wrap none">
-          <div class="close" onclick="loginClose()">x</div>
+          <div class="loginTitle">
+            <span>비밀번호 찾기</span>
+            <img
+              class="close"
+              src="/public/img/close.png"
+              onclick="loginClose()"
+            />
+          </div>
           <div class="find">
             <input
               class="findInput findPwValue"
@@ -113,7 +135,14 @@
           </div>
         </div>
         <div class="find-pw-wrap-local none">
-          <div class="close" onclick="loginClose()">x</div>
+          <div class="loginTitle">
+            <span>비밀번호 변경</span>
+            <img
+              class="close"
+              src="/public/img/close.png"
+              onclick="loginClose()"
+            />
+          </div>
           <div>
             <h3>비밀번호 변경</h3>
             <input class="findInput" type="password" name="password2" />

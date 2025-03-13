@@ -44,12 +44,13 @@ a {
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 40%;
-  left: -250px;
-  transition: left 0.3s ease-in-out;
+  bottom: 10%;
+  right: -250px;
+  transition: right 0.3s ease-in-out;
 }
 .heartbox {
   opacity: 0.4;
+  position: relative;
 }
 .heartbox:hover {
   opacity: 1;
@@ -68,7 +69,7 @@ a {
   opacity: 0.4;
 }
 .heartRight {
-  left: 15%;
+  right: 15%;
 }
 .upHeart img {
   width: 80%;
@@ -267,7 +268,7 @@ a {
   margin-left: 50px;
 }
 #post-content {
-  min-height: 100vh;
+  min-height: 5vh;
 }
 @media (max-width: 768px) {
   #post-image {

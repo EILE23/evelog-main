@@ -174,13 +174,13 @@ function updateHeartBox() {
 }
 
 heart.addEventListener("click", () => {
-  heart.classList.toggle("like");
-
-  const Liked = heart.classList.contains("like");
-
   axios.get("/checkCookie").then((res) => {
     if (res.data.result) {
+      heart.classList.toggle("like");
+
+      const Liked = heart.classList.contains("like");
       if (Liked) {
+        heart.src = "/public/img/like_heartfill.png";
         axios
           .post("/detail/like", { userid: res.data.id, postid: post.id })
           .then((res) => {
@@ -191,6 +191,7 @@ heart.addEventListener("click", () => {
             }
           });
       } else {
+        heart.src = "/public/img/like_heart.png";
         axios
           .delete("/detail/likeDel", {
             data: { userid: res.data.id, postid: post.id },

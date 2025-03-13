@@ -3,10 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/search.css" />
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <%- include("global/header") %>
+    <div class="main-wrap">
+      <div class="container">
+        <div class="inInput">
+          <img class="inputicon" src="/public/img/search.png" /><input
+            class="input"
+            type="text"
+            placeholder="검색어를 입력하세요"
+          />
+        </div>
+      </div>
+    </div>
   </body>
 </html>
