@@ -10,15 +10,6 @@
       rel="stylesheet"
       href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
     />
-    <script
-      src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
-      charset="utf-8"
-    ></script>
-    <meta
-      name="google-signin-client_id"
-      content="328276589647-kesmnun08lbmrde51k04dcn20but3cpv.apps.googleusercontent.com"
-    />
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
@@ -92,27 +83,6 @@
     <button class="registerButton" type="button" onclick="dataOn()">
       가입하기
     </button>
-    <h4>소셜 회원가입</h4>
-    <div class="socialLoginContainer">
-      <div id="naverIdLogin"></div>
-      <div
-        id="g_id_onload"
-        data-client_id="328276589647-kesmnun08lbmrde51k04dcn20but3cpv.apps.googleusercontent.com"
-        data-context="signup"
-        data-ux_mode="popup"
-        data-callback="handleCredentialResponse"
-        data-auto_prompt="false"
-      ></div>
-      <div
-        class="g_id_signin"
-        data-type="icon"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="large"
-        data-logo_alignment="left"
-      ></div>
-    </div>
   </div>
   <script src="/public/js/join.js"></script>
 </html>

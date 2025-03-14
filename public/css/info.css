@@ -111,3 +111,21 @@ p {
   filter: blur(5px);
   pointer-events: none;
 }
+
+input {
+  height: 30px;
+  padding: 5px;
+  min-width: 200px;
+  border: grey;
+}
+
+body {
+  white-space: nowrap;
+}
+.postalCode {
+  color: #12b886;
+}
+.postalCode:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}

@@ -79,14 +79,45 @@ const exportContentByUser = async (req, res) => {
 };
 
 const getLikePost = async (req, res) => {
-  let post = await models.Like.findAll({ where: { userid: req.body.id } });
-  let posts = post.map((item) => {
-    return item.postid;
-  });
+  try {
+    // 사용자가 좋아요를 누른 게시물 ID 가져오기
+    let post = await models.Like.findAll({
+      where: { userid: req.body.id },
+      attributes: ["postid"], // postid만 가져옴
+    });
 
-  post = await models.Data.findAll({ where: { id: posts } });
+    // post에서 postid로만 이루어진 배열 생성
+    let posts = post.map((item) => item.postid);
 
-  res.json(post);
+    // post에 다시 게시물의 postid로 이루어진 데이터 가져오기
+    // User 테이블과 조인, 닉네임과 imgsrc를 포함해서
+    post = await models.Data.findAll({
+      where: { id: posts },
+    });
+
+    let postUser = post.map((item) => item.email);
+    postUser = await models.User.findAll({ where: { email: postUser } });
+
+    const likeUser = postUser.reduce((i, item) => {
+      i[item.email] = item;
+      return i;
+    }, {});
+
+    const total = post.map((item) => {
+      const user = likeUser[item.email]; // post의 email을 기준으로 user 찾기
+      if (user) {
+        return {
+          ...item.toJSON(), // Data 객체의 데이터를 복사
+          nickname: user.nickname,
+          imgsrc: user.imgsrc,
+        };
+      }
+    });
+
+    res.json(total);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 const getRecentPost = async (req, res) => {

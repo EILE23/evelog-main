@@ -196,12 +196,12 @@ const getContent = async (req, res) => {
     if (req.query.categoryid === "all") {
       if (req.query.ud === "up") {
         content = await models.Data.findAll({
-          order: [["updatedAt", "ASC"]],
+          order: [["createdAt", "ASC"]],
           limit: 50,
         });
       } else {
         content = await models.Data.findAll({
-          order: [["updatedAt", "DESC"]],
+          order: [["createdAt", "DESC"]],
           limit: 50,
         });
       }
@@ -209,13 +209,13 @@ const getContent = async (req, res) => {
       if (req.query.ud === "up") {
         content = await models.Data.findAll({
           where: { categoryid: Number(req.query.categoryid) },
-          order: [["updatedAt", "ASC"]],
+          order: [["createdAt", "ASC"]],
           limit: 50,
         });
       } else {
         content = await models.Data.findAll({
           where: { categoryid: Number(req.query.categoryid) },
-          order: [["updatedAt", "DESC"]],
+          order: [["createdAt", "DESC"]],
           limit: 50,
         });
       }

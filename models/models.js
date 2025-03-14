@@ -66,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
     Data.belongsTo(db.User, {
       foreignKey: "email",
       targetKey: "email",
+      as: "User",
       onDelete: "CASCADE",
     });
   };

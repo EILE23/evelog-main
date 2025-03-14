@@ -159,6 +159,7 @@ function addressChange() {
               type="div"
               onclick="sample4_execDaumPostcode(8)"
               value="우편번호 찾기"
+              class = "postalCode"
             /><br />
             <input
               type="text"

@@ -151,15 +151,6 @@ function join(social) {
   }
 }
 
-const naverLogin = new naver.LoginWithNaverId({
-  clientId: "Q5BIVkykzWdlsrohoFLp",
-  callbackUrl: "http://localhost:3000/join/check",
-  buttonType: 2,
-  loginButton: { color: "green", type: 1, height: 40 },
-});
-
-naverLogin.init();
-
 function userInfo() {
   axios.get("/userGet").then((res) => {
     if (res.data.social == "naver") {
@@ -205,43 +196,3 @@ function userInfo() {
 }
 
 userInfo();
-
-window.handleCredentialResponse = function (response) {
-  console.log("handleCredentialResponse 호출");
-  const payload = decode(response.credential); // credential에 데이터를 받아오네요 google은
-
-  sendGooglelogin(payload.name, payload.email);
-};
-
-//google은 data를 jwt형식으로 주기 때문에 decoding이 필요함
-function decode(id_token) {
-  console.log(id_token);
-  const base64Url = id_token.split(".")[1];
-  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-  const jsonPayload = decodeURIComponent(
-    atob(base64)
-      .split("")
-      .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-      })
-      .join("")
-  );
-  return JSON.parse(jsonPayload);
-}
-
-//data 보내는 곳
-function sendGooglelogin(name, email) {
-  axios.post("/idcheck", { email: email }).then((res) => {
-    if (!res.data.result) {
-      axios.post("/accessToken", { email: email }).then((res) => {
-        alert("이미 가입되어 있는 회원입니다.");
-        window.location.href = "/";
-      });
-    } else {
-      const udata = { name: name, email: email, social: "google" };
-      axios.post("/joinData", { userInfo: udata }).then((res) => {
-        window.location.href = "/join";
-      });
-    }
-  });
-}

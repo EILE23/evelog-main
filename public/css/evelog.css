@@ -105,23 +105,29 @@
 }
 
 .buttons-container button {
-  color: white;
-  background-color: #12b886;
+  color: #12b886;
+  background-color: whitesmoke;
   border: none;
   border-radius: 5px;
-  padding: 5px 5px;
+  padding: 7px 7px;
   font-size: 12px;
   margin: 5px;
 }
 .edit-button button:hover {
   cursor: pointer;
-  filter: brightness(1.1);
+  filter: brightness(0.9);
 }
 .delete-button button:hover {
   cursor: pointer;
-  filter: brightness();
+  filter: brightness(0.9);
 }
 .edit-button button,
 .delete-button button {
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  #postsContainer {
+    width: 100%;
+  }
 }

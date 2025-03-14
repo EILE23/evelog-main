@@ -6,6 +6,7 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
+const sequelizeErd = require("sequelize-erd");
 
 let sequelize;
 if (config.use_env_variable) {
@@ -44,5 +45,10 @@ Object.keys(db).forEach((modelName) => {
 db.Data = require("./models")(sequelize, Sequelize.DataTypes);
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+(async function () {
+  const svg = await sequelizeErd({ source: sequelize }); // sequelize 인스턴스를 전달하여 ERD 생성
+  fs.writeFileSync("./erd.svg", svg); // 생성된 ERD를 파일로 저장
+})();
 
 module.exports = db;

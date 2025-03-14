@@ -77,7 +77,7 @@ const getLike = async (req, res) => {
         postid: req.body.postid,
       });
       if (data) {
-        const post = await models.Data.update(
+        await models.Data.update(
           {
             likecnt: Sequelize.literal(`
           CASE 

@@ -84,7 +84,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(db.Data, {
       foreignKey: "email",
       sourceKey: "email",
-      as: "Data",
     });
   };
 
