@@ -41,13 +41,27 @@ function fetchPosts() {
 
     posts.map((post) => {
       // Created At
+      // 작성 날짜가 5일 미만일 경우 x일 전으로 표현
+      // 작성 날짜가 그날 이면 '오늘'로 표기
       let createdAtText = "Unknown";
       if (post.createdAt) {
         const createdAtDate = new Date(post.createdAt);
-        const year = createdAtDate.getFullYear();
-        const month = String(createdAtDate.getMonth() + 1).padStart(2, "0");
-        const day = String(createdAtDate.getDate()).padStart(2, "0");
-        createdAtText = `${year}년${month}월${day}일`;
+        const now = new Date();
+        const diffTime = Math.abs(now - createdAtDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 1) {
+          createdAtText = "1일전";
+        } else if (diffDays > 1 && diffDays < 5) {
+          createdAtText = `${diffDays}일 전`;
+        } else if (diffDays === 0) {
+          createdAtText = "오늘";
+        } else {
+          const year = createdAtDate.getFullYear();
+          const month = String(createdAtDate.getMonth() + 1).padStart(2, "0");
+          const day = String(createdAtDate.getDate()).padStart(2, "0");
+          createdAtText = `${year}년${month}월${day}일`;
+        }
       }
 
       const img =

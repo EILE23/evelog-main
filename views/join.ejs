@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="../public/css/join.css" />
     <link rel="icon" href="/public/img/iconBanner.jpeg" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,14 +22,22 @@
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
-  <h1>회원가입</h1>
+  <h1>EVELOG</h1>
   <div class="main-wrap">
     <form name="data">
       <div>
         이메일
-        <input onkeyup="textCheck(this,'email',0)" type="text" name="userid" />
-        <button type="button" onclick="redundancy(6)">중복검사</button>
-        <p class="errorCode"></p>
+        <div>
+          <div class="email">
+            <input
+              onkeyup="textCheck(this,'email',0)"
+              type="text"
+              name="userid"
+            />
+            <button type="button" onclick="redundancy(6)">중복검사</button>
+          </div>
+          <p class="errorCode"></p>
+        </div>
       </div>
       <div>
         패스워드
@@ -80,9 +89,11 @@
       <p class="errorCode"></p>
     </div> -->
     </form>
-    <button type="button" onclick="dataOn()">가입하기</button>
+    <button class="registerButton" type="button" onclick="dataOn()">
+      가입하기
+    </button>
     <h4>소셜 회원가입</h4>
-    <div>
+    <div class="socialLoginContainer">
       <div id="naverIdLogin"></div>
       <div
         id="g_id_onload"

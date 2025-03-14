@@ -3,42 +3,77 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+/* h1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+  margin: 0 auto;
+  padding: 10px;
+  font-size: 36px;
+  color: white;
+  background-color: black;
+  margin: 50px 0;
+} */
+
 h1 {
-  font-size: 21px;
+  width: 20%;
+  margin: 30px auto; /* Combined margin top/bottom and left/right */
+  padding: 10px;
+  font-size: 36px;
+  color: white;
+  background-color: black;
+  text-align: center; /* Explicitly center the text */
 }
 
 .main-wrap {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-/* .main-wrap input {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */
-
-.main-wrap div {
-  display: flex;
-  align-items: center; /* Vertically align label and input */
-  margin-bottom: 10px; /* Add spacing between pairs */
-  width: 100%; /* so the label and input will stretch to the full width of the main-wrap */
-  max-width: 300px; /* add a max-width to the input pair */
+  width: 20%;
+  margin: 0 auto;
+  padding: 10px;
 }
 
 .main-wrap input {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
   min-width: 80px; /* Consistent minimum width for labels */
-  margin-right: 10px; /* Add spacing between label and input */
   text-align: right; /* align the text to the right side of the label, for better visual appearance.*/
   flex: 1;
 }
 
-#socialLogin {
+.email {
   display: flex;
+  align-items: center;
 }
 
-/* #socialLogin div {
+.email button {
+  margin-left: 10px;
+  background-color: #12b886;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.registerButton {
+  margin-top: 20px;
+  background-color: #12b886;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: bolder;
+}
+
+.socialLoginContainer {
+  display: flex;
+  align-items: center;
+}
+
+.socialLoginContainer div {
   margin-right: 10px;
-} */
+}
