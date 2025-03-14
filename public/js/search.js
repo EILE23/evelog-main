@@ -27,7 +27,6 @@ function innerSearch() {
   const area = document.querySelector("#postsContainer");
   if (text.length > 0) {
     axios.post("/write/searchInput", { text: text }).then((res) => {
-      console.log(res.data);
       if (res.data.result) {
         let posts = res.data.post;
         area.innerHTML = ``;

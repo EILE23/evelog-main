@@ -125,7 +125,11 @@ function editSubmit() {
 function passChange() {
   const pwInput = document.querySelector(".passwordChange");
   pwInput.innerHTML = `<input type = "password" name = "pass" /><input type = "password" name = "passChc" />
-                        <div class="passSbtn btn" onclick="passSubmit()">수정완료</div>`;
+                        <div class = "btn" onclick = "passCancel()">취소</div><div class="passSbtn btn" onclick="passSubmit()">수정완료</div>`;
+}
+function passCancel() {
+  const pwInput = document.querySelector(".passwordChange");
+  pwInput.innerHTML = `<div class="passCbtn btn" onclick="passChange()">수정</div>`;
 }
 
 function passSubmit() {
@@ -268,3 +272,33 @@ const loadContent = () => {
     body.classList.remove("blurred-text");
   }, 120);
 };
+
+function phoneChange() {
+  const phoneBox = document.querySelector(".phoneChange");
+  phoneBox.innerHTML = `<input type = "text" name = "phone" placeholder = "휴대폰 번호를 입력해주세요."/>
+                        <div class = "btn" onclick = "phoneCancel()">취소</div><div class="passSbtn btn" onclick="phoneSubmit()">등록</div>`;
+}
+
+function phoneSubmit() {
+  const phoneR = /-/g;
+  const phone = document.querySelector("input[name = 'phone']").value;
+
+  if (!phoneR.test(phone) && phone.length !== 11) {
+    alert("올바른 휴대폰 번호 형식을 입력해주세요");
+  } else {
+    axios
+      .post("/update/updatePhone", {
+        phone: phone,
+        id: id,
+      })
+      .then((res) => {
+        const phoneBox = document.querySelector(".phoneChange");
+        phoneBox.innerHTML = `<div class="btn" onclick="phoneChange()">수정</div>`;
+      });
+  }
+}
+
+function phoneCancel() {
+  const phoneBox = document.querySelector(".phoneChange");
+  phoneBox.innerHTML = `<div class="btn" onclick="phoneChange()">수정</div>`;
+}

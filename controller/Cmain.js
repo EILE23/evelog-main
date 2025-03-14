@@ -226,6 +226,7 @@ const getContent = async (req, res) => {
     const img = content.map((item) => item.imgsrc);
     const id = content.map((item) => item.id);
     const date = content.map((item) => item.updatedAt);
+    const likecnt = content.map((item) => item.likecnt);
     const nickname = await Promise.all(
       content.map(async (item) => {
         const data = await models.User.findOne({
@@ -242,6 +243,7 @@ const getContent = async (req, res) => {
       date: date[i],
       nickname: nickname[i],
       commentCnt: commentCnt[i],
+      likecnt: likecnt[i],
     }));
 
     res.json(total);

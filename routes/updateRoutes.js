@@ -22,10 +22,12 @@ router.post("/updateEdit", controller.updateEdit);
 router.post("/updatePass", controller.updatePass);
 router.post("/updateAddress", controller.updateAddress);
 router.post("/updateTitle", controller.updateTitle);
+router.post("/updatePhone", controller.updatePhone);
 router.post("/getFile", upload.single("file"), controller.fileUpload);
 router.post("/userDestroy", controller.userDestroy);
 router.post("/getmypost", controller.getMypost);
 router.post("/postDestroy", controller.postDestroy);
+router.post("/updatePost", upload.single("file"), controller.postUpdate);
 
 router.delete("/delFile", controller.fileRemove);
 

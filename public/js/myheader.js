@@ -73,7 +73,7 @@ function cookieCheck(post, user) {
                                         </a>
                                 </div>
             <div class="iconBox">
-              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon alam" onclick="login()" src="/public/img/alam.png" />
               <img class="icon" onclick="search()" src="/public/img/search.png" />
               <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
               <div class="myInfo">
@@ -112,7 +112,7 @@ function cookieCheck(post, user) {
                                       </a>
                               </div>
           <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
+            <img class="icon alam" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
             <button class="loginBtn" type="button" onclick="login()">
               로그인
@@ -325,3 +325,18 @@ function getUserInfo() {
 function myVelog(hsh) {
   window.location.href = `/detail/evelog/?hsh=${hsh.trim()}`;
 }
+
+const email = document.querySelector("input[name='email']");
+const password = document.querySelector("input[name='password']");
+
+email.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});
+
+password.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});

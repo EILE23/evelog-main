@@ -90,6 +90,22 @@ const updatePass = async (req, res) => {
     res.json({ result: false, message: "올바르지 않은 요청입니다." });
   }
 };
+const updatePhone = async (req, res) => {
+  if (req.body) {
+    try {
+      await models.User.update(
+        { phone: req.body.phone },
+        { where: { id: req.body.id } }
+      );
+      res.json({ result: true, message: "변경 완료" });
+    } catch (e) {
+      console.error(e);
+      res.json({ result: false, message: "올바르지 않은 요청입니다." });
+    }
+  } else {
+    res.json({ result: false, message: "올바르지 않은 요청입니다." });
+  }
+};
 
 const updateAddress = async (req, res) => {
   if (req.body) {
@@ -130,11 +146,8 @@ const userDestroy = async (req, res) => {
     await models.User.destroy({
       where: { email: req.body.email },
     });
-    des = req.body.des;
 
     res.json({ result: true, message: "탈퇴 성공" });
-    des = false;
-    console.log(des);
   } catch (e) {
     res.json({ result: false, message: "탈퇴 실패" });
   }
@@ -169,9 +182,40 @@ const getEditPost = async (req, res) => {
     const post = await models.Data.findOne({
       where: { id: Number(req.params.id) },
     });
+    post.content = marked.parse(post.content);
     res.json(post);
   } catch (e) {
     console.error(E);
+  }
+};
+
+const postUpdate = async (req, res) => {
+  try {
+    let imgsrc = req.body.imgsrc;
+
+    if (req.file) {
+      imgsrc = `/uploads/${file.filename}`; // 파일 경로 설정
+    }
+    const check = await models.Data.update(
+      {
+        title: req.body.title,
+        content: req.body.content,
+        categoryId: req.body.categoryId,
+        imgsrc: req.body.imgsrc,
+        comment: req.body.comment,
+        email: req.body.email,
+      },
+      {
+        where: { id: Number(req.body.id) },
+      }
+    );
+    if (check) {
+      res.json({ result: true, message: "수정 완료" });
+    } else {
+      res.json({ result: false, message: "수정 실패" });
+    }
+  } catch (e) {
+    console.error(e);
   }
 };
 
@@ -180,6 +224,7 @@ module.exports = {
   updatePass,
   updateEdit,
   updateTitle,
+  updatePhone,
   fileRemove,
   fileUpload,
   userDestroy,
@@ -187,4 +232,5 @@ module.exports = {
   postDestroy,
   editPage,
   getEditPost,
+  postUpdate,
 };

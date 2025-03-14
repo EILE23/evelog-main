@@ -23,7 +23,6 @@ const getCategory = async (req, res) => {
 
 const createData = async (req, res) => {
   try {
-    console.log(req.body);
     const { title, content, categoryId, imgsrc, email, comment } = req.body;
 
     await models.Data.create({
@@ -47,15 +46,14 @@ const cookieCheck = async (req, res) => {
       const check = jwt.verify(req.cookies.token, secret);
       if (check) {
         res.json({ result: true, email: check.email });
-        console.log("검증완료");
       } else {
-        res.json({ result: false, message: "검증되지 않은 유저 입니다." });
+        res.json({ result: false, message: "검증되지 않은 유저." });
       }
     } catch (e) {
       console.error(e);
     }
   } else {
-    res.json({ result: false, message: "검증되지 않은 이메일 입니다." });
+    res.json({ result: false, message: "비 로그인 사용자." });
   }
 };
 

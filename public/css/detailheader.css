@@ -1,5 +1,11 @@
+@font-face {
+  font-family: "gothic";
+  src: url("/public/fonts/NotoSansKR-VariableFont_wght.ttf");
+}
+
 body {
   background-color: whitesmoke;
+  font-family: "gothic";
 }
 .icon:hover {
   cursor: pointer;
@@ -148,7 +154,7 @@ body {
   background-color: whitesmoke;
   white-space: nowrap;
   top: 0;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .newWrite {
@@ -323,7 +329,7 @@ body {
 .logo {
   width: 60px;
   aspect-ratio: 1/1;
-  border-radius: 8px;
+  border-radius: 50%;
 }
 .none {
   display: none;
@@ -344,6 +350,12 @@ body {
   cursor: pointer;
 }
 @media screen and (max-width: 768px) {
+  .alam {
+    display: none;
+  }
+  .hHead {
+    display: none;
+  }
   .loginInbox {
     width: 100%;
     height: 100%;

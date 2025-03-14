@@ -30,6 +30,7 @@ const getPostDetail = async (req, res) => {
         imgsrc: post.imgsrc,
         title: post.title,
         commentCnt: post.commentCnt,
+        likecnt: post.likecnt,
         content: htmlContent,
         createdAt: post.createdAt,
       },
@@ -71,11 +72,29 @@ const postGet = async (req, res) => {
 const getLike = async (req, res) => {
   if (req.body) {
     try {
-      await models.Like.create({
+      const data = await models.Like.create({
         userid: req.body.userid,
         postid: req.body.postid,
       });
-      res.json({ result: true });
+      if (data) {
+        const post = await models.Data.update(
+          {
+            likecnt: Sequelize.literal(`
+          CASE 
+            WHEN likecnt IS NULL THEN 1 
+            ELSE likecnt + 1 
+          END
+        `),
+          },
+          { where: { id: Number(req.body.postid) } }
+        );
+        const uppost = await models.Data.findOne({
+          where: { id: req.body.postid },
+        });
+        res.json({ result: true, post: uppost });
+      } else {
+        res.json({ result: false, message: "허용되지 않은 요청입니다." });
+      }
     } catch (e) {
       console.error(e);
       res.json({ result: false, message: "id 확인 필요" });
@@ -88,10 +107,29 @@ const getLike = async (req, res) => {
 const dontLike = async (req, res) => {
   if (req.body) {
     try {
+      console.log(req.body);
       await models.Like.destroy({
         where: { userid: req.body.userid, postid: req.body.postid },
       });
-      res.json({ result: true });
+
+      const post = await models.Data.findOne({
+        where: { id: req.body.postid },
+        attributes: ["likecnt"],
+      });
+
+      if (post) {
+        const cnt = post.likecnt - 1;
+        const likecnt = cnt < 0 ? 0 : cnt;
+
+        await models.Data.update(
+          { likecnt: likecnt },
+          { where: { id: req.body.postid } }
+        );
+        const uppost = await models.Data.findOne({
+          where: { id: req.body.postid },
+        });
+        res.json({ result: true, post: uppost });
+      }
     } catch (e) {
       console.error(e);
       res.json({ result: false, message: "id 확인 필요" });

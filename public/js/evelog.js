@@ -13,7 +13,7 @@ function fetchPosts() {
       user.imgsrc !== "" &&
       user.imgsrc !== "null"
         ? user.imgsrc
-        : "/public/img/noimage.jpeg";
+        : "/public/img/user-thumbnail.png";
     profile.innerHTML = `
         <div class="profileContainer">
         <div class="profilePicture">
@@ -22,10 +22,10 @@ function fetchPosts() {
         
         <div class="namesContainer">
         <div class="username">
-        ${user.username}
+        ${user.nickname}
         </div>
         <div class="nickname">
-        ${user.nickname}
+        ${user.comment}
         </div>
         </div>
         </div>

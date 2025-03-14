@@ -31,6 +31,7 @@
 }
 
 .profilePicture img {
+  width: 128px;
   height: 128px;
   border-radius: 50%;
 }
@@ -111,4 +112,16 @@
   padding: 5px 5px;
   font-size: 12px;
   margin: 5px;
+}
+.edit-button button:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+}
+.delete-button button:hover {
+  cursor: pointer;
+  filter: brightness();
+}
+.edit-button button,
+.delete-button button {
+  font-weight: 600;
 }

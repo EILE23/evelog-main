@@ -57,7 +57,7 @@ function cookieCheck() {
 
       loginWrap.innerHTML = `<div class="title">evelog</div>
           <div class="iconBox">
-            <img class="icon" onclick="alam()" src="/public/img/alam.png" />
+            <img class="icon alam" onclick="alam()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
             <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
             <div class="myInfo">
@@ -95,7 +95,7 @@ function cookieCheck() {
       console.error(`${res.data.message}`);
       loginWrap.innerHTML = `<div class="title">evelog   </div>
           <div class="iconBox">
-            <img class="icon" onclick="login()" src="/public/img/alam.png" />
+            <img class="icon alam" onclick="login()" src="/public/img/alam.png" />
             <img class="icon" onclick="search()" src="/public/img/search.png" />
             <button class="loginBtn" type="button" onclick="login()">
               로그인
@@ -300,3 +300,18 @@ function kakaoLogin() {
 function alam() {
   alert("미구현 기능입니다.");
 }
+
+const email = document.querySelector("input[name='email']");
+const password = document.querySelector("input[name='password']");
+
+email.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});
+
+password.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});

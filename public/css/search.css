@@ -97,4 +97,22 @@
   .input {
     font-size: 18px;
   }
+  .container {
+    width: 70%;
+  }
+  #postsContainer {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .input {
+    font-size: 16px;
+  }
+  .container {
+    width: 85%;
+  }
+  #postsContainer {
+    width: 85%;
+  }
 }

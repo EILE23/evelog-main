@@ -1,3 +1,12 @@
+@font-face {
+  font-family: "gothic";
+  src: url("/public/fonts/NotoSansKR-VariableFont_wght.ttf");
+}
+
+body {
+  font-family: "gothic";
+}
+
 #writeContainer {
   display: flex;
   width: 100%; /* Or a specific width if needed */

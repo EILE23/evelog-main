@@ -12,6 +12,7 @@
   align-items: center;
   gap: 20px;
   position: relative;
+  white-space: nowrap;
 }
 
 .categoryBtn {
@@ -126,7 +127,37 @@
   gap: 10px;
   font-size: 12px;
   color: rgb(130, 130, 130);
+  width: 100%;
+  justify-content: space-between;
 }
+.timeComment div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.select {
+  border: whitesmoke;
+  padding: 10px;
+  font-size: 16px;
+}
+.select:hover {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+.select option {
+  padding: 10px;
+}
+.select option:hover {
+  color: #12b886;
+}
+.lcnt {
+  width: 20px !important;
+  height: 20px !important;
+  opacity: 0.4;
+}
+/* / */
 /* 반응형 디자인 */
 
 /* 1280px 이하에서는 4개씩 표시, 크기 그대로 */
@@ -150,11 +181,26 @@
 
 /* 768px 이하에서는 2개씩 표시 */
 @media screen and (max-width: 768px) {
+  .select {
+    display: none;
+  }
   .main-container {
     grid-template-columns: repeat(1, 1fr);
   }
   .content-box {
     width: 400px;
     height: 400px;
+  }
+  .categoryBox {
+    font-size: 12px;
+    gap: 5px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 468px) {
+  .content-box {
+    width: 320px;
+    height: 360px;
   }
 }

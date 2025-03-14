@@ -79,11 +79,11 @@ function cookieCheck(hd, vUrl) {
       loginWrap.innerHTML = `<div class = "head">
                                         <img class = "logo title"src = "/public/img/iconBanner.jpeg">
                                         <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
-                                        <span class = "head">${hd}</span>
+                                        <span class = "hHead">${hd}</span>
                                         </a>
                                 </div>
             <div class="iconBox">
-              <img class="icon" onclick="alam()" src="/public/img/alam.png" />
+              <img class="icon alam" onclick="alam()" src="/public/img/alam.png" />
               <img class="icon" onclick="search()" src="/public/img/search.png" />
               <button class = "newWrite" onclick = "newWrite()" type = "button">새 글 작성</button>
               <div class="myInfo">
@@ -122,11 +122,11 @@ function cookieCheck(hd, vUrl) {
       loginWrap.innerHTML = `<div class = "head">
                                         <img class = "logo title"src = "/public/img/iconBanner.jpeg">
                                         <a class = "hA" href = "/detail/evelog/?hsh=${vUrl}">
-                                        <span class = "head">${hd}</span>
+                                        <span class = "hHead">${hd}</span>
                                         </a>
                                 </div>
             <div class="iconBox">
-              <img class="icon" onclick="login()" src="/public/img/alam.png" />
+              <img class="icon alam" onclick="login()" src="/public/img/alam.png" />
               <img class="icon" onclick="search()" src="/public/img/search.png" />
               <button class="loginBtn" type="button" onclick="login()">
                 로그인
@@ -347,3 +347,18 @@ function myVelog(hsh) {
 function alam() {
   alert("미구현 기능입니다.");
 }
+
+const email = document.querySelector("input[name='email']");
+const password = document.querySelector("input[name='password']");
+
+email.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});
+
+password.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    checkLogin();
+  }
+});

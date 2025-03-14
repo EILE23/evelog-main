@@ -1,5 +1,8 @@
 let post, user;
+let likechc = false;
 
+const heartbox = document.querySelector(".upHeart");
+const heart = document.querySelector(".heartbox");
 function myevelog(vUrl) {
   window.location.href = `/detail/evelog/?hsh=${vUrl}`;
 }
@@ -14,37 +17,64 @@ async function fetchPostDetail(postId) {
 
     console.log(post, user);
     // Display the post details on the page
-    let loginuser;
+
     axios.get("/checkCookie").then((res) => {
       if (res.data.result) {
-        console.log("res.dataid:", res.data.id);
-        loginuser = res.data.id;
-        console.log("loginuser:", loginuser);
-
+        const img =
+          post.imgsrc !== null &&
+          post.imgsrc !== undefined &&
+          post.imgsrc !== "" &&
+          post.imgsrc !== "null"
+            ? `<img src = "${post.imgsrc}"/>`
+            : "";
+        const cnt = post.likecnt ? post.likecnt : 0;
         const data = new Date(post.createdAt).toLocaleString().split(".");
         const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
         document.getElementById("post-title").textContent = post.title;
-        console.log("log", loginuser);
-        if (loginuser === user.id) {
+        if (user.id === res.data.id) {
           document.getElementById(
             "post-author"
           ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div><div class="upbtnBox"><div onclick = "edit(${post.id})">수정</div><div onclick = "remove(${post.id})">삭제</div></div>`;
+          document.querySelector(".upHeart").style.display = "none";
         } else {
           document.getElementById(
             "post-author"
-          ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+          ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div><div class = "likeBox"><span>${cnt}</span><img onclick = "likePost()"src = "/public/img/like_heart.png"/></div>`;
         }
-        document.getElementById("imgBox").innerHTML = post.imgsrc
-          ? ` <img id="post-image" src="${post.imgsrc}" alt="Post Image" />`
-          : "";
+
+        document.getElementById("imgBox").innerHTML = img;
         document.getElementById("post-content").innerHTML = post.content;
         axios
           .post("/detail/checkLike", { userid: res.data.id, postid: post.id })
           .then((r) => {
             if (r.data.result) {
+              likechc = true;
               document.querySelector(".heartbox").classList.toggle("like");
+              document.querySelector(".heartbox").src =
+                "/public/img/like_heartfill.png";
+              document.querySelector(".likeBox img").src =
+                "/public/img/like_heartfill.png";
+              document.querySelector(".likeBox img").classList.toggle("like");
             }
           });
+      } else {
+        const img =
+          post.imgsrc !== null &&
+          post.imgsrc !== undefined &&
+          post.imgsrc !== "" &&
+          post.imgsrc !== "null"
+            ? `<img src = "${post.imgsrc}"/>`
+            : "";
+        const data = new Date(post.createdAt).toLocaleString().split(".");
+        const date = `${data[0]}년 ${data[1]}월 ${data[2]}일`;
+        document.getElementById("post-title").textContent = post.title;
+
+        document.getElementById(
+          "post-author"
+        ).innerHTML = `<div>By <span class = "nickname">${user.nickname}</span> - ${date}</div>`;
+
+        document.getElementById("imgBox").innerHTML = img;
+        document.getElementById("post-content").innerHTML = post.content;
       }
       axios.post("/detail/commentRequest", { postid: post.id }).then((r) => {
         const cArea = document.querySelector(".comment-areaBox");
@@ -76,17 +106,20 @@ async function fetchPostDetail(postId) {
             ct.replyCnt > 0
               ? `<span>${ct.replyCnt}개의 답글</span>`
               : `<span>답글 달기</span>`;
+          const img = ct.User.imgsrc
+            ? ct.User.imgsrc
+            : "/public/img/user-thumbnail.png";
           cArea.innerHTML += `<div class="reply-container reply-wrap${ct.id}">
   <div class="reply-box">
     <div class="comment-profile">
       <a href="/detail/evelog/?hsh=${ct.User.vUrl}">
-        <img src="${ct.User.imgsrc}" />
+        <img src="${img}" />
       </a>
       <div class="cmt-profile-text">
         <a href="/detail/evelog/?hsh=${ct.User.vUrl}">
           <h4>${ct.nickname}</h4>
         </a>
-        <p>${date}</p>
+        <p class = "timeText">${date}</p>
       </div>
     </div>
     <p>${ct.content}</p>
@@ -136,14 +169,17 @@ async function fetchPostDetail(postId) {
           if (date === `0일 전`) {
             date = "오늘";
           }
+          const img = ct.User.imgsrc
+            ? ct.User.imgsrc
+            : "/public/img/user-thumbnail.png";
           replyArea.innerHTML += `<div class="nested-zone">
                 <div class="comment-profile">
                   <a href="/detail/evelog/?hsh=${ct.User.vUrl}"
-                    ><img src="${ct.User.imgsrc}"
+                    ><img src="${img}"
                   /></a>
                   <div class="cmt-profile-text">
                     <a href="/detail/evelog/?hsh=${ct.User.vUrl}"><h4>${ct.nickname}</h4></a>
-                    <p>${date}</p>
+                    <p class = "timeText">${date}</p>
                   </div>
                 </div>
                 <p>${ct.content}</p>
@@ -172,69 +208,21 @@ async function fetchPostDetail(postId) {
   }
 }
 
-const heartbox = document.querySelector(".upHeart");
-const heart = document.querySelector(".heartbox");
 function updateHeartBox() {
-  if (window.scrollY !== 0) {
+  console.log(window.scrollY);
+  if (window.scrollY > 300) {
     heartbox.classList.add("heartRight");
   } else {
     heartbox.classList.remove("heartRight");
   }
 }
 
-heart.addEventListener("click", () => {
-  axios.get("/checkCookie").then((res) => {
-    if (res.data.result) {
-      heart.classList.toggle("like");
-
-      const Liked = heart.classList.contains("like");
-      if (Liked) {
-        heart.src = "/public/img/like_heartfill.png";
-        axios
-          .post("/detail/like", { userid: res.data.id, postid: post.id })
-          .then((res) => {
-            if (res.data.result) {
-              console.log("좋아요 추가 성공");
-            } else {
-              console.log(res.data);
-            }
-          });
-      } else {
-        heart.src = "/public/img/like_heart.png";
-        axios
-          .delete("/detail/likeDel", {
-            data: { userid: res.data.id, postid: post.id },
-          })
-          .then((res) => {
-            if (res.data.result) {
-              console.log("좋아요 취소 성공");
-            } else {
-              console.log(res.data);
-            }
-          });
-      }
-    } else {
-      alert("로그인이 필요합니다");
-      return;
-    }
-  });
-});
-function scroll() {
-  return (
-    document.documentElement.scrollHeight >
-    document.documentElement.clientHeight
-  );
-}
 window.onload = () => {
   loadContent();
   const pathname = window.location.pathname;
   const postId = pathname.split("/").pop();
   fetchPostDetail(postId);
-  if (scroll()) {
-    updateHeartBox();
-  } else {
-    heartbox.classList.add("heartRight");
-  }
+
   document.addEventListener("scroll", updateHeartBox);
   document.querySelector(".upbox").addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -438,4 +426,52 @@ function remove(id) {
 
 function edit(id) {
   window.location.href = `/update/edit/?i=${id}`;
+}
+
+function likePost() {
+  const like = document.querySelector(".likeBox img");
+
+  axios.get("/checkCookie").then((res) => {
+    if (res.data.result) {
+      like.classList.toggle("like");
+
+      const Liked = like.classList.contains("like");
+      if (likechc == false) {
+        likechc = true;
+        like.src = "/public/img/like_heartfill.png";
+        heart.src = "/public/img/like_heartfill.png";
+        axios
+          .post("/detail/like", { userid: res.data.id, postid: post.id })
+          .then((res) => {
+            if (res.data.result) {
+              document.querySelector(
+                ".likeBox span"
+              ).innerHTML = `${res.data.post.likecnt}`;
+            } else {
+              alert("좋아요 추가 실패");
+            }
+          });
+      } else {
+        likechc = false;
+        like.src = "/public/img/like_heart.png";
+        heart.src = "/public/img/like_heart.png";
+        axios
+          .delete("/detail/likeDel", {
+            data: { userid: res.data.id, postid: post.id },
+          })
+          .then((res) => {
+            if (res.data.result) {
+              document.querySelector(
+                ".likeBox span"
+              ).innerHTML = `${res.data.post.likecnt}`;
+            } else {
+              console.log(res.data);
+            }
+          });
+      }
+    } else {
+      alert("로그인이 필요합니다");
+      return;
+    }
+  });
 }

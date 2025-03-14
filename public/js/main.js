@@ -90,16 +90,18 @@ function contentGet(id, ud) {
           : "/public/img/noimage.jpeg";
       console.log(img);
       let cnt = item.commentCnt > 0 ? item.commentCnt : 0;
-      let text =
-        item.text.slice(0, 80).length > 40
-          ? `${item.text.slice(0, 80)}. . .`
-          : item.text;
+      let lcnt = item.likecnt ? item.likecnt : 0;
+      let text = item.text;
       mainwrap.innerHTML += `
         <div class = "content-box" onclick = detailPage(${item.id})>
           <img src=${img} />
           <h3>${item.title}</h3>
           <p>${text}</p>
-          <div class = "timeComment"><div>${date}</div><div>${cnt}개의 댓글</div></div>
+          <div class = "timeComment">
+           <div><div>${date}</div><div>${cnt}개의 댓글</div></div>
+          
+           <div><img class = "lcnt"src = "/public/img/like_heartfill.png"/><div>${lcnt}</div></div>
+          </div>
           <div class = "hr"><hr/></div>
           <div class = "nickname"/><img class = "profileImg"src = "${
             item.nickname.img

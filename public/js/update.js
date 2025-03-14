@@ -115,7 +115,7 @@ if (parent) {
 }
 
 let id = 0;
-
+let postid = 0;
 window.onload = () => {
   function cookieCheck() {
     axios({
@@ -138,6 +138,7 @@ window.onload = () => {
 
   const urlp = new URLSearchParams(window.location.search);
   const postID = urlp.get("i");
+  postid = postID;
   console.log(postID);
   getData(postID);
 };
@@ -223,6 +224,7 @@ document
     } else {
       imgsrc = null;
     }
+    imgsrc = previewImg ? previewImg : imgsrc;
     const postIntro = document.querySelector(".post_intro").value;
     const comment = postIntro.length > 0 ? postIntro : "";
 
@@ -234,9 +236,9 @@ document
     formData.append("imgsrc", imgsrc);
     formData.append("email", id);
     formData.append("comment", comment);
-
+    formData.append("id", postid);
     axios
-      .post("/write/saveData", formData)
+      .post("/update/updatePost", formData)
       .then((response) => {
         console.log("Data saved:", response.data);
         if (response.data.result) {
@@ -254,11 +256,34 @@ document
 function cancel() {
   window.location.href = "/";
 }
-
+let previewImg;
 function getData(id) {
   axios.get(`/update/getEditPost/${id}`).then((res) => {
     console.log(res.data);
     document.querySelector(".toast_title").value = res.data.title;
     editor.setHTML(res.data.content);
+    const categoryDiv = document.getElementById("toast_category");
+    const cateid = res.data.categoryId;
+    const categoryRadios = categoryDiv.querySelectorAll('input[type="radio"]');
+    categoryRadios.forEach((item) => {
+      if (item.value == cateid) {
+        item.checked = true; //
+      }
+    });
+
+    const postText = document.querySelector(".post_intro");
+    postText.value = res.data.comment || "";
+
+    const imgBox = document.querySelector(".imgBox");
+    const imgUploadDiv = document.querySelector(".imgUpload");
+    const imgsrc = res.data.imgsrc;
+    if (imgsrc) {
+      imgBox.innerHTML = `<img src="${imgsrc}" style="max-width: 100%; max-height: 100%;"/>`;
+    } else {
+      imgBox.innerHTML = imgUploadDiv.innerHTML;
+    }
+    previewImg = imgsrc ? imgsrc : null;
+    const fileInput = document.querySelector(".post_file");
+    fileInput.value = "";
   });
 }
