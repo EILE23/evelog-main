@@ -28,6 +28,7 @@ router.get("/content/:postId", controller.detail);
 router.get("/userGet", controller.userGet);
 router.get("/check", controller.checkNaver);
 router.get("/join/check", controller.joinCheck);
+router.get("/getAddress/:id", controller.getAddress);
 
 router.post("/getOne", controller.findOne);
 router.post("/idCheck", controller.checkId);

@@ -124,8 +124,8 @@ function editSubmit() {
 
 function passChange() {
   const pwInput = document.querySelector(".passwordChange");
-  pwInput.innerHTML = `<input type = "password" name = "pass" /><input type = "password" name = "passChc" />
-                        <div class = "btn" onclick = "passCancel()">취소</div><div class="passSbtn btn" onclick="passSubmit()">수정완료</div>`;
+  pwInput.innerHTML = `<div class = "passContainer"><input type = "password" name = "pass" /><input type = "password" name = "passChc" />
+                        <div class = "btnContainer"><div class = "btn" onclick = "passCancel()">취소</div><div class="passSbtn btn" onclick="passSubmit()">수정완료</div></div></div>`;
 }
 function passCancel() {
   const pwInput = document.querySelector(".passwordChange");
@@ -153,8 +153,14 @@ function passSubmit() {
 }
 
 function addressChange() {
-  const addressInput = document.querySelector(".addressChange");
-  addressInput.innerHTML = `<input type="text" id="sample4_postcode" placeholder="우편번호" />
+  axios.get(`/getAddress/${id}`).then((res) => {
+    const address = res.data.address.split(":");
+    console.log(address);
+
+    if (address.length > 0) {
+      const addressDetail = address[2] ? address[2] : "";
+      const addressInput = document.querySelector(".addressChange");
+      addressInput.innerHTML = `<div class ="addressContainer"><div class = "address_Sub_Container"><input type="text" value ="${address[0]}"onclick="sample4_execDaumPostcode(8)" id="sample4_postcode" placeholder="우편번호" />
             <input
               type="div"
               onclick="sample4_execDaumPostcode(8)"
@@ -166,6 +172,8 @@ function addressChange() {
               name="RoadAddress"
               id="sample4_roadAddress"
               placeholder="도로명주소"
+              onclick="sample4_execDaumPostcode(8)"
+              value="${address[1]}"
             />
             <span id="guide" style="color: #999; display: none"></span>
             <input
@@ -173,20 +181,54 @@ function addressChange() {
               name="detailAddress"
               id="sample4_detailAddress"
               placeholder="상세주소"
-            /> <div class="addressSbtn btn" onclick="addressSubmit()">
+              value="${addressDetail}"
+            /></div> <div class = "btnContainer"><div class = "btn" onclick = "addressCancel()">취소</div><div class="addressSbtn btn" onclick="addressSubmit()">
               수정완료
+            </div></div></div>`;
+    } else {
+      const addressInput = document.querySelector(".addressChange");
+      addressInput.innerHTML = `<div class ="addressContainer"><div class = "address_Sub_Container"><input type="text" onclick="sample4_execDaumPostcode(8)" id="sample4_postcode" placeholder="우편번호" />
+            <input
+              type="div"
+              onclick="sample4_execDaumPostcode(8)"
+              value="우편번호 찾기"
+              class = "postalCode"
+            /><br />
+            <input
+              type="text"
+              name="RoadAddress"
+              id="sample4_roadAddress"
+              placeholder="도로명주소"
+              onclick="sample4_execDaumPostcode(8)"
+            />
+            <span id="guide" style="color: #999; display: none"></span>
+            <input
+              type="text"
+              name="detailAddress"
+              id="sample4_detailAddress"
+              placeholder="상세주소"
+            /> </div><div class = "btnContainer"><div class = "btn" onclick = "addressCancel()">취소</div><div class="addressSbtn btn" onclick="addressSubmit()">
+              수정완료
+            </div></div></div>`;
+    }
+  });
+}
+function addressCancel() {
+  const addressInput = document.querySelector(".addressChange");
+  addressInput.innerHTML = ` <div class="addressCbtn btn" onclick="addressChange()">
+              정보 등록
             </div>`;
 }
-
 function addressSubmit() {
   const pAddress = document.querySelector("#sample4_postcode").value;
   const dAddress = document.querySelector(
     "input[name = 'detailAddress']"
   ).value;
   const rAddress = document.querySelector("input[name = 'RoadAddress']").value;
-  const address = pAddress + rAddress + dAddress;
+  const address = pAddress + ":" + rAddress + ":" + dAddress;
 
   axios.post("/update/updateAddress", { address: address, id: id });
+  alert("등록이 완료되었습니다.");
   const addressInput = document.querySelector(".addressChange");
   addressInput.innerHTML = ` <div class="addressCbtn btn" onclick="addressChange()">
               정보 등록
@@ -276,8 +318,8 @@ const loadContent = () => {
 
 function phoneChange() {
   const phoneBox = document.querySelector(".phoneChange");
-  phoneBox.innerHTML = `<input type = "text" name = "phone" placeholder = "휴대폰 번호를 입력해주세요."/>
-                        <div class = "btn" onclick = "phoneCancel()">취소</div><div class="passSbtn btn" onclick="phoneSubmit()">등록</div>`;
+  phoneBox.innerHTML = `<div class = "phoneContainer"><input type = "text" name = "phone" placeholder = "휴대폰 번호를 입력해주세요."/>
+                        <div class = "btnContainer"><div class = "btn" onclick = "phoneCancel()">취소</div><div class="passSbtn btn" onclick="phoneSubmit()">등록</div></div></div>`;
 }
 
 function phoneSubmit() {

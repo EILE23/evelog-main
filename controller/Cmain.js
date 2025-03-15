@@ -399,6 +399,18 @@ const checkKakao = (req, res) => {
     });
 };
 
+const getAddress = async (req, res) => {
+  try {
+    console.log(req.params, req.query);
+    const address = await models.User.findOne({
+      where: { id: Number(req.params.id) },
+    });
+
+    res.json(address);
+  } catch (e) {
+    console.error(e);
+  }
+};
 module.exports = {
   main,
   getData,
@@ -413,6 +425,7 @@ module.exports = {
   getCategory,
   getContent,
   getOneId,
+  getAddress,
   findPw,
   findId,
   changePw,
