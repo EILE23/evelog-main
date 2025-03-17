@@ -124,7 +124,6 @@ function remove(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       axios.post("/update/postDestroy", { id: id }).then((res) => {
-        console.log("삭제 성공");
         window.location.href = "/";
       });
     } else {

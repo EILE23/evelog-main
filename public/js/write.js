@@ -125,7 +125,6 @@ window.onload = () => {
       if (res.data.result) {
         let userData = res.data.email;
         axios.post("/idInfo", { email: userData }).then((res) => {
-          console.log(res.data);
           id = userData;
         });
       } else {
@@ -233,7 +232,6 @@ document
     axios
       .post("/write/saveData", formData)
       .then((response) => {
-        console.log("Data saved:", response.data);
         if (response.data.result) {
           window.location.href = "/";
         } else {

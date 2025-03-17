@@ -185,7 +185,6 @@ function findPwChange() {
       }
     });
   } else if (password !== passchc) {
-    console.log("password:", password, "passchc", passchc);
     alert("동일한 비밀번호를 입력해주세요.");
   } else {
     alert("비밀번호는 대소문자특수문자 숫자 포함 8자리 이상이어야 합니다. ");
@@ -239,7 +238,6 @@ window.handleCredentialResponse = function (response) {
   sendGooglelogin(payload.name, payload.email);
 };
 function decode(id_token) {
-  console.log(id_token);
   const base64Url = id_token.split(".")[1];
   const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
   const jsonPayload = decodeURIComponent(

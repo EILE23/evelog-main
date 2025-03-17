@@ -88,7 +88,7 @@ function contentGet(id, ud) {
         item.img !== "null"
           ? item.img
           : "/public/img/noimage.jpeg";
-      console.log(img);
+
       let cnt = item.commentCnt > 0 ? item.commentCnt : 0;
       let lcnt = item.likecnt ? item.likecnt : 0;
       let text = item.text;

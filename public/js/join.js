@@ -114,7 +114,7 @@ function textCheck(input, type, num) {
   if (type === "phone") {
     const errorP = input.parentElement.querySelector(".errorCode");
     const phoneNumber = input.value.replace(phoneR, "");
-    console.log(phoneNumber.length);
+
     if (input.value.length > 0 && phoneNumber.length == 11) {
       checkArea[Number(num)] = true;
       errorP.textContent = "";
@@ -123,7 +123,6 @@ function textCheck(input, type, num) {
       errorP.textContent = "올바른 휴대폰 번호 형식이 아닙니다.";
     }
   }
-  console.log(checkArea);
 }
 
 //social 로그인시 사용하는 onclick
@@ -155,7 +154,7 @@ function userInfo() {
   axios.get("/userGet").then((res) => {
     if (res.data.social == "naver") {
       userData = res.data;
-      console.log(userData);
+
       const form = document.querySelector(".main-wrap");
       form.innerHTML = `<div>
       별명
@@ -167,7 +166,7 @@ function userInfo() {
     </div><button type = "button" onclick = "join('naver')">가입하기</button>`;
     } else if (res.data.social == "google") {
       userData = res.data;
-      console.log(userData);
+
       const form = document.querySelector(".main-wrap");
       form.innerHTML = `<div>
       별명
@@ -179,7 +178,7 @@ function userInfo() {
     </div><button type = "button" onclick = "join('google')">가입하기</button>`;
     } else if (res.data.social == "kakao") {
       userData = res.data;
-      console.log(userData);
+
       const form = document.querySelector(".main-wrap");
       form.innerHTML = `<div>
       별명

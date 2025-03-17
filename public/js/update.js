@@ -125,7 +125,6 @@ window.onload = () => {
       if (res.data.result) {
         let userData = res.data.email;
         axios.post("/idInfo", { email: userData }).then((res) => {
-          console.log(res.data);
           id = userData;
         });
       } else {
@@ -139,7 +138,6 @@ window.onload = () => {
   const urlp = new URLSearchParams(window.location.search);
   const postID = urlp.get("i");
   postid = postID;
-  console.log(postID);
   getData(postID);
 };
 
@@ -240,7 +238,6 @@ document
     axios
       .post("/update/updatePost", formData)
       .then((response) => {
-        console.log("Data saved:", response.data);
         if (response.data.result) {
           window.location.href = "/";
         } else {
@@ -259,7 +256,6 @@ function cancel() {
 let previewImg;
 function getData(id) {
   axios.get(`/update/getEditPost/${id}`).then((res) => {
-    console.log(res.data);
     document.querySelector(".toast_title").value = res.data.title;
     editor.setHTML(res.data.content);
     const categoryDiv = document.getElementById("toast_category");

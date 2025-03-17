@@ -155,7 +155,6 @@ function passSubmit() {
 function addressChange() {
   axios.get(`/getAddress/${id}`).then((res) => {
     const address = res.data.address.split(":");
-    console.log(address);
 
     if (address.length > 0) {
       const addressDetail = address[2] ? address[2] : "";

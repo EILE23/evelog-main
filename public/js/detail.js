@@ -11,11 +11,10 @@ async function fetchPostDetail(postId) {
   try {
     const response = await axios.get(`/detail/post/${postId}`);
     // ... process the response.data
-    // console.log(response.data);
+
     post = response.data.post;
     user = response.data.user;
 
-    console.log(post, user);
     // Display the post details on the page
 
     axios.get("/checkCookie").then((res) => {
@@ -91,7 +90,7 @@ async function fetchPostDetail(postId) {
           (item) => item.parentid === null
         );
         const Parent = r.data.comments.filter((item) => item.parentid !== null);
-        console.log(noParent, Parent);
+
         noParent.map((ct) => {
           const nowDate = new Date().toISOString().split("T")[0];
           const contentDate = ct.updatedAt.split("T")[0];
@@ -424,7 +423,6 @@ function remove(id) {
   }).then((result) => {
     if (result.isConfirmed) {
       axios.post("/update/postDestroy", { id: id }).then((res) => {
-        console.log("삭제 성공");
         window.location.href = "/";
       });
     } else {
@@ -474,7 +472,7 @@ function likePost() {
                 ".likeBox span"
               ).innerHTML = `${res.data.post.likecnt}`;
             } else {
-              console.log(res.data);
+              console.error(res.data);
             }
           });
       }

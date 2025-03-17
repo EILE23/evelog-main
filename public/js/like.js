@@ -26,7 +26,6 @@ likedBtn.addEventListener("click", () => {
   axios.get("/checkCookie").then((res) => {
     if (res.data.result) {
       axios.post("/write/likeP", { id: res.data.id }).then((likedPages) => {
-        console.log(likedPages.data);
         const likedPosts = likedPages.data;
         const likedContainer = document.querySelector(".likedPagesContainer");
         const recentContainer = document.querySelector(".recentPagesContainer");
@@ -114,7 +113,6 @@ recentBtn.addEventListener("click", (e) => {
     likedContainer.classList.add("hidden"); // Hide liked
 
     const recentPosts = res.data;
-    console.log("localhost saved pages", recentPosts);
 
     recentContainer.innerHTML = ``;
     recentPosts.map((post) => {
