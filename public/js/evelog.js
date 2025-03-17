@@ -47,7 +47,7 @@ function fetchPosts() {
         const year = createdAtDate.getFullYear();
         const month = String(createdAtDate.getMonth() + 1).padStart(2, "0");
         const day = String(createdAtDate.getDate()).padStart(2, "0");
-        createdAtText = `${year}년${month}월${day}일`;
+        createdAtText = `${year}년 ${month}월 ${day}일`;
       }
 
       const img =

@@ -28,11 +28,11 @@ async function fetchPostDetail(postId) {
             ? `<img src = "${post.imgsrc}"/>`
             : "";
         const cnt = post.likecnt ? post.likecnt : 0;
-        const data = new Date(post.createdAt).toLocaleString().split(",");
-        const newData = data[0].split("/");
-        const year = newData[2];
-        const month = newData[1];
-        const day = newData[0];
+        const newData = post.createdAt.split("T");
+        const YMD = newData[0].split("-");
+        const year = YMD[0];
+        const month = YMD[1];
+        const day = YMD[2];
         const date = `${year}년 ${month}월 ${day}일`;
         document.getElementById("post-title").textContent = post.title;
         if (user.id === res.data.id) {
@@ -69,11 +69,12 @@ async function fetchPostDetail(postId) {
           post.imgsrc !== "null"
             ? `<img src = "${post.imgsrc}"/>`
             : "";
-        const data = new Date(post.createdAt).toLocaleString().split(",");
-        const newData = data[0].split("/");
-        const year = newData[2];
-        const month = newData[1];
-        const day = newData[0];
+
+        const newData = post.createdAt.split("T");
+        const YMD = newData[0].split("-");
+        const year = YMD[0];
+        const month = YMD[1];
+        const day = YMD[2];
         const date = `${year}년 ${month}월 ${day}일`;
         document.getElementById("post-title").textContent = post.title;
 
