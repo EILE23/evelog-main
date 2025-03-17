@@ -8,7 +8,7 @@ const editor = new toastui.Editor({
         const imageUrl = await convertBlobToDataURL(blob); // Convert blob to data URL
         displayImagePreview(imageUrl);
 
-        callback(imageUrl, "Uploaded Image");
+        callback("", "Uploaded Image");
         // updatePreview();
         return false;
       } catch (error) {

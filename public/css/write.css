@@ -80,6 +80,10 @@ body {
   border-bottom: none;
 }
 
+.toastui-editor img[alt="Uploaded Image"] {
+  display: none;
+}
+
 #publish_button {
   border: none;
   background-color: #12b886;
