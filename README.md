@@ -145,6 +145,13 @@
 ### 디자인
 디자인은 전부 velog를 따라서 작성
 
+
+### DB 설계도
+
+![erd](https://github.com/user-attachments/assets/92a2f91a-82e6-4c87-9907-d0240661067d)
+
+
+
 ### 사용 라이브러리, API
 [네이버 로그인](https://nid.naver.com/user2/campaign/introNaverIdLogin)
 [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
