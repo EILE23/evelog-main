@@ -155,9 +155,9 @@
 ### 사용 라이브러리, API
 
 #### 로그인 연동
->[네이버 로그인](https://nid.naver.com/user2/campaign/introNaverIdLogin)
->[카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
->[구글 로그인](https://cloud.google.com/identity-platform/docs/web/google?hl=ko)
+>[네이버 ](https://nid.naver.com/user2/campaign/introNaverIdLogin)
+>[카카오 ](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+>[구글 ](https://cloud.google.com/identity-platform/docs/web/google?hl=ko)
 
 #### 게시판 글 작성
 >[toastEditor](https://ui.toast.com/)
