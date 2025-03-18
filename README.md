@@ -1,5 +1,6 @@
 
 <br/>
+
 ## 블로그 만들기
 
 <br/>
@@ -10,7 +11,7 @@
 <hr/>
 
 ## 팀원
-[안상현]()
+[안상현]() <br/>
 [이주형]()
 
 
@@ -117,8 +118,19 @@ __목차__
 
 회원 정보 업데이트
 
+#### 반응형 디자인
+
+![image](https://github.com/user-attachments/assets/128718fa-98fe-4ac0-9d24-3fac5c6d931a)
+
+
 ### 디자인
 디자인은 전부 velog를 따라서 작성
 
+### 사용 라이브러리, API
+[네이버 로그인](https://nid.naver.com/user2/campaign/introNaverIdLogin)
+[카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
+[구글 로그인](https://cloud.google.com/identity-platform/docs/web/google?hl=ko) 
+
+[toastEditor](https://ui.toast.com/)
 
 
