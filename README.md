@@ -159,6 +159,13 @@
 >[카카오 ](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)
 >[구글 ](https://cloud.google.com/identity-platform/docs/web/google?hl=ko)
 
+#### 로그인 검증, 개인 블로그 url
+>[jwt](https://jwt.io/)
+>[crypto](https://nodejs.org/api/crypto.html)
+
+#### 파일 업로드
+>[multer](https://www.npmjs.com/package/multer)
+
 #### 게시판 글 작성
 >[toastEditor](https://ui.toast.com/)
 
